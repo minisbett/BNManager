@@ -14,7 +14,7 @@
       <conv:BoolToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
       <conv:BoolToVisibilityConverter x:Key="InvBoolToVisibility" TrueValue="Collapsed" FalseValue="Visible" />
 
-      <FontFamily x:Key="OsuFont">ms-appx:///Assets/Fonts/osu.ttf#extra</FontFamily>
+      <FontFamily x:Key="OsuFont">ms-appx:///Assets/osu.ttf#extra</FontFamily>
       <ImageSource x:Key="Logo">ms-appx:///Assets/Logo.png</ImageSource>
       <ImageSource x:Key="LogoCompact">ms-appx:///Assets/LogoCompact.png</ImageSource>
       <ImageSource x:Key="LogoDate">ms-appx:///Assets/Logo-Date.png</ImageSource>

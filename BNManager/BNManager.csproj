@@ -10,16 +10,9 @@
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Assets\Fonts\osu.ttf" />
-    <None Remove="Assets\Logo-Date.png" />
-    <None Remove="Assets\Logo.png" />
-    <None Remove="Assets\LogoCompact.png" />
-    <None Remove="Views\CreateProjectDialog.xaml" />
-    <None Remove="Views\EditProjectDialog.xaml" />
-    <None Remove="Views\MainPage.xaml" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -30,6 +23,14 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
+  <Target Name="RemoveFoldersWithMuiFiles" AfterTargets="Publish">
+    <ItemGroup>
+      <RemovingFiles Include="$(PublishDir)*\*.mui" Exclude="$(PublishDir)en-us\*.mui" />
+      <RemovingFolders Include="@(RemovingFiles->'%(RootDir)%(Directory)')" />
+    </ItemGroup>
+    <RemoveDir Directories="@(RemovingFolders)" />
+  </Target>
+
   <!-- 
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
@@ -37,6 +38,20 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\osu.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo-Date.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\LogoCompact.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CreateProjectDialog.xaml">
