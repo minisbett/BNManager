@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BNManager.Services;
 
@@ -33,6 +34,8 @@ internal static class ProjectService
   /// <returns>The projects.</returns>
   public static void Initialize()
   {
+    // Ensure the directory and projects file exist.
+    Directory.CreateDirectory(Path.GetDirectoryName(_projectsFile));
     if (!File.Exists(_projectsFile))
       File.WriteAllText(_projectsFile, "[]");
 
@@ -41,14 +44,13 @@ internal static class ProjectService
   }
 
   /// <summary>
-  /// Creates a new project with the given name and returns it.
+  /// Creates a new project with the specified beatmap set and returns it.
   /// </summary>
-  /// <param name="name">The name of the project.</param>
-  /// <param name="modes">The targetted modes of the project.</param>
-  public static Project Create(string name, Mode[] modes)
+  /// <param name="beatmapSet">The beatmap set of the project.</param>
+  public static Project Create(BeatmapSet beatmapSet)
   {
     // Create a new project and add it to the list of projects.
-    Project project = new Project(Utils.GetSanitizedString(name), modes);
+    Project project = new Project(beatmapSet.Id, Utils.GetSanitizedString(beatmapSet.Title), beatmapSet.Beatmaps.Select(x => x.Mode).Distinct().ToArray());
     _projects.Add(project);
 
     // Populate the project with all current nominators.

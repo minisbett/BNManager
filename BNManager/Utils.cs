@@ -27,4 +27,19 @@ internal static class Utils
     // Remove leading and trailing whitespaces.
     return str.Trim();
   }
+
+  /// <summary>
+  /// Returns the mode icon/glyph in the osu extra font of the given mode.
+  /// </summary>
+  /// <param name="mode">The mode.</param>
+  /// <returns>The mode icon.</returns>
+  public static char GetModeIcon(this Mode mode) => mode switch
+  {
+    Mode.None => '\uE805', // osu
+    Mode.Standard => '\uE800', // mode-osu
+    Mode.Taiko => '\uE803', // mode-taiko
+    Mode.Catch => '\uE801', // mode-ctb
+    Mode.Mania => '\uE802', // mode-mania
+    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+  };
 }

@@ -10,6 +10,12 @@ namespace BNManager.Models;
 internal class Project
 {
   /// <summary>
+  /// The ID of the beatmap set.
+  /// </summary>
+  [JsonProperty("beatmapset_id")]
+  public int BeatmapSetId { get; }
+
+  /// <summary>
   /// The name of the project.
   /// </summary>
   [JsonProperty("name")]
@@ -27,8 +33,9 @@ internal class Project
   [JsonProperty("states")]
   public List<NominatorState> NominatorStates { get; private set; } = new List<NominatorState>();
 
-  public Project(string name, Mode[] modes)
+  public Project(int beatmapSetId, string name, Mode[] modes)
   {
+    BeatmapSetId = beatmapSetId;
     Name = name;
     Modes = modes;
   }

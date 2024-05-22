@@ -5,10 +5,16 @@ using System.Linq;
 namespace BNManager.ViewModels;
 
 /// <summary>
-/// The view model for the project dialog view.
+/// The view model for the edit project dialog view.
 /// </summary>
-internal partial class ProjectDialogViewModel : ObservableObject
+internal partial class EditProjectDialogViewModel : ObservableObject
 {
+  /// <summary>
+  /// The ID of the beatmap set.
+  /// </summary>
+  [ObservableProperty]
+  private int _beatmapSetId;
+
   /// <summary>
   /// The name of the project.
   /// </summary>
@@ -46,40 +52,17 @@ internal partial class ProjectDialogViewModel : ObservableObject
   private bool _maniaEnabled = false;
 
   /// <summary>
-  /// Bool whether the dialog is in create or edit mode.
-  /// </summary>
-  [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(DialogTitle))]
-  [NotifyPropertyChangedFor(nameof(PrimaryButtonText))]
-  private bool _isCreateMode;
-
-  /// <summary>
-  /// The original, unmodified name of the project. Used for name change detection in edit mode.
+  /// The placeholder for the name input field, displaying the original name.
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(ProjectWithNameAlreadyExists))]
-  [NotifyPropertyChangedFor(nameof(NamePlaceholder))]
   private string _originalName = "";
-
-  /// <summary>
-  /// The dialog title, depending on the create/edit mode.
-  /// </summary>
-  public string DialogTitle => IsCreateMode ? "Create Project" : "Edit Project";
-
-  /// <summary>
-  /// The text of the primary button, depending on the create/edit mode.
-  /// </summary>
-  public string PrimaryButtonText => IsCreateMode ? "Create" : "Save";
-
-  /// <summary>
-  /// The placeholder for the name input field, either displaying an example or the original name.
-  /// </summary>
-  public string NamePlaceholder => OriginalName == "" ? "eg. 'No Title'" : OriginalName;
 
   /// <summary>
   /// Bool whether a project with the same name already exists.
   /// </summary>
-  public bool ProjectWithNameAlreadyExists => Utils.GetSanitizedString(Name) != OriginalName && ProjectService.Projects.Any(p => p.Name == Utils.GetSanitizedString(Name));
+  public bool ProjectWithNameAlreadyExists => ProjectService.Projects.Count(p => p.Name == Utils.GetSanitizedString(Name)) 
+    > (Utils.GetSanitizedString(Name) == OriginalName ? 1 : 0);
 
   /// <summary>
   /// Bool whether all input field requirements are met.

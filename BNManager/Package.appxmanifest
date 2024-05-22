@@ -8,7 +8,7 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="157cc010-5fcf-4122-8d98-ac751971f663"
+    Name="BNManager"
     Publisher="CN=mini"
     Version="1.0.0.0" />
 

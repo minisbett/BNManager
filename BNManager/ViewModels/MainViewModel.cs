@@ -4,7 +4,6 @@ using BNManager.Services;
 using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -59,30 +58,19 @@ internal partial class MainViewModel : ObservableObject
   [RelayCommand]
   private async Task CreateProject()
   {
-    ProjectDialog cpd = new ProjectDialog(true)
+    CreateProjectDialog cpd = new CreateProjectDialog()
     {
       XamlRoot = MainPage.XamlRoot
     };
 
     if (await cpd.ShowAsync() == ContentDialogResult.Primary)
     {
-      ProjectDialogViewModel pdvm = cpd.DataContext as ProjectDialogViewModel;
+      CreateProjectDialogViewModel vm = cpd.DataContext as CreateProjectDialogViewModel;
 
-      // Get a list of all targetted modes.
-      List<Mode> modes = new List<Mode>();
-      if (pdvm.StdEnabled) modes.Add(Mode.Standard);
-      if (pdvm.TaikoEnabled) modes.Add(Mode.Taiko);
-      if (pdvm.CtbEnabled) modes.Add(Mode.Catch);
-      if (pdvm.ManiaEnabled) modes.Add(Mode.Mania);
-
-      // Create the project and a view model for it.
-      Project project = ProjectService.Create(pdvm.Name, modes.ToArray());
-      ProjectViewModel vm = new ProjectViewModel(project, DeleteProjectCallback);
-
-      // Add the view model to the list of projects, update the UI and select the new project.
-      _projects.Add(vm);
+      // Create the project, add the view model to the list of projects, update the UI and select the new project.
+      Project project = ProjectService.Create(vm.BeatmapSet);
+      _projects.Add(SelectedProject = new ProjectViewModel(project, DeleteProjectCallback));
       OnPropertyChanged(nameof(FilteredProjects));
-      SelectedProject = vm;
     }
   }
 
@@ -93,7 +81,7 @@ internal partial class MainViewModel : ObservableObject
   private void DeleteProjectCallback(ProjectViewModel vm)
   {
     _projects.Remove(vm);
-    if(SelectedProject == vm)
+    if (SelectedProject == vm)
       SelectedProject = null;
 
     OnPropertyChanged(nameof(FilteredProjects));

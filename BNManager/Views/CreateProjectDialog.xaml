@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="BNManager.Views.CreateProjectDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:BNManager.ViewModels"
+    mc:Ignorable="d"
+    Title="Create Project"
+    PrimaryButtonText="Create"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.HasValidBeatmapSet,Mode=OneWay}"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <ContentDialog.DataContext>
+    <vm:CreateProjectDialogViewModel x:Name="ViewModel" />
+  </ContentDialog.DataContext>
+
+  <Grid HorizontalAlignment="Stretch" RowSpacing="8">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+    <Grid RowSpacing="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <TextBlock Text="Beatmap Set ID" />
+      <TextBox Grid.Row="1" Text="{x:Bind ViewModel.BeatmapSetIdInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" PlaceholderText="eg. '1880007' or a URL" MinWidth="350" MaxWidth="350" />
+      <TextBlock Grid.Row="2" Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" Foreground="IndianRed" Visibility="{x:Bind ViewModel.HasErrorMessage,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+    </Grid>
+    <ProgressRing Grid.Row="1" IsActive="True" Margin="22" Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+    <Grid Grid.Row="1" ColumnSpacing="8" Visibility="{x:Bind ViewModel.HasValidBeatmapSet,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <Border CornerRadius="16" Width="76" Height="76">
+        <Border.Background>
+          <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.Cover,Mode=OneWay}" />
+        </Border.Background>
+      </Border>
+      <Grid Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{x:Bind ViewModel.BeatmapSet.Title,Mode=OneWay}" MaxWidth="266" FontSize="16" />
+        <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.BeatmapSet.Artist,Mode=OneWay}" FontSize="13" />
+        <ItemsControl Grid.Row="3" ItemsSource="{x:Bind ViewModel.Beatmaps,Mode=OneWay}" Margin="0,0,0,12">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="5" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:BeatmapViewModel">
+              <TextBlock Text="{x:Bind ModeIcon}" Foreground="{x:Bind DifficultyColor}" ToolTipService.ToolTip="{x:Bind DisplayText}" FontFamily="{StaticResource OsuFont}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </Grid>
+    </Grid>
+  </Grid>
+</ContentDialog>

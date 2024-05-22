@@ -16,8 +16,9 @@
     <None Remove="Assets\Logo-Date.png" />
     <None Remove="Assets\Logo.png" />
     <None Remove="Assets\LogoCompact.png" />
+    <None Remove="Views\CreateProjectDialog.xaml" />
+    <None Remove="Views\EditProjectDialog.xaml" />
     <None Remove="Views\MainPage.xaml" />
-    <None Remove="Views\ProjectDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,12 +39,17 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\CreateProjectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\ProjectDialog.xaml">
+    <Page Update="Views\EditProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

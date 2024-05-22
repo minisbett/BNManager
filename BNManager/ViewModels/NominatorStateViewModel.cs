@@ -1,5 +1,4 @@
-﻿using ABI.Windows.ApplicationModel.Activation;
-using BNManager.Enums;
+﻿using BNManager.Enums;
 using BNManager.Models;
 using BNManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,9 +20,9 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// The ask state of the nominator.
   /// </summary>
-  public DisplayableAskState State
+  public AskStateViewModel State
   {
-    get => DisplayableAskState.Options.First(x => x.State == _nominatorState.State);
+    get => AskStateViewModel.Options.First(x => x.State == _nominatorState.State);
     set
     {
       if (value is null)
@@ -52,9 +51,9 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// The group badges of the nominator.
   /// </summary>
-  public GroupBadge[] GroupBadges =>
+  public GroupBadgeViewModel[] GroupBadges =>
     Nominator.ModesInfo.GroupBy(x => x.Group)
-    .Select(x => new GroupBadge(x.Key, x.Select(y => y.Mode).ToArray()))
+    .Select(x => new GroupBadgeViewModel(x.Key, x.Select(y => y.Mode).ToArray()))
     .ToArray();
 
   /// <summary>

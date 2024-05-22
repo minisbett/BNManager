@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using BNManager.Views;
+using System.Diagnostics;
 
 namespace BNManager.ViewModels;
 
@@ -65,7 +66,10 @@ internal partial class ProjectViewModel : ObservableObject
     }
   }
 
-  public string Cover => $"https://assets.ppy.sh/beatmaps/{_project.Name}/covers/cover.jpg"; 
+  /// <summary>
+  /// A URL to the cover image of the project.
+  /// </summary>
+  public string Cover => $"https://assets.ppy.sh/beatmaps/{_project.BeatmapSetId}/covers/cover.jpg"; 
 
   /// <summary>
   /// The search query used to filter the nominators.
@@ -79,7 +83,7 @@ internal partial class ProjectViewModel : ObservableObject
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(FilteredNominatorStates))]
-  private DisplayableSortOption _sort = DisplayableSortOption.Options[0];
+  private SortOptionViewModel _sort = SortOptionViewModel.Options[0];
 
   /// <summary>
   /// The state filter option used to filter the nominators by their ask state.
@@ -133,19 +137,32 @@ internal partial class ProjectViewModel : ObservableObject
   }
 
   /// <summary>
+  /// Opens the beatmap set in the web browser.
+  /// </summary>
+  [RelayCommand]
+  private void OpenBeatmapSetInWeb()
+  {
+    Process.Start(new ProcessStartInfo()
+    {
+      FileName = $"https://osu.ppy.sh/s/{_project.BeatmapSetId}",
+      UseShellExecute = true
+    });
+  }
+
+  /// <summary>
   /// Prompts the user to edit a project.
   /// </summary>
   [RelayCommand]
   private async Task EditProject()
   {
-    ProjectDialog pd = new ProjectDialog(false, Name, Modes)
+    EditProjectDialog pd = new EditProjectDialog(_project)
     {
       XamlRoot = MainPage.XamlRoot
     };
 
     if (await pd.ShowAsync() == ContentDialogResult.Primary)
     {
-      ProjectDialogViewModel pdvm = pd.DataContext as ProjectDialogViewModel;
+      EditProjectDialogViewModel pdvm = pd.DataContext as EditProjectDialogViewModel;
 
       // Get a list of all targetted modes.
       List<Mode> modes = new List<Mode>();
