@@ -61,7 +61,7 @@ internal partial class EditProjectDialogViewModel : ObservableObject
   /// <summary>
   /// Bool whether a project with the same name already exists.
   /// </summary>
-  public bool ProjectWithNameAlreadyExists => ProjectService.Projects.Count(p => p.Name == Utils.GetSanitizedString(Name)) 
+  public bool ProjectWithNameAlreadyExists => ProjectService.Projects.Count(p => p.Name == Utils.GetSanitizedString(Name))
     > (Utils.GetSanitizedString(Name) == OriginalName ? 1 : 0);
 
   /// <summary>

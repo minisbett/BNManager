@@ -1,5 +1,4 @@
-﻿using BNManager.Enums;
-using BNManager.Models;
+﻿using BNManager.Models;
 using BNManager.Services;
 using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,7 +19,7 @@ internal partial class MainViewModel : ObservableObject
   /// <summary>
   /// A list of all project view models.
   /// </summary>
-  private List<ProjectViewModel> _projects;
+  private readonly List<ProjectViewModel> _projects;
 
   /// <summary>
   /// The search query used to filter projects.

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using BNManager.Enums;
+﻿using BNManager.Enums;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace BNManager.Models;
 

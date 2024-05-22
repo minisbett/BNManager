@@ -1,7 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using BNManager.Services;
 using BNManager.Views;
-using BNManager.Services;
-using System.Threading;
+using Microsoft.UI.Xaml;
 using System.Globalization;
 
 namespace BNManager;

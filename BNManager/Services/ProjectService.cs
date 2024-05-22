@@ -1,5 +1,4 @@
-﻿using BNManager.Enums;
-using BNManager.Models;
+﻿using BNManager.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

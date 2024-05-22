@@ -1,16 +1,15 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
 using BNManager.Services;
+using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using CommunityToolkit.Mvvm.Input;
-using BNManager.Views;
-using System.Diagnostics;
 
 namespace BNManager.ViewModels;
 
@@ -69,7 +68,7 @@ internal partial class ProjectViewModel : ObservableObject
   /// <summary>
   /// A URL to the cover image of the project.
   /// </summary>
-  public string Cover => $"https://assets.ppy.sh/beatmaps/{_project.BeatmapSetId}/covers/cover.jpg"; 
+  public string Cover => $"https://assets.ppy.sh/beatmaps/{_project.BeatmapSetId}/covers/cover.jpg";
 
   /// <summary>
   /// The search query used to filter the nominators.

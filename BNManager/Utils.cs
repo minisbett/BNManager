@@ -1,8 +1,5 @@
 ﻿using BNManager.Enums;
-using BNManager.Models;
-using Microsoft.UI.Xaml.Media;
 using System;
-using Windows.UI;
 
 namespace BNManager;
 

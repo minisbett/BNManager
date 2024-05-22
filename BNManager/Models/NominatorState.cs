@@ -1,7 +1,7 @@
-﻿using System;
-using BNManager.Enums;
+﻿using BNManager.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace BNManager.Models;
 
