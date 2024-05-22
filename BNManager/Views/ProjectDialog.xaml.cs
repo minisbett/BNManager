@@ -1,0 +1,37 @@
+using BNManager.Enums;
+using BNManager.Models;
+using BNManager.ViewModels;
+using Microsoft.UI.Xaml.Controls;
+using System.Linq;
+
+namespace BNManager.Views
+{
+  internal sealed partial class ProjectDialog : ContentDialog
+  {
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectDialog"/> with the specified default values.
+    /// </summary>
+    /// <param name="isCreateMode">Bool whether the project dialog is for creating a project.</param>
+    /// <param name="project">The existing project, used to pre-fill values.</param>
+    public ProjectDialog(bool isCreateMode, Project project = null)
+    {
+      InitializeComponent();
+
+      Loaded += (sender, e) =>
+      {
+        ViewModel.IsCreateMode = isCreateMode;
+
+        if (project is not null)
+        {
+          ViewModel.BeatmapSetId = project.BeatmapSetId.ToString();
+          ViewModel.Name = project.Name;
+          ViewModel.OriginalName = project.Name;
+          ViewModel.StdEnabled = project.Modes.Contains(Mode.Standard);
+          ViewModel.TaikoEnabled = project.Modes.Contains(Mode.Taiko);
+          ViewModel.CtbEnabled = project.Modes.Contains(Mode.Catch);
+          ViewModel.ManiaEnabled = project.Modes.Contains(Mode.Mania);
+        }
+      };
+    }
+  }
+}

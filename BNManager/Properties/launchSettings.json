@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BNManager (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "BNManager (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

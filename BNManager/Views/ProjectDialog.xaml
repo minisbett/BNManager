@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="BNManager.Views.ProjectDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:BNManager.ViewModels"
+    mc:Ignorable="d"
+    Title="{x:Bind ViewModel.DialogTitle,Mode=OneWay}"
+    PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonText,Mode=OneWay}"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.HasRequiredInput,Mode=OneWay}"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <ContentDialog.DataContext>
+    <vm:ProjectDialogViewModel x:Name="ViewModel" />
+  </ContentDialog.DataContext>
+
+  <Grid HorizontalAlignment="Stretch" RowSpacing="8">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+    <Grid RowSpacing="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <TextBlock Text="Beatmap Set ID" />
+      <TextBox Grid.Row="1" PlaceholderText="eg. '1880007' or a URL" />
+    </Grid>
+    <Grid Grid.Row="1" RowSpacing="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <TextBlock Text="Project Name" />
+      <TextBox Grid.Row="1" Text="{x:Bind ViewModel.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" PlaceholderText="{x:Bind ViewModel.NamePlaceholder,Mode=OneWay}" MaxLength="48" />
+      <TextBlock Grid.Row="2" Text="A project with this name already exists." Foreground="Yellow" Visibility="{x:Bind ViewModel.ProjectWithNameAlreadyExists,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+    </Grid>
+    <Grid Grid.Row="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <Grid ColumnSpacing="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Targetted Game Modes" />
+        <!-- StatusCircleQuestionMark -->
+        <FontIcon Grid.Column="1" Glyph="&#xF142;" ToolTipService.ToolTip="This allows filtering Beatmap Nominators for those that cover the modes you target on your Beatmap Set." />
+      </Grid>
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <CheckBox Content="osu!std" IsChecked="{x:Bind ViewModel.StdEnabled,Mode=TwoWay}" MinWidth="100" />
+        <CheckBox Grid.Column="1" IsChecked="{x:Bind ViewModel.TaikoEnabled,Mode=TwoWay}" Content="osu!taiko" MinWidth="100" />
+        <CheckBox Grid.Column="2" IsChecked="{x:Bind ViewModel.CtbEnabled,Mode=TwoWay}" Content="osu!ctb" MinWidth="100" />
+        <CheckBox Grid.Column="3" IsChecked="{x:Bind ViewModel.ManiaEnabled,Mode=TwoWay}" Content="osu!mania" MinWidth="100" />
+      </Grid>
+    </Grid>
+  </Grid>
+</ContentDialog>
