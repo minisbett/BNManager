@@ -49,7 +49,10 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
   /// <summary>
   /// The view models for the beatmaps in the <see cref="BeatmapSet"/>.
   /// </summary>
-  public BeatmapViewModel[] Beatmaps => BeatmapSet?.Beatmaps.OrderBy(x => x.DifficultyRating).Select(x => new BeatmapViewModel(x)).ToArray();
+  public BeatmapViewModel[] Beatmaps => BeatmapSet?.Beatmaps.OrderBy(b => b.Mode)
+                                                            .ThenBy(x => x.DifficultyRating)
+                                                            .Select(x => new BeatmapViewModel(x))
+                                                            .ToArray();
 
   /// <summary>
   /// A URL to the cover image of the beatmap set.
