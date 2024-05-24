@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BNManager.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+    <Image Source="{StaticResource Logo}" Width="256" Height="256" HorizontalAlignment="Center" />
+    <TextBlock Grid.Row="1" Text="BN Manager" FontSize="48" />
+    <TextBlock Grid.Row="2" Text="by minisbett" FontSize="18" HorizontalAlignment="Center" />
+    <Grid Grid.Row="3" ColumnSpacing="12" HorizontalAlignment="Center" Margin="0,30,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <Button Content="Create Project" Command="{x:Bind ViewModel.CreateProjectCommand}" />
+      <Button Grid.Column="1" Content="Lorem Ipsum" />
+    </Grid>
+  </Grid>
+</Page>

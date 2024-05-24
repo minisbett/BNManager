@@ -19,20 +19,14 @@ namespace BNManager.ViewModels;
 internal partial class ProjectViewModel : ObservableObject
 {
   /// <summary>
-  /// A delegate for the delete project callback.
-  /// </summary>
-  /// <param name="vm">The view model of the deleted project.</param>
-  public delegate void DeleteProjectCallback(ProjectViewModel vm);
-
-  /// <summary>
   /// The nominator state view models of this project.
   /// </summary>
   private readonly NominatorStateViewModel[] _nominatorStates;
 
   /// <summary>
-  /// The delete project handler, called when the project is being deleted.
+  /// The delete project command, called when the project is being deleted.
   /// </summary>
-  private readonly DeleteProjectCallback _deleteProjectCallback;
+  private readonly IRelayCommand<ProjectViewModel> _deleteProjectCommand;
 
   /// <summary>
   /// The backing project for this view model.
@@ -126,10 +120,10 @@ internal partial class ProjectViewModel : ObservableObject
     }
   }
 
-  public ProjectViewModel(Project project, DeleteProjectCallback deleteProjectCallback)
+  public ProjectViewModel(Project project, IRelayCommand<ProjectViewModel> deleteProjectCommand)
   {
     _project = project;
-    _deleteProjectCallback = deleteProjectCallback;
+    _deleteProjectCommand = deleteProjectCommand;
 
     // Load all nominator states as their view models.
     _nominatorStates = project.NominatorStates.Select(x => new NominatorStateViewModel(x)).ToArray();
@@ -178,23 +172,8 @@ internal partial class ProjectViewModel : ObservableObject
   }
 
   /// <summary>
-  /// Prompts the user to confirm the deletion of the project.
+  /// Prompts the user to confirm the deletion of the project by running the delete project command from the <see cref="MainPage"/>.
   /// </summary>
   [RelayCommand]
-  private async Task DeleteProject()
-  {
-    if (await new ContentDialog()
-    {
-      Title = "Delete Project",
-      Content = $"Are you sure you want to delete this project?\n\n{Name}",
-      PrimaryButtonText = "Delete",
-      CloseButtonText = "Cancel",
-      XamlRoot = MainPage.XamlRoot
-    }.ShowAsync() == ContentDialogResult.Primary)
-    {
-      // Delete the project and invoke the callback.
-      ProjectService.Delete(_project);
-      _deleteProjectCallback.Invoke(this);
-    }
-  }
+  private void DeleteProject() => _deleteProjectCommand.Execute(this);
 }

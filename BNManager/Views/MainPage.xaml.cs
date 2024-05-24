@@ -1,4 +1,5 @@
 using BNManager.Services;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -29,7 +30,7 @@ public sealed partial class MainPage : Page
       await MappersGuildService.InitializeAsync();
       ld.InfoText = "Loading projects...";
       ProjectService.Initialize();
-     ld.Hide();
+      ld.Hide();
     };
   }
 }

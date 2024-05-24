@@ -48,7 +48,7 @@ internal partial class MainViewModel : ObservableObject
 
   public MainViewModel()
   {
-    _projects = ProjectService.Projects.Select(x => new ProjectViewModel(x, DeleteProjectCallback)).ToList();
+    _projects = ProjectService.Projects.Select(x => new ProjectViewModel(x, DeleteProjectCommand)).ToList();
   }
 
   /// <summary>
@@ -68,16 +68,17 @@ internal partial class MainViewModel : ObservableObject
 
       // Create the project, add the view model to the list of projects, update the UI and select the new project.
       Project project = ProjectService.Create(vm.BeatmapSet);
-      _projects.Add(SelectedProject = new ProjectViewModel(project, DeleteProjectCallback));
+      _projects.Add(SelectedProject = new ProjectViewModel(project, DeleteProjectCommand));
       OnPropertyChanged(nameof(FilteredProjects));
     }
   }
 
   /// <summary>
-  /// Callback for the deletion of a project, used to remove the view model and update the UI.
+  /// A command for the deletion of a project, used to remove the view model and update the UI.
   /// </summary>
   /// <param name="vm">The view model of the project.</param>
-  private void DeleteProjectCallback(ProjectViewModel vm)
+  [RelayCommand]
+  private void DeleteProject(ProjectViewModel vm)
   {
     _projects.Remove(vm);
     if (SelectedProject == vm)
