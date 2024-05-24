@@ -1,12 +1,11 @@
 using Microsoft.UI.Xaml.Controls;
 
-namespace BNManager.Views
+namespace BNManager.Views;
+
+public sealed partial class CreateProjectDialog : ContentDialog
 {
-  public sealed partial class CreateProjectDialog : ContentDialog
+  public CreateProjectDialog()
   {
-    public CreateProjectDialog()
-    {
-      InitializeComponent();
-    }
+    InitializeComponent();
   }
 }

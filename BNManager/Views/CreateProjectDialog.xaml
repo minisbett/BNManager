@@ -33,7 +33,7 @@
       <TextBox Grid.Row="1" Text="{x:Bind ViewModel.BeatmapSetIdInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" PlaceholderText="eg. '1880007' or a URL" MinWidth="350" MaxWidth="350" />
       <TextBlock Grid.Row="2" Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" Foreground="IndianRed" Visibility="{x:Bind ViewModel.HasErrorMessage,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
     </Grid>
-    <ProgressRing Grid.Row="1" IsActive="True" Margin="22" Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+    <ProgressRing Grid.Row="1" Margin="22" Visibility="{x:Bind ViewModel.IsLoading,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
     <Grid Grid.Row="1" ColumnSpacing="8" Visibility="{x:Bind ViewModel.HasValidBeatmapSet,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
@@ -51,12 +51,12 @@
           <RowDefinition Height="*" />
           <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Bind ViewModel.BeatmapSet.Title,Mode=OneWay}" MaxWidth="266" FontSize="16" />
+        <TextBlock Text="{x:Bind ViewModel.BeatmapSet.Title,Mode=OneWay}" MaxWidth="266" FontSize="16" HorizontalAlignment="Left" />
         <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.BeatmapSet.Artist,Mode=OneWay}" FontSize="13" />
-        <ItemsControl Grid.Row="3" ItemsSource="{x:Bind ViewModel.Beatmaps,Mode=OneWay}" Margin="0,0,0,12">
+        <ItemsControl Grid.Row="3" ItemsSource="{x:Bind ViewModel.Beatmaps,Mode=OneWay}" Margin="0,0,0,12" HorizontalAlignment="Left">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <StackPanel Orientation="Horizontal" Spacing="5" />
+              <StackPanel Orientation="Horizontal" Spacing="5" MaxWidth="266" />
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
