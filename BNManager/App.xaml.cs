@@ -1,5 +1,4 @@
-﻿using BNManager.Services;
-using BNManager.Views;
+﻿using BNManager.Views;
 using Microsoft.UI.Xaml;
 using System.Globalization;
 
@@ -19,14 +18,10 @@ public partial class App : Application
   /// Invoked when the application is launched.
   /// </summary>
   /// <param name="args">Details about the launch request and process.</param>
-  protected override async void OnLaunched(LaunchActivatedEventArgs args)
+  protected override void OnLaunched(LaunchActivatedEventArgs args)
   {
     // Ensure an invariant culture for the entire application for parsing and formatting reasons.
     CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-
-    // Initialize the mappers guild service (fetches all nominators) and the project service (loads all projects).
-    await MappersGuildService.Initialize();
-    ProjectService.Initialize();
 
     _window = new MainWindow();
     _window.Activate();

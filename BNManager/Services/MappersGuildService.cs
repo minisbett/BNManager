@@ -19,7 +19,7 @@ internal static class MappersGuildService
   /// <summary>
   /// Loads the Beatmap Nominators from the Mappers' Guild API and caches them in <see cref="Nominators"/>.
   /// </summary>
-  public static async Task Initialize()
+  public static async Task InitializeAsync()
   {
     // Send the request to the API and parse the JSON response.
     using HttpClient http = new HttpClient();
