@@ -1,16 +1,21 @@
 using BNManager.Services;
-using CommunityToolkit.Mvvm.Input;
+using BNManager.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 
 namespace BNManager.Views;
 
 public sealed partial class MainPage : Page
 {
-  public static new XamlRoot XamlRoot { get; private set; }
-
+  /// <summary>
+  /// The title bar of the application, exposed for access from the <see cref="MainWindow"/>.
+  /// </summary>
   public UIElement AppTitleBar => TitleBar;
+
+  /// <summary>
+  /// The view model of the main page.
+  /// </summary>
+  private MainViewModel ViewModel { get; set; }
 
   public MainPage()
   {
@@ -18,8 +23,7 @@ public sealed partial class MainPage : Page
 
     Loaded += async (sender, e) =>
     {
-      // Make the xaml root available so that it can show dialogs.
-      XamlRoot = Content.XamlRoot;
+      //NavigationView.SelectedItem = NavigationView.FooterMenuItems[0];
 
       // Display a loading dialog while some services are being initialized.
       LoadingDialog ld = new LoadingDialog() { XamlRoot = Content.XamlRoot };
@@ -31,6 +35,10 @@ public sealed partial class MainPage : Page
       ld.InfoText = "Loading projects...";
       ProjectService.Initialize();
       ld.Hide();
+
+      // Initialize the view model and update the bindings.
+      ViewModel = new MainViewModel(ContentFrame);
+      Bindings.Update();
     };
   }
 }

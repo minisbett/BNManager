@@ -6,13 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BNManager.ViewModels"
-    xmlns:views="using:BNManager.Views"
     x:Name="Page"
     mc:Ignorable="d">
-
-  <Page.DataContext>
-    <vm:MainViewModel x:Name="ViewModel" />
-  </Page.DataContext>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -26,15 +21,17 @@
       </Grid.ColumnDefinitions>
       <Border CornerRadius="6" Width="32" Height="32">
         <Border.Background>
-          <ImageBrush  ImageSource="{StaticResource LogoCompact}" />
+          <ImageBrush ImageSource="{StaticResource LogoCompact}" />
         </Border.Background>
       </Border>
       <TextBlock Grid.Column="1" Text="BN Manager" VerticalAlignment="Center" />
     </Grid>
-    <NavigationView Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
+    <NavigationView MenuItemsSource="{x:Bind ViewModel.Projects,Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedItem,Mode=TwoWay}" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
       <NavigationView.AutoSuggestBox>
-        <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" Text="{x:Bind ViewModel.SearchQuery,Mode=TwoWay}" />
+        <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" />
       </NavigationView.AutoSuggestBox>
+      <NavigationView.FooterMenuItems>
+      </NavigationView.FooterMenuItems>
       <NavigationView.MenuItemTemplate>
         <DataTemplate x:DataType="vm:ProjectViewModel">
           <NavigationViewItem>
@@ -54,14 +51,14 @@
               <MenuFlyout>
                 <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind OpenBeatmapSetInWebCommand}" />
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Edit" Icon="Edit" Command="{x:Bind EditProjectCommand}" />
-                <MenuFlyoutItem Text="Remove" Icon="Delete" Command="{x:Bind DeleteProjectCommand}" />
+                <MenuFlyoutItem Text="Edit" Icon="Edit" />
+                <MenuFlyoutItem Text="Remove" Icon="Delete" />
               </MenuFlyout>
             </NavigationViewItem.ContextFlyout>
           </NavigationViewItem>
         </DataTemplate>
       </NavigationView.MenuItemTemplate>
-      <Frame x:Name="Frame" />
+      <Frame x:Name="ContentFrame" />
     </NavigationView>
   </Grid>
 </Page>

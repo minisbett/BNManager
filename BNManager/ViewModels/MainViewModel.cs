@@ -1,13 +1,11 @@
-﻿using BNManager.Models;
-using BNManager.Services;
+﻿using BNManager.Services;
 using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace BNManager.ViewModels;
 
@@ -17,73 +15,39 @@ namespace BNManager.ViewModels;
 internal partial class MainViewModel : ObservableObject
 {
   /// <summary>
-  /// A list of all project view models.
-  /// </summary>
-  private readonly List<ProjectViewModel> _projects;
-
-  /// <summary>
-  /// The search query used to filter projects.
+  /// The project view models.
   /// </summary>
   [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(FilteredProjects))]
-  private string _searchQuery = "";
+  private ObservableCollection<ProjectViewModel> _projects;
 
   /// <summary>
-  /// The currently selected project.
+  /// The content frame of the main page.
+  /// </summary>
+  private Frame _contentFrame;
+
+  /// <summary>
+  /// The currently selected item.
   /// </summary>
   [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(IsProjectSelected))]
-  private ProjectViewModel _selectedProject;
+  private object _selectedItem;
 
-  /// <summary>
-  /// Bool whether a project is selected.
-  /// </summary>
-  public bool IsProjectSelected => SelectedProject is not null;
-
-  /// <summary>
-  /// All project view models, filtered by the search query.
-  /// </summary>
-  public IEnumerable<ProjectViewModel> FilteredProjects => _projects
-    .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Name.Contains(tag)));
-
-  public MainViewModel()
+  public MainViewModel(Frame contentFrame)
   {
-    _projects = ProjectService.Projects.Select(x => new ProjectViewModel(x, DeleteProjectCommand)).ToList();
+    _contentFrame = contentFrame;
+    Projects = new ObservableCollection<ProjectViewModel>(ProjectService.Projects.Select(p => new ProjectViewModel(p)));
   }
 
   /// <summary>
-  /// A command for opening the create project dialog, and creating a new project.
+  /// Changes the content frame to display the correct page, depending on the selected item.
   /// </summary>
-  [RelayCommand]
-  private async Task CreateProject()
+  /// <param name="value"></param>
+  partial void OnSelectedItemChanged(object value)
   {
-    CreateProjectDialog cpd = new CreateProjectDialog()
-    {
-      XamlRoot = MainPage.XamlRoot
-    };
-
-    if (await cpd.ShowAsync() == ContentDialogResult.Primary)
-    {
-      CreateProjectDialogViewModel vm = cpd.DataContext as CreateProjectDialogViewModel;
-
-      // Create the project, add the view model to the list of projects, update the UI and select the new project.
-      Project project = ProjectService.Create(vm.BeatmapSet);
-      _projects.Add(SelectedProject = new ProjectViewModel(project, DeleteProjectCommand));
-      OnPropertyChanged(nameof(FilteredProjects));
-    }
-  }
-
-  /// <summary>
-  /// A command for the deletion of a project, used to remove the view model and update the UI.
-  /// </summary>
-  /// <param name="vm">The view model of the project.</param>
-  [RelayCommand]
-  private void DeleteProject(ProjectViewModel vm)
-  {
-    _projects.Remove(vm);
-    if (SelectedProject == vm)
-      SelectedProject = null;
-
-    OnPropertyChanged(nameof(FilteredProjects));
+    // If a project is selected, navigate to the project page.
+    if (value is ProjectViewModel project)
+      _contentFrame.Navigate(typeof(ProjectPage), project);
+    // Otherwise, navigate to the home page.
+    else
+      _contentFrame.Navigate(typeof(HomePage));
   }
 }

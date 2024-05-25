@@ -1,15 +1,11 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
-using BNManager.Services;
-using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BNManager.ViewModels;
 
@@ -22,11 +18,6 @@ internal partial class ProjectViewModel : ObservableObject
   /// The nominator state view models of this project.
   /// </summary>
   private readonly NominatorStateViewModel[] _nominatorStates;
-
-  /// <summary>
-  /// The delete project command, called when the project is being deleted.
-  /// </summary>
-  private readonly IRelayCommand<ProjectViewModel> _deleteProjectCommand;
 
   /// <summary>
   /// The backing project for this view model.
@@ -120,10 +111,9 @@ internal partial class ProjectViewModel : ObservableObject
     }
   }
 
-  public ProjectViewModel(Project project, IRelayCommand<ProjectViewModel> deleteProjectCommand)
+  public ProjectViewModel(Project project)
   {
     _project = project;
-    _deleteProjectCommand = deleteProjectCommand;
 
     // Load all nominator states as their view models.
     _nominatorStates = project.NominatorStates.Select(x => new NominatorStateViewModel(x)).ToArray();
@@ -141,39 +131,4 @@ internal partial class ProjectViewModel : ObservableObject
       UseShellExecute = true
     });
   }
-
-  /// <summary>
-  /// Prompts the user to edit a project.
-  /// </summary>
-  [RelayCommand]
-  private async Task EditProject()
-  {
-    EditProjectDialog pd = new EditProjectDialog(_project)
-    {
-      XamlRoot = MainPage.XamlRoot
-    };
-
-    if (await pd.ShowAsync() == ContentDialogResult.Primary)
-    {
-      EditProjectDialogViewModel pdvm = pd.DataContext as EditProjectDialogViewModel;
-
-      // Get a list of all targetted modes.
-      List<Mode> modes = new List<Mode>();
-      if (pdvm.StdEnabled) modes.Add(Mode.Standard);
-      if (pdvm.TaikoEnabled) modes.Add(Mode.Taiko);
-      if (pdvm.CtbEnabled) modes.Add(Mode.Catch);
-      if (pdvm.ManiaEnabled) modes.Add(Mode.Mania);
-
-      // Update the project and UI and save.
-      Name = pdvm.Name;
-      Modes = modes.ToArray();
-      ProjectService.Save();
-    }
-  }
-
-  /// <summary>
-  /// Prompts the user to confirm the deletion of the project by running the delete project command from the <see cref="MainPage"/>.
-  /// </summary>
-  [RelayCommand]
-  private void DeleteProject() => _deleteProjectCommand.Execute(this);
 }
