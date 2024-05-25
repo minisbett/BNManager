@@ -6,8 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BNManager.ViewModels"
+    xmlns:views="using:BNManager.Views"
     x:Name="Page"
     mc:Ignorable="d">
+
+  <Page.DataContext>
+    <vm:MainViewModel x:Name="ViewModel" />
+  </Page.DataContext>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -26,38 +31,48 @@
       </Border>
       <TextBlock Grid.Column="1" Text="BN Manager" VerticalAlignment="Center" />
     </Grid>
-    <NavigationView MenuItemsSource="{x:Bind ViewModel.Projects,Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedItem,Mode=TwoWay}" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
+    <NavigationView MenuItemsSource="{x:Bind ViewModel.Projects,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
       <NavigationView.AutoSuggestBox>
         <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" />
       </NavigationView.AutoSuggestBox>
       <NavigationView.FooterMenuItems>
+        <NavigationViewItem Icon="Home" Content="Home" />
       </NavigationView.FooterMenuItems>
-      <NavigationView.MenuItemTemplate>
-        <DataTemplate x:DataType="vm:ProjectViewModel">
-          <NavigationViewItem>
-            <Grid ColumnSpacing="8">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-              </Grid.ColumnDefinitions>
-              <Border Width="42" Height="42" CornerRadius="12">
-                <Border.Background>
-                  <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Cover}" />
-                </Border.Background>
-              </Border>
-              <TextBlock Grid.Column="1" Text="{x:Bind Name,Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="166" />
-            </Grid>
-            <NavigationViewItem.ContextFlyout>
-              <MenuFlyout>
-                <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind OpenBeatmapSetInWebCommand}" />
-                <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Edit" Icon="Edit" />
-                <MenuFlyoutItem Text="Remove" Icon="Delete" />
-              </MenuFlyout>
-            </NavigationViewItem.ContextFlyout>
-          </NavigationViewItem>
-        </DataTemplate>
-      </NavigationView.MenuItemTemplate>
+      <NavigationView.MenuItemTemplateSelector>
+        <views:NavigationViewDataTemplateSelector>
+          <views:NavigationViewDataTemplateSelector.DefaultTemplate>
+            <DataTemplate x:Name="DefaultTemplate" x:DataType="NavigationViewItem">
+              <NavigationViewItem Content="{x:Bind Content}" />
+            </DataTemplate>
+          </views:NavigationViewDataTemplateSelector.DefaultTemplate>
+          <views:NavigationViewDataTemplateSelector.ProjectTemplate>
+            <DataTemplate x:DataType="vm:ProjectViewModel">
+              <NavigationViewItem>
+                <Grid ColumnSpacing="8">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                  </Grid.ColumnDefinitions>
+                  <Border Width="42" Height="42" CornerRadius="12">
+                    <Border.Background>
+                      <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Cover}" />
+                    </Border.Background>
+                  </Border>
+                  <TextBlock Grid.Column="1" Text="{x:Bind Name,Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="166" />
+                </Grid>
+                <NavigationViewItem.ContextFlyout>
+                  <MenuFlyout>
+                    <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind OpenBeatmapSetInWebCommand}" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Edit" Icon="Edit" />
+                    <MenuFlyoutItem Text="Remove" Icon="Delete" /> 
+                  </MenuFlyout>
+                </NavigationViewItem.ContextFlyout>
+              </NavigationViewItem>
+            </DataTemplate>
+          </views:NavigationViewDataTemplateSelector.ProjectTemplate>
+        </views:NavigationViewDataTemplateSelector>
+      </NavigationView.MenuItemTemplateSelector>
       <Frame x:Name="ContentFrame" />
     </NavigationView>
   </Grid>

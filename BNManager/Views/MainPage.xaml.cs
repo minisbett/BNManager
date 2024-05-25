@@ -12,11 +12,6 @@ public sealed partial class MainPage : Page
   /// </summary>
   public UIElement AppTitleBar => TitleBar;
 
-  /// <summary>
-  /// The view model of the main page.
-  /// </summary>
-  private MainViewModel ViewModel { get; set; }
-
   public MainPage()
   {
     InitializeComponent();
@@ -36,9 +31,41 @@ public sealed partial class MainPage : Page
       ProjectService.Initialize();
       ld.Hide();
 
-      // Initialize the view model and update the bindings.
-      ViewModel = new MainViewModel(ContentFrame);
+      // Update the bindings as the projects have been loaded now.
       Bindings.Update();
+    };
+  }
+
+  private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+  {
+    if(args.SelectedItem is ProjectViewModel p)
+      ContentFrame.Navigate(typeof(ProjectPage), p);
+    else
+      ContentFrame.Navigate(typeof(HomePage));
+  }
+}
+
+/// <summary>
+/// The data template selector for the navigation view, separating between the project and normal items.
+/// </summary>
+internal class NavigationViewDataTemplateSelector : DataTemplateSelector
+{
+  /// <summary>
+  /// The project template for <see cref="ProjectViewModel"/>s.
+  /// </summary>
+  public DataTemplate ProjectTemplate { get; set; }
+
+  /// <summary>
+  /// The default template for <see cref="NavigationViewItem"/>s.
+  /// </summary>
+  public DataTemplate DefaultTemplate { get; set; }
+
+  protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+  {
+    return item switch
+    {
+      ProjectViewModel => ProjectTemplate,
+      _ => DefaultTemplate
     };
   }
 }
