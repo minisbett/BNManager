@@ -42,30 +42,21 @@
         <views:NavigationViewDataTemplateSelector>
           <views:NavigationViewDataTemplateSelector.DefaultTemplate>
             <DataTemplate x:Name="DefaultTemplate" x:DataType="NavigationViewItem">
-              <NavigationViewItem Content="{x:Bind Content}" />
+              <NavigationViewItem Content="{x:Bind Content}" Icon="Home" />
             </DataTemplate>
           </views:NavigationViewDataTemplateSelector.DefaultTemplate>
           <views:NavigationViewDataTemplateSelector.ProjectTemplate>
             <DataTemplate x:DataType="vm:ProjectViewModel">
-              <NavigationViewItem>
-                <Grid ColumnSpacing="8">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                  </Grid.ColumnDefinitions>
-                  <Border Width="42" Height="42" CornerRadius="12">
-                    <Border.Background>
-                      <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Cover}" />
-                    </Border.Background>
-                  </Border>
-                  <TextBlock Grid.Column="1" Text="{x:Bind Name,Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="166" />
-                </Grid>
+              <NavigationViewItem Content="{x:Bind Name,Mode=OneWay}">
+                <NavigationViewItem.Icon>
+                  <ImageIcon Source="{x:Bind Cover}" Width="42" Height="42" />
+                </NavigationViewItem.Icon>
                 <NavigationViewItem.ContextFlyout>
                   <MenuFlyout>
                     <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind OpenBeatmapSetInWebCommand}" />
                     <MenuFlyoutSeparator />
                     <MenuFlyoutItem Text="Edit" Icon="Edit" />
-                    <MenuFlyoutItem Text="Remove" Icon="Delete" /> 
+                    <MenuFlyoutItem Text="Remove" Icon="Delete" />
                   </MenuFlyout>
                 </NavigationViewItem.ContextFlyout>
               </NavigationViewItem>

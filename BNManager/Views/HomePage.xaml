@@ -6,8 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BNManager.ViewModels"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
   <Page.DataContext>
     <vm:HomeViewModel x:Name="ViewModel" />
@@ -22,7 +21,9 @@
     </Grid.RowDefinitions>
     <Image Source="{StaticResource Logo}" Width="256" Height="256" HorizontalAlignment="Center" />
     <TextBlock Grid.Row="1" Text="BN Manager" FontSize="48" />
-    <TextBlock Grid.Row="2" Text="by minisbett" FontSize="18" HorizontalAlignment="Center" />
+    <TextBlock Grid.Row="2" FontSize="18" HorizontalAlignment="Center">
+      by <Hyperlink NavigateUri="https://osu.ppy.sh/u/minisbett">minisbett</Hyperlink>
+    </TextBlock>
     <Grid Grid.Row="3" ColumnSpacing="12" HorizontalAlignment="Center" Margin="0,30,0,0">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />

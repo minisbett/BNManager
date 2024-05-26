@@ -38,8 +38,10 @@ public sealed partial class MainPage : Page
 
   private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
   {
-    if(args.SelectedItem is ProjectViewModel p)
+    if (args.SelectedItem is ProjectViewModel p)
       ContentFrame.Navigate(typeof(ProjectPage), p);
+    else if (args.IsSettingsSelected)
+      ContentFrame.Navigate(typeof(SettingsPage));
     else
       ContentFrame.Navigate(typeof(HomePage));
   }
