@@ -1,18 +1,24 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
+using BNManager.Services;
+using BNManager.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BNManager.ViewModels;
 
 /// <summary>
 /// Represents a beatmap set (project) with general info and all it's Beatmap Nominator states.
 /// </summary>
+#pragma warning disable CS0659
 internal partial class ProjectViewModel : ObservableObject
+#pragma warning restore CS0659
 {
   /// <summary>
   /// The nominator state view models of this project.
@@ -46,7 +52,7 @@ internal partial class ProjectViewModel : ObservableObject
     set
     {
       _project.Modes = value;
-      OnPropertyChanged(nameof(Modes));
+      OnPropertyChanged(nameof(FilteredNominatorStates));
     }
   }
 
@@ -131,4 +137,57 @@ internal partial class ProjectViewModel : ObservableObject
       UseShellExecute = true
     });
   }
+
+  /// <summary>
+  /// Prompts the user to edit a project.
+  /// </summary>
+  [RelayCommand]
+  private async Task EditProject()
+  {
+    EditProjectDialog pd = new EditProjectDialog(_project)
+    {
+      XamlRoot = MainWindow.XamlRoot
+    };
+
+    if (await pd.ShowAsync() == ContentDialogResult.Primary)
+    {
+      EditProjectDialogViewModel pdvm = pd.DataContext as EditProjectDialogViewModel;
+
+      // Get a list of all targetted modes.
+      List<Mode> modes = new List<Mode>();
+      if (pdvm.StdEnabled) modes.Add(Mode.Standard);
+      if (pdvm.TaikoEnabled) modes.Add(Mode.Taiko);
+      if (pdvm.CtbEnabled) modes.Add(Mode.Catch);
+      if (pdvm.ManiaEnabled) modes.Add(Mode.Mania);
+
+      // Update the project and UI and save.
+      Name = pdvm.Name;
+      Modes = modes.ToArray();
+      ProjectService.Save();
+    }
+  }
+
+  /// <summary>
+  /// Prompts the user to confirm the deletion of the project.
+  /// </summary>
+  [RelayCommand]
+  private async Task DeleteProject()
+  {
+    if (await new ContentDialog()
+    {
+      Title = "Delete Project",
+      Content = $"Are you sure you want to delete this project?\n\n{Name}",
+      PrimaryButtonText = "Delete",
+      CloseButtonText = "Cancel",
+      XamlRoot = MainWindow.XamlRoot
+    }.ShowAsync() == ContentDialogResult.Primary)
+      ProjectService.Delete(_project);
+  }
+
+  /// <summary>
+  /// Allows comparison of a <see cref="ProjectViewModel"/> with a <see cref="Project"/>, comparing it with the backing project.
+  /// </summary>
+  /// <param name="obj">The object.</param>
+  /// <returns>Bool whether the objects are equal.</returns>
+  public override bool Equals(object obj) => obj is Project p ? p == _project : base.Equals(obj);
 }

@@ -31,7 +31,7 @@
       </Border>
       <TextBlock Grid.Column="1" Text="BN Manager" VerticalAlignment="Center" />
     </Grid>
-    <NavigationView MenuItemsSource="{x:Bind ViewModel.Projects,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
+    <NavigationView x:Name="NavView" SelectedItem="{x:Bind ViewModel.SelectedItem,Mode=TwoWay}" MenuItemsSource="{x:Bind ViewModel.Projects,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
       <NavigationView.AutoSuggestBox>
         <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" />
       </NavigationView.AutoSuggestBox>
@@ -55,8 +55,8 @@
                   <MenuFlyout>
                     <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind OpenBeatmapSetInWebCommand}" />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Text="Edit" Icon="Edit" />
-                    <MenuFlyoutItem Text="Remove" Icon="Delete" />
+                    <MenuFlyoutItem Text="Edit" Icon="Edit" Command="{x:Bind EditProjectCommand}" />
+                    <MenuFlyoutItem Text="Remove" Icon="Delete" Command="{x:Bind DeleteProjectCommand}" />
                   </MenuFlyout>
                 </NavigationViewItem.ContextFlyout>
               </NavigationViewItem>

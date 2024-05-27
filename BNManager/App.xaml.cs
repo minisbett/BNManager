@@ -9,11 +9,6 @@ namespace BNManager;
 /// </summary>
 public partial class App : Application
 {
-  /// <summary>
-  /// The XamlRoot for the main window of the application.
-  /// </summary>
-  public static XamlRoot XamlRoot { get; private set; }
-
   public App()
   {
     InitializeComponent();
@@ -31,7 +26,6 @@ public partial class App : Application
     // Create the main window, activate it and set the XamlRoot for the entire application.
     _window = new MainWindow();
     _window.Activate();
-    XamlRoot = _window.Content.XamlRoot;
   }
 
   private Window _window;

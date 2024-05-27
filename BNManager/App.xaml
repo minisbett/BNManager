@@ -22,9 +22,11 @@
       <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
           <Color x:Key="BadgeBackground">#10000000</Color>
+          <Color x:Key="ThemeAwareGray">Gray</Color>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
           <Color x:Key="BadgeBackground">#08FFFFFF</Color>
+          <Color x:Key="ThemeAwareGray">LightGray</Color>
         </ResourceDictionary>
       </ResourceDictionary.ThemeDictionaries>
     </ResourceDictionary>

@@ -1,7 +1,9 @@
+using BNManager.Models;
 using BNManager.Services;
 using BNManager.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace BNManager.Views;
 
@@ -16,10 +18,11 @@ public sealed partial class MainPage : Page
   {
     InitializeComponent();
 
+    // Select the home page by default.
+    NavView.SelectedItem = NavView.FooterMenuItems[0];
+
     Loaded += async (sender, e) =>
     {
-      //NavigationView.SelectedItem = NavigationView.FooterMenuItems[0];
-
       // Display a loading dialog while some services are being initialized.
       LoadingDialog ld = new LoadingDialog() { XamlRoot = Content.XamlRoot };
       _ = ld.ShowAsync();
@@ -31,19 +34,31 @@ public sealed partial class MainPage : Page
       ProjectService.Initialize();
       ld.Hide();
 
-      // Update the bindings as the projects have been loaded now.
-      Bindings.Update();
+      // Load the projects into the view model.
+      foreach (Project p in ProjectService.Projects)
+        ViewModel.Projects.Add(new ProjectViewModel(p));
     };
   }
 
+  /// <summary>
+  /// Handles clicking on a navigation view item, navigating to the corresponding page.
+  /// </summary>
   private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
   {
+    // This happens when the item source gets updated (eg. when a project is deleted). In this case, we default to the home page.
+    if (args.SelectedItem is null)
+    {
+      NavView.SelectedItem = NavView.FooterMenuItems[0];
+      return;
+    }
+
+    // Navigate to the corresponding page, depending on the selected item.
     if (args.SelectedItem is ProjectViewModel p)
-      ContentFrame.Navigate(typeof(ProjectPage), p);
+      ContentFrame.Navigate(typeof(ProjectPage), p, new SuppressNavigationTransitionInfo());
     else if (args.IsSettingsSelected)
       ContentFrame.Navigate(typeof(SettingsPage));
     else
-      ContentFrame.Navigate(typeof(HomePage));
+      ContentFrame.Navigate(typeof(HomePage), null);
   }
 }
 
