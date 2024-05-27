@@ -1,7 +1,4 @@
-using BNManager.ViewModels;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
-using System;
 
 namespace BNManager.Views;
 
