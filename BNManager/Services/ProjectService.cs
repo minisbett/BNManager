@@ -20,12 +20,25 @@ internal static class ProjectService
       "BNManager", "projects.json"
   );
 
+  /// <summary>
+  /// The list of all loaded projects.
+  /// </summary>
   private static List<Project> _projects = new List<Project>();
 
   /// <summary>
   /// An list of all loaded projects.
   /// </summary>
   public static IReadOnlyList<Project> Projects => _projects.AsReadOnly();
+
+  /// <summary>
+  /// An event that is triggered when a project is created.
+  /// </summary>
+  public static event EventHandler<Project> ProjectCreated;
+
+  /// <summary>
+  /// An event that is triggered when a project is deleted.
+  /// </summary>
+  public static event EventHandler<Project> ProjectDeleted;
 
   /// <summary>
   /// Loads all projects from the projects.json file and caches them in <see cref="Projects"/>.
@@ -46,7 +59,7 @@ internal static class ProjectService
   /// Creates a new project with the specified beatmap set and returns it.
   /// </summary>
   /// <param name="beatmapSet">The beatmap set of the project.</param>
-  public static Project Create(BeatmapSet beatmapSet)
+  public static void Create(BeatmapSet beatmapSet)
   {
     // Create a new project and add it to the list of projects.
     Project project = new Project(beatmapSet.Id, Utils.GetSanitizedString(beatmapSet.Title), beatmapSet.Beatmaps.Select(x => x.Mode).Distinct().ToArray());
@@ -56,9 +69,9 @@ internal static class ProjectService
     foreach (Nominator nominator in MappersGuildService.Nominators)
       project.NominatorStates.Add(new NominatorState(nominator.Id));
 
-    // Save the projects.json file and return the created project.
+    // Save the projects.json file to immediately reflect the changes and invoke the ProjectCreated event.
     Save();
-    return project;
+    ProjectCreated?.Invoke(null, project);
   }
 
   /// <summary>
@@ -69,14 +82,11 @@ internal static class ProjectService
   {
     _projects.Remove(project);
     Save();
+    ProjectDeleted?.Invoke(null, project);
   }
 
   /// <summary>
   /// Saves all projects to the projects.json file.
   /// </summary>
-  public static void Save()
-  {
-    string json = JsonConvert.SerializeObject(_projects, Formatting.Indented);
-    File.WriteAllText(_projectsFile, json);
-  }
+  public static void Save() => File.WriteAllText(_projectsFile, JsonConvert.SerializeObject(_projects, Formatting.Indented));
 }

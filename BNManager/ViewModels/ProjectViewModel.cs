@@ -16,23 +16,14 @@ namespace BNManager.ViewModels;
 /// <summary>
 /// Represents a beatmap set (project) with general info and all it's Beatmap Nominator states.
 /// </summary>
+#pragma warning disable CS0659
 internal partial class ProjectViewModel : ObservableObject
+#pragma warning restore CS0659
 {
-  /// <summary>
-  /// A delegate for the delete project callback.
-  /// </summary>
-  /// <param name="vm">The view model of the deleted project.</param>
-  public delegate void DeleteProjectCallback(ProjectViewModel vm);
-
   /// <summary>
   /// The nominator state view models of this project.
   /// </summary>
   private readonly NominatorStateViewModel[] _nominatorStates;
-
-  /// <summary>
-  /// The delete project handler, called when the project is being deleted.
-  /// </summary>
-  private readonly DeleteProjectCallback _deleteProjectCallback;
 
   /// <summary>
   /// The backing project for this view model.
@@ -61,7 +52,7 @@ internal partial class ProjectViewModel : ObservableObject
     set
     {
       _project.Modes = value;
-      OnPropertyChanged(nameof(Modes));
+      OnPropertyChanged(nameof(FilteredNominatorStates));
     }
   }
 
@@ -119,17 +110,16 @@ internal partial class ProjectViewModel : ObservableObject
       {
         SortOption.NameAsc => states.OrderBy(x => x.Nominator.Name),
         SortOption.NameDesc => states.OrderByDescending(x => x.Nominator.Name),
-        SortOption.LevelAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)),
-        SortOption.LevelDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)),
+        SortOption.LevelAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        SortOption.LevelDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
         _ => states
       };
     }
   }
 
-  public ProjectViewModel(Project project, DeleteProjectCallback deleteProjectCallback)
+  public ProjectViewModel(Project project)
   {
     _project = project;
-    _deleteProjectCallback = deleteProjectCallback;
 
     // Load all nominator states as their view models.
     _nominatorStates = project.NominatorStates.Select(x => new NominatorStateViewModel(x)).ToArray();
@@ -156,7 +146,7 @@ internal partial class ProjectViewModel : ObservableObject
   {
     EditProjectDialog pd = new EditProjectDialog(_project)
     {
-      XamlRoot = MainPage.XamlRoot
+      XamlRoot = MainWindow.XamlRoot
     };
 
     if (await pd.ShowAsync() == ContentDialogResult.Primary)
@@ -189,12 +179,15 @@ internal partial class ProjectViewModel : ObservableObject
       Content = $"Are you sure you want to delete this project?\n\n{Name}",
       PrimaryButtonText = "Delete",
       CloseButtonText = "Cancel",
-      XamlRoot = MainPage.XamlRoot
+      XamlRoot = MainWindow.XamlRoot
     }.ShowAsync() == ContentDialogResult.Primary)
-    {
-      // Delete the project and invoke the callback.
       ProjectService.Delete(_project);
-      _deleteProjectCallback.Invoke(this);
-    }
   }
+
+  /// <summary>
+  /// Allows comparison of a <see cref="ProjectViewModel"/> with a <see cref="Project"/>, comparing it with the backing project.
+  /// </summary>
+  /// <param name="obj">The object.</param>
+  /// <returns>Bool whether the objects are equal.</returns>
+  public override bool Equals(object obj) => obj is Project p ? p == _project : base.Equals(obj);
 }

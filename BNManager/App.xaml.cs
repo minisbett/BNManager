@@ -23,6 +23,7 @@ public partial class App : Application
     // Ensure an invariant culture for the entire application for parsing and formatting reasons.
     CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
+    // Create the main window, activate it and set the XamlRoot for the entire application.
     _window = new MainWindow();
     _window.Activate();
   }
