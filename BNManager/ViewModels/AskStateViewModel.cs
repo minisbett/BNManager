@@ -23,7 +23,7 @@ internal class AskStateViewModel
   public Brush Brush => new SolidColorBrush(State switch
   {
     AskState.Declined => Color.FromArgb(255, 224, 102, 102),
-    AskState.NotAsked => Colors.Gray,
+    AskState.NotAsked => Color.FromArgb(255, 200, 200, 200),
     AskState.Pending => Color.FromArgb(255, 255, 217, 102),
     AskState.Possible => Color.FromArgb(255, 153, 204, 255),
     AskState.Confirmed => Color.FromArgb(255, 76, 212, 112),
