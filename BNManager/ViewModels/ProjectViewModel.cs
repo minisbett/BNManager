@@ -40,6 +40,9 @@ internal partial class ProjectViewModel : ObservableObject
   [NotifyPropertyChangedFor(nameof(FilteredNominatorStates))]
   private DisplayableStateFilterOption _stateFilter = DisplayableStateFilterOption.Options[0];
 
+  /// <summary>
+  /// Bool whether the mode targetted by the project are being ignored.
+  /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(FilteredNominatorStates))]
   private bool _ignoreModes = false;
