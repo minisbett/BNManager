@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="BNManager.Views.HomePage"
+    x:Class="BNManager.Views.Pages.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:BNManager.ViewModels"
     mc:Ignorable="d">
 
   <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,50">

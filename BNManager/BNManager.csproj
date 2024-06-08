@@ -19,6 +19,9 @@
     <None Remove="Views\ProjectPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Views\Controls\ProjectNavigationViewItem.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -93,6 +96,15 @@
     <Page Update="Views\EditProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Views\Controls\ProjectNavigationViewItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Dialogs\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
 
   <!-- 

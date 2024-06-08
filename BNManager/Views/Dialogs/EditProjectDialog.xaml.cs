@@ -3,7 +3,7 @@ using BNManager.Models;
 using Microsoft.UI.Xaml.Controls;
 using System.Linq;
 
-namespace BNManager.Views;
+namespace BNManager.Views.Dialogs;
 
 internal sealed partial class EditProjectDialog : ContentDialog
 {

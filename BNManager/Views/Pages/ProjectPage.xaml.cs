@@ -2,7 +2,7 @@ using BNManager.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace BNManager.Views;
+namespace BNManager.Views.Pages;
 
 internal sealed partial class ProjectPage : Page
 {

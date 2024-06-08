@@ -1,4 +1,5 @@
 ﻿using BNManager.Services;
+using BNManager.Views.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,26 +12,22 @@ namespace BNManager.ViewModels;
 internal partial class MainViewModel : ObservableObject
 {
   /// <summary>
-  /// The project view models.
+  /// The project navigation view items for the navigation view.
   /// </summary>
-  public ObservableCollection<ProjectViewModel> Projects { get; } = new ObservableCollection<ProjectViewModel>();
-
-  /// <summary>
-  /// The currently selected item in the navigation view.
-  /// </summary>
-  [ObservableProperty]
-  private object _selectedItem;
+  public ObservableCollection<ProjectNavigationViewItem> ProjectNavigationItems { get; } = new ObservableCollection<ProjectNavigationViewItem>();
 
   public MainViewModel()
   {
     // If a project was created, add it to the tracked view models and select it.
     ProjectService.ProjectCreated += (_, project) =>
     {
-      Projects.Add(new ProjectViewModel(project));
-      SelectedItem = Projects.Last();
+      ProjectNavigationItems.Add(new ProjectNavigationViewItem(project));
     };
 
     // If a project was deleted, remove it from the tracked view models.
-    ProjectService.ProjectDeleted += (_, project) => Projects.Remove(Projects.First(viewModel => viewModel.Equals(project)));
+    ProjectService.ProjectDeleted += (_, project) =>
+    {
+      ProjectNavigationItems.Remove(ProjectNavigationItems.FirstOrDefault(p => p.Project == project));
+    };
   }
 }

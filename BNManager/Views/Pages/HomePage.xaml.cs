@@ -1,9 +1,11 @@
 using BNManager.Services;
 using BNManager.ViewModels;
+using BNManager.Views.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace BNManager.Views;
+namespace BNManager.Views.Pages;
 
 public sealed partial class HomePage : Page
 {
@@ -15,7 +17,7 @@ public sealed partial class HomePage : Page
   /// <summary>
   /// Opens a dialog to create a new project, creating it if the user confirms.
   /// </summary>
-  private async void CreateProject_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+  private async void CreateProject_Click(object sender, RoutedEventArgs e)
   {
     CreateProjectDialog cpd = new CreateProjectDialog()
     {

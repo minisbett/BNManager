@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 
-namespace BNManager.Views;
+namespace BNManager.Views.Dialogs;
 
 public sealed partial class LoadingDialog : ContentDialog
 {

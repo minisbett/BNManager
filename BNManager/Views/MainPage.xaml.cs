@@ -1,6 +1,9 @@
 using BNManager.Models;
 using BNManager.Services;
 using BNManager.ViewModels;
+using BNManager.Views.Controls;
+using BNManager.Views.Dialogs;
+using BNManager.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -34,9 +37,9 @@ public sealed partial class MainPage : Page
       ProjectService.Initialize();
       ld.Hide();
 
-      // Load the projects into the view model.
+      // Load the projects into the navigation view.
       foreach (Project p in ProjectService.Projects)
-        ViewModel.Projects.Add(new ProjectViewModel(p));
+        ViewModel.ProjectNavigationItems.Add(new ProjectNavigationViewItem(p));
     };
   }
 
@@ -45,44 +48,12 @@ public sealed partial class MainPage : Page
   /// </summary>
   private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
   {
-    // This happens when the item source gets updated (eg. when a project is deleted). In this case, we default to the home page.
-    if (args.SelectedItem is null)
-    {
-      NavView.SelectedItem = NavView.FooterMenuItems[0];
-      return;
-    }
-
     // Navigate to the corresponding page, depending on the selected item.
-    if (args.SelectedItem is ProjectViewModel p)
-      ContentFrame.Navigate(typeof(ProjectPage), p, new SuppressNavigationTransitionInfo());
+    if (args.SelectedItem is ProjectNavigationViewItem p)
+      ContentFrame.Navigate(typeof(ProjectPage), new ProjectViewModel(p.Project), new SuppressNavigationTransitionInfo());
     else if (args.IsSettingsSelected)
       ContentFrame.Navigate(typeof(SettingsPage));
     else
-      ContentFrame.Navigate(typeof(HomePage), null);
-  }
-}
-
-/// <summary>
-/// The data template selector for the navigation view, separating between the project and normal items.
-/// </summary>
-internal class NavigationViewDataTemplateSelector : DataTemplateSelector
-{
-  /// <summary>
-  /// The project template for <see cref="ProjectViewModel"/>s.
-  /// </summary>
-  public DataTemplate ProjectTemplate { get; set; }
-
-  /// <summary>
-  /// The default template for <see cref="NavigationViewItem"/>s.
-  /// </summary>
-  public DataTemplate DefaultTemplate { get; set; }
-
-  protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-  {
-    return item switch
-    {
-      ProjectViewModel => ProjectTemplate,
-      _ => DefaultTemplate
-    };
+      ContentFrame.Navigate(typeof(HomePage));
   }
 }
