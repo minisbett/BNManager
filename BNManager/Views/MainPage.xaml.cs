@@ -7,6 +7,7 @@ using BNManager.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using System;
 
 namespace BNManager.Views;
 
@@ -22,7 +23,7 @@ public sealed partial class MainPage : Page
     InitializeComponent();
 
     // Select the home page by default.
-    NavView.SelectedItem = NavView.FooterMenuItems[0];
+    NavView.SelectedItem = HomeNavigationViewItem;
 
     Loaded += async (sender, e) =>
     {
@@ -48,12 +49,22 @@ public sealed partial class MainPage : Page
   /// </summary>
   private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
   {
+    // If no item is selected anymore (eg. because the current item got deleted), default to the home page.
+    if (args.SelectedItem is null)
+    {
+      NavView.SelectedItem = HomeNavigationViewItem; // re-calls this event handler
+      return;
+    }
+
     // Navigate to the corresponding page, depending on the selected item.
     if (args.SelectedItem is ProjectNavigationViewItem p)
       ContentFrame.Navigate(typeof(ProjectPage), new ProjectViewModel(p.Project), new SuppressNavigationTransitionInfo());
     else if (args.IsSettingsSelected)
       ContentFrame.Navigate(typeof(SettingsPage));
-    else
+    else if (args.SelectedItem as NavigationViewItem == HomeNavigationViewItem)
       ContentFrame.Navigate(typeof(HomePage));
+    else
+      throw new Exception("Invalid selected item."); // fail-safe for development
+
   }
 }

@@ -30,12 +30,12 @@
       </Border>
       <TextBlock Grid.Column="1" Text="BN Manager" VerticalAlignment="Center" />
     </Grid>
-    <NavigationView x:Name="NavView" MenuItemsSource="{x:Bind ViewModel.ProjectNavigationItems,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
+    <NavigationView x:Name="NavView" SelectedItem="{x:Bind ViewModel.SelectedItem,Mode=TwoWay}" MenuItemsSource="{x:Bind ViewModel.ProjectNavigationItems,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
       <NavigationView.AutoSuggestBox>
         <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" />
       </NavigationView.AutoSuggestBox>
       <NavigationView.FooterMenuItems>
-        <NavigationViewItem Icon="Home" Content="Home" />
+        <NavigationViewItem Icon="Home" Content="Home" x:Name="HomeNavigationViewItem" />
       </NavigationView.FooterMenuItems>
       <Frame x:Name="ContentFrame" />
     </NavigationView>

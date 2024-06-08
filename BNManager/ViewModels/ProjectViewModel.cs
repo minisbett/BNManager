@@ -1,16 +1,9 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
-using BNManager.Services;
-using BNManager.Views;
-using BNManager.Views.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BNManager.ViewModels;
 
@@ -122,18 +115,5 @@ internal partial class ProjectViewModel : ObservableObject
 
     // Load all nominator states as their view models.
     _nominatorStates = project.NominatorStates.Select(x => new NominatorStateViewModel(x)).ToArray();
-  }
-
-  /// <summary>
-  /// Opens the beatmap set in the web browser.
-  /// </summary>
-  [RelayCommand]
-  private void OpenBeatmapSetInWeb()
-  {
-    Process.Start(new ProcessStartInfo()
-    {
-      FileName = $"https://osu.ppy.sh/s/{_project.BeatmapSetId}",
-      UseShellExecute = true
-    });
   }
 }

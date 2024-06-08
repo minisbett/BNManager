@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BNManager.ViewModels;
@@ -74,5 +75,18 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
       XamlRoot = MainWindow.XamlRoot
     }.ShowAsync() == ContentDialogResult.Primary)
       ProjectService.Delete(Project);
+  }
+
+  /// <summary>
+  /// Opens the beatmap set in the web browser.
+  /// </summary>
+  [RelayCommand]
+  private void OpenBeatmapSetInWeb()
+  {
+    Process.Start(new ProcessStartInfo()
+    {
+      FileName = $"https://osu.ppy.sh/s/{Project.BeatmapSetId}",
+      UseShellExecute = true
+    });
   }
 }

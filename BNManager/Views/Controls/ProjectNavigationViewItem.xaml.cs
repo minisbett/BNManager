@@ -1,5 +1,4 @@
-﻿using BNManager.Models;
-using BNManager.ViewModels;
+using BNManager.Models;
 using Microsoft.UI.Xaml.Controls;
 
 namespace BNManager.Views.Controls;
@@ -12,13 +11,7 @@ internal sealed partial class ProjectNavigationViewItem : NavigationViewItem
   /// <summary>
   /// The backing project this navigation view item represents.
   /// </summary>
-  public Project Project { get; }
-
-  /// <summary>
-  /// The view model for this navigation view item.
-  /// For obscure reasons, this cannot be created in the XAML-code directly.
-  /// </summary>
-  private ProjectNavigationViewItemViewModel ViewModel { get; } = new();
+  public Project Project => ViewModel.Project;
 
   /// <summary>
   /// Creates an instance with the specified backing project to be displayed.
@@ -26,7 +19,8 @@ internal sealed partial class ProjectNavigationViewItem : NavigationViewItem
   /// <param name="project">The project to display.</param>
   public ProjectNavigationViewItem(Project project)
   {
-    Project = project;
+    InitializeComponent();
+
     ViewModel.Project = project;
   }
 }
