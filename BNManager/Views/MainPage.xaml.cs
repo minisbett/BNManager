@@ -58,7 +58,7 @@ public sealed partial class MainPage : Page
 
     // Navigate to the corresponding page, depending on the selected item.
     if (args.SelectedItem is ProjectNavigationViewItem p)
-      ContentFrame.Navigate(typeof(ProjectPage), new ProjectViewModel(p.Project), new SuppressNavigationTransitionInfo());
+      ContentFrame.Navigate(typeof(ProjectPage), p.Project, new SuppressNavigationTransitionInfo());
     else if (args.IsSettingsSelected)
       ContentFrame.Navigate(typeof(SettingsPage));
     else if (args.SelectedItem as NavigationViewItem == HomeNavigationViewItem)

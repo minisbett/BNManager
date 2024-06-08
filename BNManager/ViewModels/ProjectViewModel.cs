@@ -13,45 +13,11 @@ namespace BNManager.ViewModels;
 internal partial class ProjectViewModel : ObservableObject
 {
   /// <summary>
-  /// The nominator state view models of this project.
-  /// </summary>
-  private readonly NominatorStateViewModel[] _nominatorStates;
-
-  /// <summary>
   /// The backing project for this view model.
   /// </summary>
-  private readonly Project _project;
-
-  /// <summary>
-  /// The name of the project.
-  /// </summary>
-  public string Name
-  {
-    get => _project.Name;
-    set
-    {
-      _project.Name = value;
-      OnPropertyChanged(nameof(Name));
-    }
-  }
-
-  /// <summary>
-  /// The modes targetted by the project.
-  /// </summary>
-  public Mode[] Modes
-  {
-    get => _project.Modes;
-    set
-    {
-      _project.Modes = value;
-      OnPropertyChanged(nameof(FilteredNominatorStates));
-    }
-  }
-
-  /// <summary>
-  /// A URL to the cover image of the project.
-  /// </summary>
-  public string Cover => $"https://assets.ppy.sh/beatmaps/{_project.BeatmapSetId}/covers/cover.jpg";
+  [ObservableProperty]
+  [NotifyPropertyChangedFor(nameof(FilteredNominatorStates))]
+  private Project _project;
 
   /// <summary>
   /// The search query used to filter the nominators.
@@ -79,14 +45,14 @@ internal partial class ProjectViewModel : ObservableObject
   private bool _ignoreModes = false;
 
   /// <summary>
-  /// The <see cref="_nominatorStates"/>, filtered and sorted based on the search query, sort options and filters.
+  /// The nominator states of the project, filtered and sorted based on the search query, sort options and filters.
   /// </summary>
   public IEnumerable<NominatorStateViewModel> FilteredNominatorStates
   {
     get
     {
       // Filter the nominator states based on the search query.
-      IEnumerable<NominatorStateViewModel> states = _nominatorStates
+      IEnumerable<NominatorStateViewModel> states = Project.NominatorStates.Select(state => new NominatorStateViewModel(state))
         .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
 
       // Filter the nominator states based on the state filter.
@@ -95,7 +61,7 @@ internal partial class ProjectViewModel : ObservableObject
 
       // Filter the nominator states based on the modes targetted by the project.
       if (!IgnoreModes)
-        states = states.Where(x => x.Nominator.ModesInfo.Any(x => _project.Modes.Contains(x.Mode)));
+        states = states.Where(x => x.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
 
       // Sort the nominator states based on the selected sort option.
       return Sort.Option switch
@@ -107,13 +73,5 @@ internal partial class ProjectViewModel : ObservableObject
         _ => states
       };
     }
-  }
-
-  public ProjectViewModel(Project project)
-  {
-    _project = project;
-
-    // Load all nominator states as their view models.
-    _nominatorStates = project.NominatorStates.Select(x => new NominatorStateViewModel(x)).ToArray();
   }
 }

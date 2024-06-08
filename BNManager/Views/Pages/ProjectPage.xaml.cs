@@ -1,13 +1,14 @@
-using BNManager.ViewModels;
+using BNManager.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace BNManager.Views.Pages;
 
+/// <summary>
+/// The page representing a singular <see cref="Project"/>.
+/// </summary>
 internal sealed partial class ProjectPage : Page
 {
-  private ProjectViewModel ViewModel { get; set; }
-
   public ProjectPage()
   {
     InitializeComponent();
@@ -17,7 +18,7 @@ internal sealed partial class ProjectPage : Page
   {
     base.OnNavigatedTo(e);
 
-    // Set the view model to the project passed as parameter.
-    ViewModel = e.Parameter as ProjectViewModel;
+    // Set the project in the view model to the navigation parameter.
+    ViewModel.Project = e.Parameter as Project;
   }
 }

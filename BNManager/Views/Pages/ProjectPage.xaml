@@ -8,6 +8,10 @@
     xmlns:vm="using:BNManager.ViewModels"
     mc:Ignorable="d">
 
+  <Page.DataContext>
+    <vm:ProjectViewModel x:Name="ViewModel" />
+  </Page.DataContext>
+
   <Grid RowSpacing="8">
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
