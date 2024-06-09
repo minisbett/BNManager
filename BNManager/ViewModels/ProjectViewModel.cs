@@ -72,8 +72,8 @@ internal partial class ProjectViewModel : ObservableObject
       {
         SortOption.NameAsc => states.OrderBy(x => x.Nominator.Name),
         SortOption.NameDesc => states.OrderByDescending(x => x.Nominator.Name),
-        SortOption.LevelAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
-        SortOption.LevelDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        SortOption.GroupAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        SortOption.GroupDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
         _ => states
       };
     }

@@ -1,12 +1,27 @@
-﻿namespace BNManager.Enums;
+﻿tor sorrefacnamespace BNManager.Enums;
 
 /// <summary>
 /// An enum containing the sort options for the nominator state list.
 /// </summary>
 internal enum SortOption
 {
+  /// <summary>
+  /// Sorts by name in ascensing order (A-Z).
+  /// </summary>
   NameAsc,
-  LevelAsc,
+
+  /// <summary>
+  /// Sorts by group in ascending order (Probation-NAT).
+  /// </summary>
+  GroupAsc,
+
+  /// <summary>
+  /// Sorts by name in descending order (Z-A).
+  /// </summary>
   NameDesc,
-  LevelDesc
+
+  /// <summary>
+  /// Sorts by group in descending order (NAT-Probation).
+  /// </summary>
+  GroupDesc
 }
