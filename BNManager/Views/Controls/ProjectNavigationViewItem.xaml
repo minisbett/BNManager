@@ -6,16 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BNManager.ViewModels"
-    Content="{x:Bind ViewModel.Project.Name,Mode=OneWay}"
     mc:Ignorable="d">
 
   <NavigationViewItem.DataContext>
     <vm:ProjectNavigationViewItemViewModel x:Name="ViewModel" />
   </NavigationViewItem.DataContext>
 
-  <NavigationViewItem.Icon>
-    <ImageIcon Source="{x:Bind ViewModel.Cover}" />
-  </NavigationViewItem.Icon>
+  <Grid ColumnSpacing="8">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="auto" />
+      <ColumnDefinition Width="auto" />
+    </Grid.ColumnDefinitions>
+    <Border CornerRadius="12" Width="42" Height="42">
+      <Border.Background>
+        <ImageBrush ImageSource="{x:Bind ViewModel.Cover}" Stretch="UniformToFill" />
+      </Border.Background>
+    </Border>
+    <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Project.Name}" Width="174" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,0,4" />
+  </Grid>
 
   <NavigationViewItem.ContextFlyout>
     <MenuFlyout>
