@@ -1,3 +1,4 @@
+using BNManager.Enums;
 using BNManager.Models;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -13,7 +14,9 @@ internal sealed partial class ProjectPage : Page
   {
     InitializeComponent();
 
-    // Set the default selection for the combo boxes.
+    // Set the default selection for the combo boxes. Note that we are specifically setting the tag here because at this
+    // point the bindings, which assign enum value and combobox item, haven't initialized yet, causing Tag to be null.
+    NominatorSortDefaultItem.Tag = NominatorSort.NameAsc;
     ViewModel.NominatorSortItem = NominatorSortDefaultItem;
     ViewModel.AskStateFilterItem = AskStateFilterDefaultItem;
   }
