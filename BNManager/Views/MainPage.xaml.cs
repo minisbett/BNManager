@@ -61,8 +61,6 @@ public sealed partial class MainPage : Page
       ld.Hide();
 
       // If any nominators were removed from projects, notify the user.
-      removedNominators.Add("minisbett");
-      removedNominators.Add("Hivie");
       if (removedNominators.Count > 0)
         _ = new ContentDialog()
         {
@@ -76,9 +74,6 @@ public sealed partial class MainPage : Page
       // Load the projects into the navigation view.
       foreach (Project p in ProjectService.Projects)
         ViewModel.ProjectNavigationItems.Add(new ProjectNavigationViewItem(p));
-
-      // Check whether BNs that are still saved in projects are no longer part of the Beatmap Nominators.
-
     };
   }
 
