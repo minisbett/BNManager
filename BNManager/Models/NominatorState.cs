@@ -17,7 +17,7 @@ internal class NominatorState
   public int Id { get; private set; }
 
   /// <summary>
-  /// The last datetime at which the ask state was updated. Automatically updated when <see cref="State"/> is set.
+  /// The last datetime at which the ask state was updated. Automatically updated when <see cref="AskState"/> is set.
   /// </summary>
   [JsonProperty("updated_at")]
   public DateTime UpdatedAt { get; set; }
@@ -27,12 +27,12 @@ internal class NominatorState
   /// </summary>
   [JsonProperty("state")]
   [JsonConverter(typeof(StringEnumConverter))]
-  public AskState State { get; set; }
+  public AskState AskState { get; set; }
 
   public NominatorState(int id)
   {
     Id = id;
     UpdatedAt = DateTime.UtcNow;
-    State = AskState.NotAsked;
+    AskState = AskState.NotAsked;
   }
 }

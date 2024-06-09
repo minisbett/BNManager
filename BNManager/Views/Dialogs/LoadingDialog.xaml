@@ -5,14 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="using:BNManager.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-  <ContentDialog.DataContext>
-    <vm:LoadingDialogViewModel x:Name="ViewModel" />
-  </ContentDialog.DataContext>
-  
   <Grid RowSpacing="16">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -20,6 +15,6 @@
     </Grid.RowDefinitions>
     <Image Source="{StaticResource Logo}" Width="128" Height="128" />
     <ProgressRing Margin="0,118,0,0" />
-    <TextBlock Grid.Row="1" Text="{x:Bind ViewModel.InfoText,Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="270" />
+    <TextBlock Grid.Row="1" Name="InfoTextBlock" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="270" />
   </Grid>
 </ContentDialog>

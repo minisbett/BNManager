@@ -10,7 +10,7 @@ namespace BNManager.ViewModels;
 /// <summary>
 /// Represents a nominator (state) in the project view.
 /// </summary>
-internal partial class NominatorStateViewModel : ObservableObject
+internal class NominatorStateViewModel
 {
   /// <summary>
   /// The backing nominator state.
@@ -22,13 +22,13 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// </summary>
   public AskStateViewModel State
   {
-    get => AskStateViewModel.Options.First(x => x.State == _nominatorState.State);
+    get => AskStateViewModel.Options.First(x => x.State == _nominatorState.AskState);
     set
     {
       if (value is null)
         return;
 
-      _nominatorState.State = value.State;
+      _nominatorState.AskState = value.State;
       ProjectService.Save();
     }
   }
@@ -61,6 +61,10 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// </summary>
   public Nominator Nominator => MappersGuildService.Nominators.FirstOrDefault(x => x.Id == _nominatorState.Id);
 
+  /// <summary>
+  /// Creates a new instance of <see cref="NominatorStateViewModel"/> with the specified nominator state to represent.
+  /// </summary>
+  /// <param name="nominator">The nominator state to represent.</param>
   public NominatorStateViewModel(NominatorState nominator)
   {
     _nominatorState = nominator;

@@ -9,8 +9,8 @@ public sealed partial class LoadingDialog : ContentDialog
   /// </summary>
   public string InfoText
   {
-    get => ViewModel.InfoText;
-    set => ViewModel.InfoText = value;
+    get => InfoTextBlock.Text;
+    set => InfoTextBlock.Text = value;
   }
 
   public LoadingDialog()

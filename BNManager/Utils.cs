@@ -30,13 +30,13 @@ internal static class Utils
   /// </summary>
   /// <param name="mode">The mode.</param>
   /// <returns>The mode icon.</returns>
-  public static char GetModeIcon(this Mode mode) => mode switch
+  public static string GetModeIcon(this Mode mode) => mode switch
   {
-    Mode.None => '\uE805', // osu
-    Mode.Standard => '\uE800', // mode-osu
-    Mode.Taiko => '\uE803', // mode-taiko
-    Mode.Catch => '\uE801', // mode-ctb
-    Mode.Mania => '\uE802', // mode-mania
+    Mode.None => "\uE805", // osu
+    Mode.Standard => "\uE800", // mode-osu
+    Mode.Taiko => "\uE803", // mode-taiko
+    Mode.Catch => "\uE801", // mode-ctb
+    Mode.Mania => "\uE802", // mode-mania
     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
   };
 }

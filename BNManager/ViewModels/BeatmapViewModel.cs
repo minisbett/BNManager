@@ -18,7 +18,7 @@ internal class BeatmapViewModel
   /// <summary>
   /// The mode icon/glyph in the osu extra font for the mode of the beatmap.
   /// </summary>
-  public string ModeIcon => _beatmap.Mode.GetModeIcon().ToString();
+  public string ModeIcon => _beatmap.Mode.GetModeIcon();
 
   /// <summary>
   /// The display text (or tooltip) for the displayed beatmap.
@@ -43,6 +43,10 @@ internal class BeatmapViewModel
     _ => Color.FromArgb(255, 66, 144, 251)
   });
 
+  /// <summary>
+  /// Creates a new instance of <see cref="BeatmapViewModel"/> with the specified beatmap to represent.
+  /// </summary>
+  /// <param name="beatmap">The beatmap to represent.</param>
   public BeatmapViewModel(Beatmap beatmap)
   {
     _beatmap = beatmap;
