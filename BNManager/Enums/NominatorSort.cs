@@ -3,7 +3,7 @@
 /// <summary>
 /// An enum containing the sort options for the nominator state list.
 /// </summary>
-internal enum SortOption
+internal enum NominatorSort
 {
   /// <summary>
   /// Sorts by name in ascensing order (A-Z).

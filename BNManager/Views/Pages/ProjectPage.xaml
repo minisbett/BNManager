@@ -27,8 +27,8 @@
         <ColumnDefinition Width="auto" />
       </Grid.ColumnDefinitions>
       <AutoSuggestBox Text="{x:Bind ViewModel.SearchQuery,Mode=TwoWay}" QueryIcon="Find" PlaceholderText="Search..." Width="240" />
-      <ComboBox Grid.Column="1" Width="115" SelectedValue="{x:Bind ViewModel.AskStateFilter,Mode=TwoWay}">
-        <ComboBoxItem Content="All" />
+      <ComboBox Grid.Column="1" Width="115" SelectedValue="{x:Bind ViewModel.AskStateFilterItem,Mode=TwoWay}">
+        <ComboBoxItem Content="All" Name="AskStateFilterDefaultItem" />
         <ComboBoxItem Content="Declined" Tag="{x:Bind enums:AskState.Declined}" />
         <ComboBoxItem Content="Not Asked" Tag="{x:Bind enums:AskState.NotAsked}" />
         <ComboBoxItem Content="Pending" Tag="{x:Bind enums:AskState.Pending}"/>
@@ -36,11 +36,11 @@
         <ComboBoxItem Content="Confirmed" Tag="{x:Bind enums:AskState.Confirmed}" />
       </ComboBox>
       <CheckBox Grid.Column="2" MinWidth="120" Content="Ignore Modes" IsChecked="{x:Bind ViewModel.IgnoreModes,Mode=TwoWay}" ToolTipService.ToolTip="Ignores the game modes targetted in the Project settings." />
-      <ComboBox Grid.Column="4" Width="165" SelectedValue="{x:Bind ViewModel.Sort,Mode=TwoWay}">
-        <ComboBoxItem Content="Name (A-Z)" Tag="{x:Bind enums:SortOption.NameAsc}" />
-        <ComboBoxItem Content="Group (Prob-NAT)" Tag="{x:Bind enums:SortOption.GroupAsc}" />
-        <ComboBoxItem Content="Name (Z-A)" Tag="{x:Bind enums:SortOption.NameDesc}" />
-        <ComboBoxItem Content="Group (NAT-Prob)" Tag="{x:Bind enums:SortOption.GroupDesc}" />
+      <ComboBox Grid.Column="4" Width="165" SelectedValue="{x:Bind ViewModel.NominatorSortItem,Mode=TwoWay}">
+        <ComboBoxItem Content="Name (A-Z)" Tag="{x:Bind enums:NominatorSort.NameAsc}" Name="NominatorSortDefaultItem" />
+        <ComboBoxItem Content="Group (Prob-NAT)" Tag="{x:Bind enums:NominatorSort.GroupAsc}" />
+        <ComboBoxItem Content="Name (Z-A)" Tag="{x:Bind enums:NominatorSort.NameDesc}" />
+        <ComboBoxItem Content="Group (NAT-Prob)" Tag="{x:Bind enums:NominatorSort.GroupDesc}" />
       </ComboBox>
     </Grid>
     <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.NominatorStates,Mode=OneWay}" SelectionMode="None" IsItemClickEnabled="True">

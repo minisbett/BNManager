@@ -32,14 +32,14 @@ internal partial class ProjectViewModel : ObservableObject
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(NominatorStates))]
-  private ComboBoxItem _sort;
+  private ComboBoxItem _nominatorSortItem;
 
   /// <summary>
   /// The selected combo box item for the state filter option used to filter the nominators by their ask state.
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(NominatorStates))]
-  private ComboBoxItem _askStateFilter;
+  private ComboBoxItem _askStateFilterItem;
 
   /// <summary>
   /// Bool whether the mode targetted by the project are being ignored.
@@ -60,7 +60,7 @@ internal partial class ProjectViewModel : ObservableObject
         .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
 
       // Filter the nominator states based on the state filter.
-      if (AskStateFilter?.Tag is AskState state)
+      if (AskStateFilterItem?.Tag is AskState state)
         states = states.Where(states => states.State.State == state);
 
       // Filter the nominator states based on the modes targetted by the project.
@@ -68,12 +68,12 @@ internal partial class ProjectViewModel : ObservableObject
         states = states.Where(x => x.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
 
       // Sort the nominator states based on the selected sort option.
-      return Sort?.Tag switch
+      return NominatorSortItem?.Tag switch
       {
-        SortOption.NameAsc => states.OrderBy(x => x.Nominator.Name),
-        SortOption.NameDesc => states.OrderByDescending(x => x.Nominator.Name),
-        SortOption.GroupAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
-        SortOption.GroupDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        NominatorSort.NameAsc => states.OrderBy(x => x.Nominator.Name),
+        NominatorSort.NameDesc => states.OrderByDescending(x => x.Nominator.Name),
+        NominatorSort.GroupAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        NominatorSort.GroupDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
         _ => states
       };
     }

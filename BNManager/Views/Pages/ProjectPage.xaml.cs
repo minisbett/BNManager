@@ -12,6 +12,10 @@ internal sealed partial class ProjectPage : Page
   public ProjectPage()
   {
     InitializeComponent();
+
+    // Set the default selection for the combo boxes.
+    ViewModel.NominatorSortItem = NominatorSortDefaultItem;
+    ViewModel.AskStateFilterItem = AskStateFilterDefaultItem;
   }
 
   protected override void OnNavigatedTo(NavigationEventArgs e)

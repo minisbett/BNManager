@@ -28,6 +28,7 @@ internal class NominatorStateViewModel
       if (value is null)
         return;
 
+
       _nominatorState.AskState = value.State;
       ProjectService.Save();
     }
