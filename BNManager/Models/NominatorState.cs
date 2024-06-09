@@ -17,6 +17,12 @@ internal class NominatorState
   public int Id { get; private set; }
 
   /// <summary>
+  /// The osu! name of the Beatmap Nominator, fetched from the Mappers' Guild API and cached for display purposes.
+  /// </summary>
+  [JsonProperty("name")]
+  public string Name { get; set; }
+
+  /// <summary>
   /// The last datetime at which the ask state was updated. Automatically updated when <see cref="AskState"/> is set.
   /// </summary>
   [JsonProperty("updated_at")]
@@ -29,9 +35,17 @@ internal class NominatorState
   [JsonConverter(typeof(StringEnumConverter))]
   public AskState AskState { get; set; }
 
-  public NominatorState(int id)
+  [JsonConstructor]
+  private NominatorState() { }
+
+  /// <summary>
+  /// Creates a new <see cref="NominatorState"/> for the specified nominator.
+  /// </summary>
+  /// <param name="nominator"></param>
+  public NominatorState(Nominator nominator)
   {
-    Id = id;
+    Id = nominator.Id;
+    Name = nominator.Name;
     UpdatedAt = DateTime.UtcNow;
     AskState = AskState.NotAsked;
   }

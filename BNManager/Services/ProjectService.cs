@@ -67,7 +67,7 @@ internal static class ProjectService
 
     // Populate the project with all current nominators.
     foreach (Nominator nominator in MappersGuildService.Nominators)
-      project.NominatorStates.Add(new NominatorState(nominator.Id));
+      project.NominatorStates.Add(new NominatorState(nominator));
 
     // Save the projects.json file to immediately reflect the changes and invoke the ProjectCreated event.
     Save();

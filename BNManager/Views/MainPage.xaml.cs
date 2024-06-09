@@ -8,6 +8,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BNManager.Views;
 
@@ -31,16 +33,52 @@ public sealed partial class MainPage : Page
       LoadingDialog ld = new LoadingDialog() { XamlRoot = Content.XamlRoot };
       _ = ld.ShowAsync();
 
-      // Initialize the services and hide the loading dialog afterwards.
+      // Initialize the mappers guild service, providing info about the beatmap nominators.
       ld.InfoText = "Fetching Beatmap Nominators from Mappers' Guild...";
       await MappersGuildService.InitializeAsync();
+
+      // Load all projects from the local storage.
       ld.InfoText = "Loading projects...";
       ProjectService.Initialize();
+
+      // Update the nominator names saved in the projects based on the mappers guild data.
+      // Also find all nominators saved in projects that are no longer part of the Beatmap Nominators, remove them and notify the user.
+      List<string> removedNominators = new List<string>();
+      foreach (Project project in ProjectService.Projects)
+      {
+        // Remove all nominator states that are no longer part of the Beatmap Nominators and remember their names for display purposes.
+        removedNominators.AddRange(project.NominatorStates.Where(ns => !MappersGuildService.Nominators.Any(n => n.Id == ns.Id)).Select(ns => ns.Name));
+        project.NominatorStates.RemoveAll(ns => !MappersGuildService.Nominators.Any(n => n.Id == ns.Id));
+
+        // For all other nominator states, update the cached name based on the mappers guild data.
+        foreach (NominatorState ns in project.NominatorStates)
+          ns.Name = MappersGuildService.Nominators.First(n => n.Id == ns.Id).Name;
+      }
+
+      // Save all projects back to the local storage since their names might have changed via the synchronization with the mappers guild.
+      ProjectService.Save();
+
       ld.Hide();
+
+      // If any nominators were removed from projects, notify the user.
+      removedNominators.Add("minisbett");
+      removedNominators.Add("Hivie");
+      if (removedNominators.Count > 0)
+        _ = new ContentDialog()
+        {
+          XamlRoot = MainWindow.XamlRoot,
+          Title = "Removed Beatmap Nominators",
+          Content = "The following nominators were removed from the Beatmap Nominators and thus were removed from all projects:\n\n"
+                  + $"{string.Join('\n', removedNominators.Distinct())}",
+          CloseButtonText = "OK"
+        }.ShowAsync();
 
       // Load the projects into the navigation view.
       foreach (Project p in ProjectService.Projects)
         ViewModel.ProjectNavigationItems.Add(new ProjectNavigationViewItem(p));
+
+      // Check whether BNs that are still saved in projects are no longer part of the Beatmap Nominators.
+
     };
   }
 
