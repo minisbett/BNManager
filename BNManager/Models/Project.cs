@@ -33,6 +33,12 @@ internal class Project
   [JsonProperty("states")]
   public List<NominatorState> NominatorStates { get; private set; } = new List<NominatorState>();
 
+  /// <summary>
+  /// Creates a new instance of <see cref="Project"/> with the specified beatmap set ID, name and targetted modes.
+  /// </summary>
+  /// <param name="beatmapSetId">The ID of the beatmap set associated with the project.</param>
+  /// <param name="name">The name of the project.</param>
+  /// <param name="modes">The modes targetted by the project.</param>
   public Project(int beatmapSetId, string name, Mode[] modes)
   {
     BeatmapSetId = beatmapSetId;
