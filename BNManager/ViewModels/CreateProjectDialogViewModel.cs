@@ -64,6 +64,9 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
   /// </summary>
   public bool HasErrorMessage => ErrorMessage is not null;
 
+  /// <summary>
+  /// Bool whether the beatmap set is currently being fetched, showing/hiding the loading animation.
+  /// </summary>
   [ObservableProperty]
   private bool _isLoading;
 
