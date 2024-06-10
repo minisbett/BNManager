@@ -1,6 +1,5 @@
 using BNManager.Models;
 using BNManager.Services;
-using BNManager.ViewModels;
 using BNManager.Views.Controls;
 using BNManager.Views.Dialogs;
 using BNManager.Views.Pages;
