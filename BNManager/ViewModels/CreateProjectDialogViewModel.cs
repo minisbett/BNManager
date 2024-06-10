@@ -116,10 +116,4 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
     IsLoading = true;
     _fetchTimer.Start();
   }
-
-  private async Task<BeatmapSet> FetchBeatmapSetAsync()
-  {
-    await Task.Delay(2000);
-    return new BeatmapSet();
-  }
 }
