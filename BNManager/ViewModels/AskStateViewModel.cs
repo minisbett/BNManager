@@ -22,6 +22,7 @@ internal class AskStateViewModel
   public Brush Brush => new SolidColorBrush(State switch
   {
     AskState.Declined => Color.FromArgb(255, 224, 102, 102),
+    AskState.Unlikely => Color.FromArgb(255, 252, 149, 76),
     AskState.NotAsked => Color.FromArgb(255, 200, 200, 200),
     AskState.Pending => Color.FromArgb(255, 255, 217, 102),
     AskState.Possible => Color.FromArgb(255, 153, 204, 255),
@@ -37,6 +38,7 @@ internal class AskStateViewModel
   public override string ToString() => State switch
   {
     AskState.Declined => "Declined",
+    AskState.Unlikely => "Unlikely",
     AskState.NotAsked => "Not Asked",
     AskState.Pending => "Pending",
     AskState.Possible => "Possible",

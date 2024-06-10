@@ -14,6 +14,12 @@ internal enum AskState
   Declined,
 
   /// <summary>
+  /// The nominator is unlikely to nominate the beatmap, eg. due to specific requirements.
+  /// </summary>
+  [EnumMember(Value = "unlikely")]
+  Unlikely,
+
+  /// <summary>
   /// The nominator has not been asked to nominate the beatmap.
   /// </summary>
   [EnumMember(Value = "not_asked")]
