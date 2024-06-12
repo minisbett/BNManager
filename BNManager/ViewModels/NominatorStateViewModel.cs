@@ -25,11 +25,25 @@ internal partial class NominatorStateViewModel : ObservableObject
     get => AskStateViewModel.Options.FirstOrDefault(x => x.State == _state.AskState);
     set
     {
+      // Prevent stack overflows because the OnPropertyChanged method will trigger the setter again.
       if (_state.AskState == value.State)
         return;
 
       _state.AskState = value.State;
-      OnPropertyChanged(nameof(AskState));
+      OnPropertyChanged(nameof(AskState)); // Update AskState bindings for other parts of the UI (eg. info dialog & project list)
+      ProjectService.Save();
+    }
+  }
+
+  /// <summary>
+  /// The notes for the state of the nominator.
+  /// </summary>
+  public string Notes
+  {
+    get => _state.Notes;
+    set
+    {
+      _state.Notes = value;
       ProjectService.Save();
     }
   }

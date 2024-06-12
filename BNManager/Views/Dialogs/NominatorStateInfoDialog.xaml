@@ -10,14 +10,25 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <ContentDialog.Resources>
-    <x:Double x:Key="ContentDialogMaxWidth">1200</x:Double>
+    <x:Double x:Key="ContentDialogMaxWidth">1000</x:Double>
   </ContentDialog.Resources>
   
-  <Grid>
+  <Grid RowSpacing="12">
     <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
 
-    <controls:NominatorStateItem State="{x:Bind ViewModel}" Width="700" />
+    <controls:NominatorStateItem State="{x:Bind ViewModel}" Width="800" />
+    <TextBlock Text="Preferences" Grid.Row="1" FontWeight="SemiBold" FontSize="24" />
+    <Grid Grid.Row="2" RowSpacing="8">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+      </Grid.RowDefinitions>
+      <TextBlock Text="Notes" FontWeight="SemiBold" FontSize="18" />
+      <TextBox Grid.Row="1" PlaceholderText="Enter notes here..." Text="{x:Bind ViewModel.Notes,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" MinHeight="72" AcceptsReturn="True" />
+    </Grid>
   </Grid>
 </ContentDialog>

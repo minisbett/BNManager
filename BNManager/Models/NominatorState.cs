@@ -35,6 +35,12 @@ internal class NominatorState
   [JsonConverter(typeof(StringEnumConverter))]
   public AskState AskState { get; set; }
 
+  /// <summary>
+  /// Notes about the state of the nominator.
+  /// </summary>
+  [JsonProperty("notes")]
+  public string Notes { get; set; }
+
   [JsonConstructor]
   private NominatorState() { }
 
