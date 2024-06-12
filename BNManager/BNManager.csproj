@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Views\Controls\NominatorStateItem.xaml" />
     <None Remove="Views\Controls\ProjectNavigationViewItem.xaml" />
+    <None Remove="Views\Dialogs\NominatorStateInfoDialog.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoadingDialog.xaml" />
     <None Remove="Views\ProjectPage.xaml" />
@@ -102,8 +103,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Dialogs\" />
     <Folder Include="Views\Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\NominatorStateInfoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Controls\NominatorStateItem.xaml">

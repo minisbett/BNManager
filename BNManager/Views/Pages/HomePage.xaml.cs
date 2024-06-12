@@ -19,11 +19,7 @@ public sealed partial class HomePage : Page
   /// </summary>
   private async void CreateProject_Click(object sender, RoutedEventArgs e)
   {
-    CreateProjectDialog cpd = new CreateProjectDialog()
-    {
-      XamlRoot = MainWindow.XamlRoot
-    };
-
+    CreateProjectDialog cpd = new CreateProjectDialog();
     if (await cpd.ShowAsync() == ContentDialogResult.Primary)
       ProjectService.Create((cpd.DataContext as CreateProjectDialogViewModel).BeatmapSet);
   }

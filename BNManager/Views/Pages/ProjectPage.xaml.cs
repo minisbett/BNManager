@@ -2,6 +2,7 @@ using BNManager.Enums;
 using BNManager.Models;
 using BNManager.ViewModels;
 using BNManager.Views.Controls;
+using BNManager.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -33,10 +34,6 @@ internal sealed partial class ProjectPage : Page
 
   private void ListView_ItemClick(object sender, ItemClickEventArgs e)
   {
-    _ = new ContentDialog()
-    {
-      XamlRoot = MainWindow.XamlRoot,
-      Content = new NominatorStateItem() { State = e.ClickedItem as NominatorStateViewModel },
-    }.ShowAsync();
+    _ = new NominatorStateInfoDialog(e.ClickedItem as NominatorStateViewModel).ShowAsync();
   }
 }

@@ -36,11 +36,7 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
   [RelayCommand]
   private async Task EditProject()
   {
-    EditProjectDialog pd = new EditProjectDialog(Project)
-    {
-      XamlRoot = MainWindow.XamlRoot
-    };
-
+    EditProjectDialog pd = new EditProjectDialog(Project);
     if (await pd.ShowAsync() == ContentDialogResult.Primary)
     {
       EditProjectDialogViewModel pdvm = pd.DataContext as EditProjectDialogViewModel;
@@ -68,11 +64,11 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
   {
     if (await new ContentDialog()
     {
+      XamlRoot = MainWindow.XamlRoot,
       Title = "Delete Project",
       Content = $"Are you sure you want to delete this project?\n\n{Project.Name}",
       PrimaryButtonText = "Delete",
-      CloseButtonText = "Cancel",
-      XamlRoot = MainWindow.XamlRoot
+      CloseButtonText = "Cancel"
     }.ShowAsync() == ContentDialogResult.Primary)
       ProjectService.Delete(Project);
   }

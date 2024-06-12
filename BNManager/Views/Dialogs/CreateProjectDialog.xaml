@@ -15,7 +15,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <ContentDialog.DataContext>
-    <vm:CreateProjectDialogViewModel x:Name="ViewModel" />
+    <vm:CreateProjectDialogViewModel x:Name="ViewModel"  />
   </ContentDialog.DataContext>
 
   <Grid HorizontalAlignment="Stretch" RowSpacing="8">

@@ -41,38 +41,60 @@ public sealed partial class MainPage : Page
       ProjectService.Initialize();
 
       // Update the nominator names saved in the projects based on the mappers guild data.
-      // Also find all nominators saved in projects that are no longer part of the Beatmap Nominators, remove them and notify the user.
-      List<string> removedNominators = new List<string>();
+      // Also find all nominators that are no longer a BN, remove them and notify the user.
+      // Also find all nominators that are now a BN, add them and notify the user.
+      List<string> remNoms = new List<string>();
+      List<string> addNoms = new List<string>();
       foreach (Project project in ProjectService.Projects)
       {
-        // Remove all nominator states that are no longer part of the Beatmap Nominators and remember their names for display purposes.
-        removedNominators.AddRange(project.NominatorStates.Where(ns => !MappersGuildService.Nominators.Any(n => n.Id == ns.Id)).Select(ns => ns.Name));
-        project.NominatorStates.RemoveAll(ns => !MappersGuildService.Nominators.Any(n => n.Id == ns.Id));
+        // Find all nominator states where the nominator is no longer a BN, remove them and remember their names.
+        foreach(NominatorState ns in project.NominatorStates.Where(ns => MappersGuildService.FromId(ns.Id) is null).ToArray())
+        {
+          remNoms.Add(ns.Name);
+          project.NominatorStates.Remove(ns);
+        }
 
-        // For all other nominator states, update the cached name based on the mappers guild data.
+        // Find all nominators that are not in the project yet, add them, and remember their names.
+        foreach(Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.Id)))
+        {
+          project.NominatorStates.Add(new NominatorState(nominator));
+          addNoms.Add(nominator.Name);
+        }
+
+        // For all other nominators, update the cached name based on the mappers guild data.
         foreach (NominatorState ns in project.NominatorStates)
-          ns.Name = MappersGuildService.Nominators.First(n => n.Id == ns.Id).Name;
+          ns.Name = MappersGuildService.FromId(ns.Id).Name;
       }
 
-      // Save all projects back to the local storage since their names might have changed via the synchronization with the mappers guild.
+      // Save all projects back to the local storage since they might have changed via the synchronization with the mappers guild.
       ProjectService.Save();
-
       ld.Hide();
-
-      // If any nominators were removed from projects, notify the user.
-      if (removedNominators.Count > 0)
-        _ = new ContentDialog()
-        {
-          XamlRoot = MainWindow.XamlRoot,
-          Title = "Removed Beatmap Nominators",
-          Content = "The following nominators were removed from the Beatmap Nominators and thus were removed from all projects:\n\n"
-                  + $"{string.Join('\n', removedNominators.Distinct())}",
-          CloseButtonText = "OK"
-        }.ShowAsync();
 
       // Load the projects into the navigation view.
       foreach (Project p in ProjectService.Projects)
         ViewModel.ProjectNavigationItems.Add(new ProjectNavigationViewItem(p));
+
+      // If any nominators were removed from projects, notify the user.
+      if (remNoms.Count > 0)
+        await new ContentDialog()
+        {
+          XamlRoot = MainWindow.XamlRoot,
+          Title = "Removed Beatmap Nominators",
+          Content = "The following nominators were removed from the Beatmap Nominators and thus were removed from all projects:\n\n"
+                  + $"{string.Join('\n', remNoms.Distinct())}",
+          CloseButtonText = "OK"
+        }.ShowAsync();
+
+      // If any nominators were added to projects, notify the user.
+      if (addNoms.Count > 0)
+        await new ContentDialog()
+        {
+          XamlRoot = MainWindow.XamlRoot,
+          Title = "Added Beatmap Nominators",
+          Content = "The following nominators added to the Beatmap Nominators and thus were added to all projects:\n\n"
+                  + $"{string.Join('\n', addNoms.Distinct())}",
+          CloseButtonText = "OK"
+        }.ShowAsync();
     };
   }
 

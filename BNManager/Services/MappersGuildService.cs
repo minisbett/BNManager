@@ -31,4 +31,11 @@ internal static class MappersGuildService
     // Distinct nominators by their ID such that we don't have duplicates.
     Nominators = nominators.GroupBy(x => x.Id).Select(x => x.First()).ToArray();
   }
+
+  /// <summary>
+  /// Returns the <see cref="Nominator"/> with the specified ID or null if no such nominator exists.
+  /// </summary>
+  /// <param name="id">The ID of the nominator.</param>
+  /// <returns>The nominator or null if not found.</returns>
+  public static Nominator FromId(int id) => Nominators.FirstOrDefault(n => n.Id == id);
 }

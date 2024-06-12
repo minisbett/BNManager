@@ -55,7 +55,7 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// The nominator this state is representing.
   /// </summary>
-  public Nominator Nominator => MappersGuildService.Nominators.FirstOrDefault(x => x.Id == _state.Id);
+  public Nominator Nominator => MappersGuildService.FromId(_state.Id);
 
   /// <summary>
   /// Creates a new instance of <see cref="NominatorStateViewModel"/> representing the specified nominator state.

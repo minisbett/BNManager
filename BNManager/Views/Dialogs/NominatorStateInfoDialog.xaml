@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="BNManager.Views.Dialogs.NominatorStateInfoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:BNManager.Views.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <ContentDialog.Resources>
+    <x:Double x:Key="ContentDialogMaxWidth">1200</x:Double>
+  </ContentDialog.Resources>
+  
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+    </Grid.RowDefinitions>
+
+    <controls:NominatorStateItem State="{x:Bind ViewModel}" Width="700" />
+  </Grid>
+</ContentDialog>

@@ -14,6 +14,7 @@ internal sealed partial class EditProjectDialog : ContentDialog
   public EditProjectDialog(Project project)
   {
     InitializeComponent();
+    XamlRoot = MainWindow.XamlRoot;
 
     Loaded += (sender, e) =>
     {
