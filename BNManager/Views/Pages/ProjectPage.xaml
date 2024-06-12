@@ -47,7 +47,7 @@
     </Grid>
     <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.NominatorStates,Mode=OneWay}" ItemClick="ListView_ItemClick" SelectionMode="None" IsItemClickEnabled="True">
       <ListView.ItemTemplate>
-        <DataTemplate x:DataType="m:NominatorState">
+        <DataTemplate x:DataType="vm:NominatorStateViewModel">
           <controls:NominatorStateItem State="{x:Bind}" />
         </DataTemplate>
       </ListView.ItemTemplate>

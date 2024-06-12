@@ -1,5 +1,6 @@
 using BNManager.Enums;
 using BNManager.Models;
+using BNManager.ViewModels;
 using BNManager.Views.Controls;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -35,7 +36,7 @@ internal sealed partial class ProjectPage : Page
     _ = new ContentDialog()
     {
       XamlRoot = MainWindow.XamlRoot,
-      Content = new NominatorStateItem() { State = e.ClickedItem as NominatorState },
+      Content = new NominatorStateItem() { State = e.ClickedItem as NominatorStateViewModel },
     }.ShowAsync();
   }
 }

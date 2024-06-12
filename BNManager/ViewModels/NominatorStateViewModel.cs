@@ -15,27 +15,21 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// The backing nominator state.
   /// </summary>
-  [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(AskState))]
-  [NotifyPropertyChangedFor(nameof(AvatarUrl))]
-  [NotifyPropertyChangedFor(nameof(IsOpened))]
-  [NotifyPropertyChangedFor(nameof(GroupBadges))]
-  [NotifyPropertyChangedFor(nameof(Nominator))]
-  private NominatorState _state;
+  private readonly NominatorState _state;
 
   /// <summary>
   /// The ask state of the nominator.
   /// </summary>
   public AskStateViewModel AskState
   {
-    get => AskStateViewModel.Options.FirstOrDefault(x => x.State == State?.AskState);
+    get => AskStateViewModel.Options.FirstOrDefault(x => x.State == _state.AskState);
     set
     {
-      if (value is null)
+      if (_state.AskState == value.State)
         return;
 
-
-      State.AskState = value.State;
+      _state.AskState = value.State;
+      OnPropertyChanged(nameof(AskState));
       ProjectService.Save();
     }
   }
@@ -43,12 +37,12 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// A URL to the avatar of the nominator.
   /// </summary>
-  public string AvatarUrl => $"https://a.ppy.sh/{State?.Id}";
+  public string AvatarUrl => $"https://a.ppy.sh/{_state.Id}";
 
   /// <summary>
   /// Bool whether the queue of the nominator is opened.
   /// </summary>
-  public bool IsOpened => !Nominator?.RequestStatus.Contains(RequestStatus.Closed) ?? false;
+  public bool IsOpened => !Nominator.RequestStatus.Contains(RequestStatus.Closed);
 
   /// <summary>
   /// The group badges of the nominator.
@@ -61,5 +55,14 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// The nominator this state is representing.
   /// </summary>
-  public Nominator Nominator => MappersGuildService.Nominators.FirstOrDefault(x => x.Id == State?.Id);
+  public Nominator Nominator => MappersGuildService.Nominators.FirstOrDefault(x => x.Id == _state.Id);
+
+  /// <summary>
+  /// Creates a new instance of <see cref="NominatorStateViewModel"/> representing the specified nominator state.
+  /// </summary>
+  /// <param name="state">The nominator state represented.</param>
+  public NominatorStateViewModel(NominatorState state)
+  {
+    _state = state;
+  }
 }

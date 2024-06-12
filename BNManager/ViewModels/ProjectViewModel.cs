@@ -52,7 +52,7 @@ internal partial class ProjectViewModel : ObservableObject
   /// <summary>
   /// The nominator states of the project, filtered and sorted based on the search query, sort options and filters.
   /// </summary>
-  public IEnumerable<NominatorState> NominatorStates
+  public IEnumerable<NominatorStateViewModel> NominatorStates
   {
     get
     {
@@ -70,14 +70,14 @@ internal partial class ProjectViewModel : ObservableObject
         states = states.Where(state => nom(state).ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
 
       // Sort the nominator states based on the selected sort option.
-      return NominatorSortItem?.Tag switch
+      return (NominatorSortItem?.Tag switch
       {
         NominatorSort.NameAsc => states.OrderBy(state => state.Name),
         NominatorSort.NameDesc => states.OrderByDescending(state => state.Name),
         NominatorSort.GroupAsc => states.OrderBy(state => nom(state).ModesInfo.Max(x => x.Group)).ThenBy(x => x.Name),
         NominatorSort.GroupDesc => states.OrderByDescending(state => nom(state).ModesInfo.Max(x => x.Group)).ThenBy(x => x.Name),
         _ => states
-      };
+      }).Select(x => new NominatorStateViewModel(x));
     }
   }
 }
