@@ -37,7 +37,13 @@ internal class Nominator
   /// The link to the nominator's request queue.
   /// </summary>
   [JsonProperty("requestLink")]
-  public string RequestLink { get; private set; }
+  public string RequestLink { get; private set; } = "";
+
+  /// <summary>
+  /// A nominator-specific info on how to request.
+  /// </summary>
+  [JsonProperty("requestInfo")]
+  public string RequestInfo { get; private set; } = "";
 
   [JsonConstructor]
   private Nominator(string[] requestStatus)

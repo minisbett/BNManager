@@ -54,9 +54,24 @@ internal partial class NominatorStateViewModel : ObservableObject
   public string AvatarUrl => $"https://a.ppy.sh/{_state.Id}";
 
   /// <summary>
+  /// A URL to the game chat of the nominator.
+  /// </summary>
+  public string GameChatUrl => $"https://osu.ppy.sh/community/chat/?sendto={_state.Id}";
+
+  /// <summary>
   /// Bool whether the queue of the nominator is opened.
   /// </summary>
-  public bool IsOpened => !Nominator.RequestStatus.Contains(RequestStatus.Closed);
+  public bool IsClosed => Nominator.RequestStatus.Contains(RequestStatus.Closed);
+
+  /// <summary>
+  /// Bool whether the nominator receives requests via a personal queue.
+  /// </summary>
+  public bool IsPersonalQueue => Nominator.RequestStatus.Contains(RequestStatus.PersonalQueue);
+
+  /// <summary>
+  /// Bool whether the nominator receives requests via game chat.
+  /// </summary>
+  public bool IsGameChatQueue => Nominator.RequestStatus.Contains(RequestStatus.GameChat);
 
   /// <summary>
   /// The group badges of the nominator.
@@ -65,6 +80,16 @@ internal partial class NominatorStateViewModel : ObservableObject
     Nominator?.ModesInfo.GroupBy(x => x.Group)
     .Select(x => new GroupBadgeViewModel(x.Key, x.Select(y => y.Mode).ToArray()))
     .ToArray();
+
+  /// <summary>
+  /// Bool whether the nominator has request info specified.
+  /// </summary>
+  public bool HasRequestInfo => Nominator.RequestInfo is not "";
+
+  /// <summary>
+  /// The request info of the nominator, formatted by trimming newlines.
+  /// </summary>
+  public string RequestInfoFormatted => Nominator.RequestInfo.Trim('\n');
 
   /// <summary>
   /// The nominator this state is representing.
