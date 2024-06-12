@@ -1,5 +1,6 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
+using BNManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -51,29 +52,30 @@ internal partial class ProjectViewModel : ObservableObject
   /// <summary>
   /// The nominator states of the project, filtered and sorted based on the search query, sort options and filters.
   /// </summary>
-  public IEnumerable<NominatorStateViewModel> NominatorStates
+  public IEnumerable<NominatorState> NominatorStates
   {
     get
     {
       // Filter the nominator states based on the search query.
-      IEnumerable<NominatorStateViewModel> states = Project.NominatorStates.Select(state => new NominatorStateViewModel(state))
-        .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
+      IEnumerable<NominatorState> states = Project.NominatorStates
+        .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Name.ToLower().Contains(tag)));
 
       // Filter the nominator states based on the state filter.
       if (AskStateFilterItem?.Tag is AskState state)
-        states = states.Where(states => states.State.State == state);
+        states = states.Where(states => states.AskState == state);
 
       // Filter the nominator states based on the modes targetted by the project.
+      Nominator nom(NominatorState state) => MappersGuildService.Nominators.FirstOrDefault(x => x.Name == state.Name);
       if (!IgnoreModes)
-        states = states.Where(x => x.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
+        states = states.Where(state => nom(state).ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
 
       // Sort the nominator states based on the selected sort option.
       return NominatorSortItem?.Tag switch
       {
-        NominatorSort.NameAsc => states.OrderBy(x => x.Nominator.Name),
-        NominatorSort.NameDesc => states.OrderByDescending(x => x.Nominator.Name),
-        NominatorSort.GroupAsc => states.OrderBy(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
-        NominatorSort.GroupDesc => states.OrderByDescending(x => x.Nominator.ModesInfo.Max(x => x.Group)).ThenBy(x => x.Nominator.Name),
+        NominatorSort.NameAsc => states.OrderBy(state => state.Name),
+        NominatorSort.NameDesc => states.OrderByDescending(state => state.Name),
+        NominatorSort.GroupAsc => states.OrderBy(state => nom(state).ModesInfo.Max(x => x.Group)).ThenBy(x => x.Name),
+        NominatorSort.GroupDesc => states.OrderByDescending(state => nom(state).ModesInfo.Max(x => x.Group)).ThenBy(x => x.Name),
         _ => states
       };
     }

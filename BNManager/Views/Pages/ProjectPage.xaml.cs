@@ -1,5 +1,6 @@
 using BNManager.Enums;
 using BNManager.Models;
+using BNManager.Views.Controls;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -27,5 +28,14 @@ internal sealed partial class ProjectPage : Page
 
     // Set the project in the view model to the navigation parameter.
     ViewModel.Project = e.Parameter as Project;
+  }
+
+  private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+  {
+    _ = new ContentDialog()
+    {
+      XamlRoot = MainWindow.XamlRoot,
+      Content = new NominatorStateItem() { State = e.ClickedItem as NominatorState },
+    }.ShowAsync();
   }
 }

@@ -14,6 +14,7 @@
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\Controls\NominatorStateItem.xaml" />
     <None Remove="Views\Controls\ProjectNavigationViewItem.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoadingDialog.xaml" />
@@ -103,6 +104,11 @@
   <ItemGroup>
     <Folder Include="Views\Dialogs\" />
     <Folder Include="Views\Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Controls\NominatorStateItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
