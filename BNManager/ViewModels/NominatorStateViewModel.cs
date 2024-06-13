@@ -59,6 +59,11 @@ internal partial class NominatorStateViewModel : ObservableObject
   public string GameChatUrl => $"https://osu.ppy.sh/community/chat/?sendto={_state.Id}";
 
   /// <summary>
+  /// A URL to the personal queue of the nominator. Returns *any* valid URL (eg. GameChatUrl) if the nominator does not have a personal queue.
+  /// </summary>
+  public string PersonalQueueUrl => Nominator.RequestLink is "" ? GameChatUrl : Nominator.RequestLink;
+
+  /// <summary>
   /// Bool whether the queue of the nominator is opened.
   /// </summary>
   public bool IsClosed => Nominator.RequestStatus.Contains(RequestStatus.Closed);
@@ -66,12 +71,12 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// <summary>
   /// Bool whether the nominator receives requests via a personal queue.
   /// </summary>
-  public bool IsPersonalQueue => Nominator.RequestStatus.Contains(RequestStatus.PersonalQueue);
+  public bool HasPersonalQueue => Nominator.RequestStatus.Contains(RequestStatus.PersonalQueue) && Nominator.RequestLink is not "";
 
   /// <summary>
   /// Bool whether the nominator receives requests via game chat.
   /// </summary>
-  public bool IsGameChatQueue => Nominator.RequestStatus.Contains(RequestStatus.GameChat);
+  public bool HasGameChatQueue => Nominator.RequestStatus.Contains(RequestStatus.GameChat);
 
   /// <summary>
   /// The group badges of the nominator.

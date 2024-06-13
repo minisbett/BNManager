@@ -13,47 +13,49 @@
     <x:Double x:Key="ContentDialogMaxWidth">1000</x:Double>
   </ContentDialog.Resources>
 
-  <Grid RowSpacing="12" Width="800">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="auto" />
-      <RowDefinition Height="auto" />
-      <RowDefinition Height="auto" />
-      <RowDefinition Height="auto" />
-    </Grid.RowDefinitions>
-
-    <controls:NominatorStateItem State="{x:Bind ViewModel}" />
-    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal" Spacing="8">
-      <HyperlinkButton Background="#3b4e57" NavigateUri="{x:Bind ViewModel.GameChatUrl}">
-        <StackPanel Orientation="Horizontal" Spacing="4">
-          <FontIcon Glyph="&#xE8F2;" Foreground="#BBE7EF" />
-          <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">
-            <Hyperlink UnderlineStyle="None">Game Chat</Hyperlink>
-          </TextBlock>
-        </StackPanel>
-      </HyperlinkButton>
-      <HyperlinkButton Background="#3b4e57" NavigateUri="{x:Bind ViewModel.Nominator.RequestLink}">
-        <StackPanel Orientation="Horizontal" Spacing="4">
-          <FontIcon Glyph="&#xE8A7;" Foreground="#BBE7EF" />
-          <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">
-            <Hyperlink UnderlineStyle="None">Personal Queue</Hyperlink>
-          </TextBlock>
-        </StackPanel>
-      </HyperlinkButton>
-    </StackPanel>
-    <Border Grid.Row="1" CornerRadius="12" Background="{StaticResource BadgeBackground}" Padding="12">
-      <StackPanel>
-        <TextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />
-        <TextBlock Text="This nominator has no request info specified." TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource InvBoolToVisibility}}" />
-      </StackPanel>
-    </Border>
-    <TextBlock Text="Preferences" Grid.Row="2" FontWeight="SemiBold" FontSize="24" />
-    <Grid Grid.Row="3" RowSpacing="8">
+  <ScrollViewer MaxHeight="600" Padding="0,0,12,0">
+    <Grid RowSpacing="12" Width="800">
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
       </Grid.RowDefinitions>
-      <TextBlock Text="Notes" FontWeight="SemiBold" FontSize="18" />
-      <TextBox Grid.Row="1" PlaceholderText="Enter notes here..." Text="{x:Bind ViewModel.Notes,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" MinHeight="72" AcceptsReturn="True" />
+
+      <controls:NominatorStateItem State="{x:Bind ViewModel}" />
+      <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal">
+        <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <FontIcon Glyph="&#xE8F2;" />
+            <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">
+              Game Chat
+            </TextBlock>
+          </StackPanel>
+        </HyperlinkButton>
+        <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.PersonalQueueUrl}" Margin="8,0,0,0" Visibility="{x:Bind ViewModel.HasPersonalQueue,Converter={StaticResource BoolToVisibility}}">
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <FontIcon Glyph="&#xE8A7;" />
+            <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">
+              Personal Queue
+            </TextBlock>
+          </StackPanel>
+        </HyperlinkButton>
+      </StackPanel>
+      <Border Grid.Row="1" CornerRadius="12" Background="{StaticResource BadgeBackground}" Padding="12">
+        <StackPanel>
+          <TextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />
+          <TextBlock Text="This nominator has no request info specified." TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource InvBoolToVisibility}}" />
+        </StackPanel>
+      </Border>
+      <TextBlock Text="Preferences" Grid.Row="2" FontWeight="SemiBold" FontSize="24" />
+      <Grid Grid.Row="3" RowSpacing="8">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Notes" FontWeight="SemiBold" FontSize="18" />
+        <TextBox Grid.Row="1" PlaceholderText="Enter notes here..." Text="{x:Bind ViewModel.Notes,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" MinHeight="72" AcceptsReturn="True" />
+      </Grid>
     </Grid>
-  </Grid>
+  </ScrollViewer>
 </ContentDialog>
