@@ -24,5 +24,11 @@ to be added
 
 ## 🖼️ Demo Gallery
 
+<img src=".github/assets/demo/1.png" width="512">
+<img src=".github/assets/demo/2.png" width="512">
+<img src=".github/assets/demo/3.png" width="512">
+<img src=".github/assets/demo/4.png" width="512">
+<img src=".github/assets/demo/5.png" width="512">
+
 ---
 Logo by [cyperdark](https://www.youtube.com/@cpol_v1)
