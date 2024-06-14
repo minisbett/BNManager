@@ -30,7 +30,7 @@
       <MenuFlyoutItem Text="Open in Web" Icon="Globe" Command="{x:Bind ViewModel.OpenBeatmapSetInWebCommand}" />
       <MenuFlyoutSeparator />
       <MenuFlyoutItem Text="Edit" Icon="Edit" Command="{x:Bind ViewModel.EditProjectCommand}" />
-      <MenuFlyoutItem Text="Remove" Icon="Delete" Command="{x:Bind ViewModel.DeleteProjectCommand}" />
+      <MenuFlyoutItem Text="Delete" Icon="Delete" Command="{x:Bind ViewModel.DeleteProjectCommand}" />
     </MenuFlyout>
   </NavigationViewItem.ContextFlyout>
 </NavigationViewItem>
