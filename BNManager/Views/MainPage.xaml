@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BNManager"
     xmlns:vm="using:BNManager.ViewModels"
     x:Name="Page"
     mc:Ignorable="d">
@@ -28,7 +29,10 @@
           <ImageBrush ImageSource="{StaticResource LogoCompact}" />
         </Border.Background>
       </Border>
-      <TextBlock Grid.Column="1" Text="BN Manager" VerticalAlignment="Center" />
+      <TextBlock Grid.Column="1" VerticalAlignment="Center">
+        BN Manager
+        <Run Text="{x:Bind local:App.Version}" />
+      </TextBlock>
     </Grid>
     <NavigationView x:Name="NavView" SelectedItem="{x:Bind ViewModel.SelectedItem,Mode=TwoWay}" MenuItemsSource="{x:Bind ViewModel.ProjectNavigationItems,Mode=OneWay}" SelectionChanged="NavigationView_SelectionChanged" Grid.Row="1" CompactPaneLength="66" OpenPaneLength="256" IsBackButtonVisible="Collapsed" IsPaneOpen="False">
       <NavigationView.AutoSuggestBox>

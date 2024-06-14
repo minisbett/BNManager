@@ -1,7 +1,6 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
 using BNManager.Services;
-using BNManager.Views;
 using BNManager.Views.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

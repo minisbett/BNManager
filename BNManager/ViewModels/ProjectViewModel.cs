@@ -1,6 +1,5 @@
 ﻿using BNManager.Enums;
 using BNManager.Models;
-using BNManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -71,7 +70,7 @@ internal partial class ProjectViewModel : ObservableObject
       // Sort the nominator states based on the selected sort option.
       return NominatorSortItem?.Tag switch
       {
-        NominatorSort.NameAsc => states.OrderBy(state => state.Nominator.Name),   
+        NominatorSort.NameAsc => states.OrderBy(state => state.Nominator.Name),
         NominatorSort.NameDesc => states.OrderByDescending(state => state.Nominator.Name),
         NominatorSort.GroupAsc => states.OrderBy(state => state.Nominator.ModesInfo.Max(state => state.Group))
                                         .ThenBy(state => state.Nominator.Name),

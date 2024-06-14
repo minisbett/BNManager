@@ -10,6 +10,22 @@ namespace BNManager;
 public partial class App : Application
 {
   /// <summary>
+  /// The version of the application.
+  /// </summary>
+  public static string Version
+  {
+    get
+    {
+      string ver = "0.5.0";
+#if DEBUG
+      ver += "-dev";
+#endif
+
+      return ver;
+    }
+  }
+
+  /// <summary>
   /// The main window of the application.
   /// </summary>
   public static Window MainWindow { get; } = new MainWindow();

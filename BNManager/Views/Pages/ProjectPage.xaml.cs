@@ -1,7 +1,6 @@
 using BNManager.Enums;
 using BNManager.Models;
 using BNManager.ViewModels;
-using BNManager.Views.Controls;
 using BNManager.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;

@@ -1,4 +1,3 @@
-using BNManager.Models;
 using BNManager.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

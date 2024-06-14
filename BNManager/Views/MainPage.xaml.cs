@@ -48,14 +48,14 @@ public sealed partial class MainPage : Page
       foreach (Project project in ProjectService.Projects)
       {
         // Find all nominator states where the nominator is no longer a BN, remove them and remember their names.
-        foreach(NominatorState ns in project.NominatorStates.Where(ns => MappersGuildService.FromId(ns.Id) is null).ToArray())
+        foreach (NominatorState ns in project.NominatorStates.Where(ns => MappersGuildService.FromId(ns.Id) is null).ToArray())
         {
           remNoms.Add(ns.Name);
           project.NominatorStates.Remove(ns);
         }
 
         // Find all nominators that are not in the project yet, add them, and remember their names.
-        foreach(Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.Id)))
+        foreach (Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.Id)))
         {
           project.NominatorStates.Add(new NominatorState(nominator));
           addNoms.Add(nominator.Name);
