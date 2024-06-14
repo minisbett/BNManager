@@ -3,6 +3,7 @@ using BNManager.Models;
 using BNManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BNManager.ViewModels;
@@ -30,10 +31,17 @@ internal partial class NominatorStateViewModel : ObservableObject
         return;
 
       _state.AskState = value.State;
+      _state.UpdatedAt = DateTime.UtcNow;
       OnPropertyChanged(nameof(AskState)); // Update AskState bindings for other parts of the UI (eg. info dialog & project list)
+      OnPropertyChanged(nameof(UpdatedAt));
       ProjectService.Save();
     }
   }
+
+  /// <summary>
+  /// A readable string of the last time the nominator state was updated.
+  /// </summary>
+  public string UpdatedAt => $"Updated on {_state.UpdatedAt.ToLocalTime():yyyy/MM/dd HH:mm}";
 
   /// <summary>
   /// The notes for the state of the nominator.
@@ -85,6 +93,76 @@ internal partial class NominatorStateViewModel : ObservableObject
     Nominator?.ModesInfo.GroupBy(x => x.Group)
     .Select(x => new GroupBadgeViewModel(x.Key, x.Select(y => y.Mode).ToArray()))
     .ToArray();
+
+  #region Preferences
+
+  /// <summary>
+  /// The genre preferences of the nominator.
+  /// </summary>
+  public IEnumerable<PreferenceViewModel> GenrePreferences =>
+    Nominator.GenrePreferences.Select(x => new PreferenceViewModel(true, x))
+      .Concat(Nominator.GenreNegativePreferences.Select(x => new PreferenceViewModel(false, x)));
+
+  /// <summary>
+  /// The language preferences of the nominator.
+  /// </summary>
+  public IEnumerable<PreferenceViewModel> LanguagePreferences =>
+    Nominator.LanguagePreferences.Select(x => new PreferenceViewModel(true, x))
+      .Concat(Nominator.LanguageNegativePreferences.Select(x => new PreferenceViewModel(false, x)));
+
+  /// <summary>
+  /// The language preferences of the nominator.
+  /// </summary>
+  public IEnumerable<PreferenceViewModel> MapperPreferences =>
+    Nominator.MapperPreferences.Select(x => new PreferenceViewModel(true, x))
+      .Concat(Nominator.MapperNegativePreferences.Select(x => new PreferenceViewModel(false, x)));
+
+  /// <summary>
+  /// The detail preferences of the nominator.
+  /// </summary>
+  public IEnumerable<PreferenceViewModel> DetailPreferences =>
+    Nominator.DetailPreferences.Select(x => new PreferenceViewModel(true, x))
+      .Concat(Nominator.DetailNegativePreferences.Select(x => new PreferenceViewModel(false, x)));
+
+  /// <summary>
+  /// The osu! preferences of the nominator.
+  /// </summary>
+  public IEnumerable<PreferenceViewModel> StylePreferences =>
+    Nominator.OsuStylePreferences.Select(x => new PreferenceViewModel(true, $"{x} (osu!std)"))
+      .Concat(Nominator.TaikoStylePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!taiko)")))
+      .Concat(Nominator.CatchStylePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!catch)")))
+      .Concat(Nominator.ManiaStylePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!mania)")))
+      .Concat(Nominator.OsuStyleNegativePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!std)")))
+      .Concat(Nominator.TaikoStyleNegativePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!taiko)")))
+      .Concat(Nominator.CatchStyleNegativePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!catch)")))
+      .Concat(Nominator.ManiaStyleNegativePreferences.Select(x => new PreferenceViewModel(false, $"{x} (osu!mania)")));
+
+  /// <summary>
+  /// Bool whether the nominator has genre preferences.
+  /// </summary>
+  public bool HasGenrePreferences => GenrePreferences.Any();
+
+  /// <summary>
+  /// Bool whether the nominator has language preferences.
+  /// </summary>
+  public bool HasLanguagePreferences => LanguagePreferences.Any();
+
+  /// <summary>
+  /// Bool whether the nominator has mapper preferences.
+  /// </summary>
+  public bool HasMapperPreferences => MapperPreferences.Any();
+
+  /// <summary>
+  /// Bool whether the nominator has detail preferences.
+  /// </summary>
+  public bool HasDetailPreferences => DetailPreferences.Any();
+
+  /// <summary>
+  /// Bool whether the nominator has style preferences.
+  /// </summary>
+  public bool HasStylePreferences => StylePreferences.Any();
+
+  #endregion
 
   /// <summary>
   /// Bool whether the nominator has request info specified.

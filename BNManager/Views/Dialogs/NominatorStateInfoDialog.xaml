@@ -6,11 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BNManager.Views.Controls"
+    xmlns:vm="using:BNManager.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <ContentDialog.Resources>
     <x:Double x:Key="ContentDialogMaxWidth">1000</x:Double>
+
+    <DataTemplate x:Key="PreferenceTemplate" x:DataType="vm:PreferenceViewModel">
+      <StackPanel Orientation="Horizontal">
+        <FontIcon Glyph="&#xE73E;" Foreground="LimeGreen" FontSize="16" Visibility="{x:Bind IsPositive, Converter={StaticResource BoolToVisibility}}" />
+        <FontIcon Glyph="&#xE711;" Foreground="IndianRed" FontSize="16" Visibility="{x:Bind IsPositive, Converter={StaticResource InvBoolToVisibility}}" />
+        <TextBlock Text="{x:Bind Text}" Margin="8,0,0,0" />
+      </StackPanel>
+    </DataTemplate>
+
+    <ItemsPanelTemplate x:Key="PreferencePanelTemplate">
+      <StackPanel Orientation="Vertical" Spacing="4" />
+    </ItemsPanelTemplate>
   </ContentDialog.Resources>
 
   <ScrollViewer MaxHeight="600" Padding="0,0,12,0">
@@ -20,9 +33,10 @@
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
+        <RowDefinition Height="auto" />
       </Grid.RowDefinitions>
 
-      <controls:NominatorStateItem State="{x:Bind ViewModel}" />
+      <controls:NominatorStateItem State="{x:Bind ViewModel}" IsDetailed="True" />
       <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal">
         <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">
@@ -48,7 +62,41 @@
         </StackPanel>
       </Border>
       <TextBlock Text="Preferences" Grid.Row="2" FontWeight="SemiBold" FontSize="24" />
-      <Grid Grid.Row="3" RowSpacing="8">
+      <Grid Grid.Row="3">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock Text="Genre" FontWeight="SemiBold" FontSize="18" />
+          <TextBlock Text="None..." Foreground="LightGray" Visibility="{x:Bind ViewModel.HasGenrePreferences,Converter={StaticResource InvBoolToVisibility}}" />
+          <ItemsControl ItemsSource="{x:Bind ViewModel.GenrePreferences}" ItemsPanel="{StaticResource PreferencePanelTemplate}" ItemTemplate="{StaticResource PreferenceTemplate}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+          <TextBlock Text="Language" FontWeight="SemiBold" FontSize="18" />
+          <TextBlock Text="None..." Foreground="LightGray" Visibility="{x:Bind ViewModel.HasLanguagePreferences,Converter={StaticResource InvBoolToVisibility}}" />
+          <ItemsControl ItemsSource="{x:Bind ViewModel.LanguagePreferences}" ItemsPanel="{StaticResource PreferencePanelTemplate}" ItemTemplate="{StaticResource PreferenceTemplate}" />
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+          <TextBlock Text="Style" FontWeight="SemiBold" FontSize="18" />
+          <TextBlock Text="None..." Foreground="LightGray" Visibility="{x:Bind ViewModel.HasStylePreferences,Converter={StaticResource InvBoolToVisibility}}" />
+          <ItemsControl ItemsSource="{x:Bind ViewModel.StylePreferences}" ItemsPanel="{StaticResource PreferencePanelTemplate}" ItemTemplate="{StaticResource PreferenceTemplate}" />
+        </StackPanel>
+        <StackPanel Grid.Column="3">
+          <TextBlock Text="Song Details" FontWeight="SemiBold" FontSize="18" />
+          <TextBlock Text="None..." Foreground="LightGray" Visibility="{x:Bind ViewModel.HasDetailPreferences,Converter={StaticResource InvBoolToVisibility}}" />
+          <ItemsControl ItemsSource="{x:Bind ViewModel.DetailPreferences}" ItemsPanel="{StaticResource PreferencePanelTemplate}" ItemTemplate="{StaticResource PreferenceTemplate}" />
+        </StackPanel>
+        <StackPanel Grid.Column="4">
+          <TextBlock Text="Mapper" FontWeight="SemiBold" FontSize="18" />
+          <TextBlock Text="None..." Foreground="LightGray" Visibility="{x:Bind ViewModel.HasMapperPreferences,Converter={StaticResource InvBoolToVisibility}}" />
+          <ItemsControl ItemsSource="{x:Bind ViewModel.MapperPreferences}" ItemsPanel="{StaticResource PreferencePanelTemplate}" ItemTemplate="{StaticResource PreferenceTemplate}" />
+        </StackPanel>
+      </Grid>
+      <Grid Grid.Row="4" RowSpacing="8">
         <Grid.RowDefinitions>
           <RowDefinition Height="auto" />
           <RowDefinition Height="auto" />

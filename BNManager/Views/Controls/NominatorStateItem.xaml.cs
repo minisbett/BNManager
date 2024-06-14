@@ -35,8 +35,20 @@ internal sealed partial class NominatorStateItem : UserControl
     }
   }
 
+  /// <summary>
+  /// Bool whether the item displays detailed information.
+  /// </summary>
+  public bool IsDetailed
+  {
+    get { return (bool)GetValue(IsDetailedProperty); }
+    set { SetValue(IsDetailedProperty, value); }
+  }
+
   public static readonly DependencyProperty StateProperty =
       DependencyProperty.Register("State", typeof(NominatorStateViewModel), typeof(NominatorStateItem), new PropertyMetadata(null));
+
+  public static readonly DependencyProperty IsDetailedProperty =
+      DependencyProperty.Register("IsDetailed", typeof(bool), typeof(NominatorStateItem), new PropertyMetadata(null));
 
   public NominatorStateItem()
   {
