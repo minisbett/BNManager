@@ -9,6 +9,11 @@ namespace BNManager;
 /// </summary>
 public partial class App : Application
 {
+  /// <summary>
+  /// The main window of the application.
+  /// </summary>
+  public static Window MainWindow { get; } = new MainWindow();
+
   public App()
   {
     InitializeComponent();
@@ -23,10 +28,6 @@ public partial class App : Application
     // Ensure an invariant culture for the entire application for parsing and formatting reasons.
     CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
-    // Create the main window, activate it and set the XamlRoot for the entire application.
-    _window = new MainWindow();
-    _window.Activate();
+    MainWindow.Activate();
   }
-
-  private Window _window;
 }

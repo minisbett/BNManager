@@ -64,7 +64,7 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
   {
     if (await new ContentDialog()
     {
-      XamlRoot = MainWindow.XamlRoot,
+      XamlRoot = App.MainWindow.Content.XamlRoot,
       Title = "Delete Project",
       Content = $"Are you sure you want to delete this project?\n\n{Project.Name}",
       PrimaryButtonText = "Delete",

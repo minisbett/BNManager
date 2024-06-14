@@ -17,7 +17,7 @@ internal sealed partial class NominatorStateInfoDialog : ContentDialog
   public NominatorStateInfoDialog(NominatorStateViewModel state)
   {
     InitializeComponent();
-    XamlRoot = MainWindow.XamlRoot;
+    XamlRoot = App.MainWindow.Content.XamlRoot;
 
     ViewModel = state;
   }

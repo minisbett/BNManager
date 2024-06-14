@@ -78,7 +78,7 @@ public sealed partial class MainPage : Page
       if (remNoms.Count > 0)
         await new ContentDialog()
         {
-          XamlRoot = MainWindow.XamlRoot,
+          XamlRoot = App.MainWindow.Content.XamlRoot,
           Title = "Removed Beatmap Nominators",
           Content = "The following nominators were removed from the Beatmap Nominators and thus were removed from all projects:\n\n"
                   + $"{string.Join('\n', remNoms.Distinct())}",
@@ -89,7 +89,7 @@ public sealed partial class MainPage : Page
       if (addNoms.Count > 0)
         await new ContentDialog()
         {
-          XamlRoot = MainWindow.XamlRoot,
+          XamlRoot = App.MainWindow.Content.XamlRoot,
           Title = "Added Beatmap Nominators",
           Content = "The following nominators added to the Beatmap Nominators and thus were added to all projects:\n\n"
                   + $"{string.Join('\n', addNoms.Distinct())}",

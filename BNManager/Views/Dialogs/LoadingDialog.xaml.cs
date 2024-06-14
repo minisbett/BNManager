@@ -16,6 +16,6 @@ public sealed partial class LoadingDialog : ContentDialog
   public LoadingDialog()
   {
     InitializeComponent();
-    XamlRoot = MainWindow.XamlRoot;
+    XamlRoot = App.MainWindow.Content.XamlRoot;
   }
 }
