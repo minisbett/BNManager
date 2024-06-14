@@ -10,7 +10,8 @@
 [![Latest Release](https://img.shields.io/github/v/release/minisbett/bnmanager?color=ff5867
 )](https://github.com/minisbett/bnmanager/releases/latest)
 
-A program for managing the BN nomination requests for your beatmaps, written in WASDK/WinUI 3.
+A program for managing the BN nomination requests for your beatmaps,  
+written in WASDK/WinUI 3.
 
 [Usage](#usage) • [Demo](#demo)<br/>
 
