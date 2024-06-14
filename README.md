@@ -13,7 +13,7 @@
 A program for managing the BN nomination requests for your beatmaps,  
 written in WASDK/WinUI 3.
 
-[Usage](#usage) • [Demo](#demo)<br/>
+[Usage](#usage) • [Demo Gallery](#demo-gallery)<br/>
 
 <i>Made with ❤️ by minisbett</i>
 </div>
@@ -22,6 +22,7 @@ written in WASDK/WinUI 3.
 
 to be added
 
-## Demo
+## 🖼️ Demo Gallery
 
-to be added
+---
+Logo by [cyperdark](https://www.youtube.com/@cpol_v1)
