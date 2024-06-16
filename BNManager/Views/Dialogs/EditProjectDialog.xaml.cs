@@ -1,5 +1,7 @@
 using BNManager.Enums;
 using BNManager.Models;
+using BNManager.Services;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Linq;
 
@@ -15,6 +17,7 @@ internal sealed partial class EditProjectDialog : ContentDialog
   {
     InitializeComponent();
     XamlRoot = App.MainWindow.Content.XamlRoot;
+    RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light;
 
     Loaded += (sender, e) =>
     {

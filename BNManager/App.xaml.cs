@@ -1,5 +1,7 @@
-﻿using BNManager.Views;
+﻿using BNManager.Services;
+using BNManager.Views;
 using Microsoft.UI.Xaml;
+using Newtonsoft.Json.Linq;
 using System.Globalization;
 
 namespace BNManager;
@@ -43,6 +45,12 @@ public partial class App : Application
   {
     // Ensure an invariant culture for the entire application for parsing and formatting reasons.
     CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+
+    // Initialize the configuration service by loading the config file.
+    ConfigService.Load();
+
+    // Apply settings from the configuration which are to be applied on startup.
+    (MainWindow.Content as FrameworkElement).RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light;
 
     MainWindow.Activate();
   }

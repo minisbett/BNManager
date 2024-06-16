@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace BNManager.Services;
 
 /// <summary>
-/// A static class for handling interaction with the Mino API.
+/// A static service for handling interaction with the Mino API.
 /// </summary>
 internal static class MinoApiService
 {

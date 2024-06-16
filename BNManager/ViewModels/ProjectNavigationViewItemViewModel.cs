@@ -4,7 +4,9 @@ using BNManager.Services;
 using BNManager.Views.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -64,6 +66,7 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
     if (await new ContentDialog()
     {
       XamlRoot = App.MainWindow.Content.XamlRoot,
+      RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light,
       Title = "Delete Project",
       Content = $"Are you sure you want to delete this project?\n\n{Project.Name}",
       PrimaryButtonText = "Delete",

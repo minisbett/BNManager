@@ -79,6 +79,7 @@ public sealed partial class MainPage : Page
         await new ContentDialog()
         {
           XamlRoot = App.MainWindow.Content.XamlRoot,
+          RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light,
           Title = "Removed Beatmap Nominators",
           Content = "The following nominators were removed from the Beatmap Nominators and thus were removed from all projects:\n\n"
                   + $"{string.Join('\n', remNoms.Distinct())}",
@@ -90,6 +91,7 @@ public sealed partial class MainPage : Page
         await new ContentDialog()
         {
           XamlRoot = App.MainWindow.Content.XamlRoot,
+          RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light,
           Title = "Added Beatmap Nominators",
           Content = "The following nominators added to the Beatmap Nominators and thus were added to all projects:\n\n"
                   + $"{string.Join('\n', addNoms.Distinct())}",

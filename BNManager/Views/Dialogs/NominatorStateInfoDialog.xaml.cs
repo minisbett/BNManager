@@ -1,4 +1,6 @@
+using BNManager.Services;
 using BNManager.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace BNManager.Views.Dialogs;
@@ -18,6 +20,7 @@ internal sealed partial class NominatorStateInfoDialog : ContentDialog
   {
     InitializeComponent();
     XamlRoot = App.MainWindow.Content.XamlRoot;
+    RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light;
 
     ViewModel = state;
   }
