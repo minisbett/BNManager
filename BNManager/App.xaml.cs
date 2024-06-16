@@ -1,7 +1,6 @@
 ﻿using BNManager.Services;
 using BNManager.Views;
 using Microsoft.UI.Xaml;
-using Newtonsoft.Json.Linq;
 using System.Globalization;
 
 namespace BNManager;
