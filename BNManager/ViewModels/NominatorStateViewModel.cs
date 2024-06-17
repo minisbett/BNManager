@@ -2,9 +2,12 @@
 using BNManager.Models;
 using BNManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI;
 
 namespace BNManager.ViewModels;
 
@@ -173,6 +176,18 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// The request info of the nominator, formatted by trimming newlines.
   /// </summary>
   public string RequestInfoFormatted => Nominator.RequestInfo.Trim('\n');
+
+  /// <summary>
+  /// The last time the queue status of the nominator was updated, as a readable string.
+  /// </summary>
+  public string LastQueueStatusUpdate
+    => IsClosed ? $"Last opened {(DateTime.UtcNow - Nominator.LastQueueStatusUpdate).Days} days ago"
+                : $"Opened for {(DateTime.UtcNow - Nominator.LastQueueStatusUpdate).Days} days";
+
+  /// <summary>
+  /// The foreground color for the <see cref="LastQueueStatusUpdate"/> text.
+  /// </summary>
+  public SolidColorBrush LastQueueStatusUpdateForeground => new SolidColorBrush(IsClosed ? Colors.IndianRed : Colors.LightGreen);
 
   /// <summary>
   /// The nominator this state is representing.

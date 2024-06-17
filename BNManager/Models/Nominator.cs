@@ -46,6 +46,12 @@ internal class Nominator
   public string RequestInfo { get; private set; } = "";
 
   /// <summary>
+  /// The datetime at which the nominator last opened/closed their queue for requests.
+  /// </summary>
+  [JsonProperty("lastOpenedForRequests")]
+  public DateTime LastQueueStatusUpdate { get; private set; }
+
+  /// <summary>
   /// The genre preferences of the nominator.
   /// </summary>
   [JsonProperty("genrePreferences")]

@@ -55,6 +55,7 @@
           </StackPanel>
         </HyperlinkButton>
       </StackPanel>
+      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{x:Bind ViewModel.LastQueueStatusUpdateForeground}" />
       <Border Grid.Row="1" CornerRadius="12" Background="{StaticResource BadgeBackground}" Padding="12">
         <StackPanel>
           <TextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />
