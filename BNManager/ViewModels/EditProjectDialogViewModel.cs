@@ -52,6 +52,18 @@ internal partial class EditProjectDialogViewModel : ObservableObject
   private bool _maniaEnabled = false;
 
   /// <summary>
+  /// The genre of the beatmap set associated with the project.
+  /// </summary>
+  [ObservableProperty]
+  private string _genre;
+
+  /// <summary>
+  /// The language of the beatmap set associated with the project.
+  /// </summary>
+  [ObservableProperty]
+  private string _language;
+
+  /// <summary>
   /// The placeholder for the name input field, displaying the original name.
   /// </summary>
   [ObservableProperty]

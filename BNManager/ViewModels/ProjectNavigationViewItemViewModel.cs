@@ -51,6 +51,8 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
       // Update the project and UI and save.
       Project.Name = pdvm.Name;
       Project.Modes = modes.ToArray();
+      Project.Genre = pdvm.Genre;
+      Project.Language = pdvm.Language;
       OnPropertyChanged(nameof(Project));
       ProjectService.Save();
     }

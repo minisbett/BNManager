@@ -28,6 +28,8 @@ internal sealed partial class EditProjectDialog : ContentDialog
       ViewModel.TaikoEnabled = project.Modes.Contains(Mode.Taiko);
       ViewModel.CtbEnabled = project.Modes.Contains(Mode.Catch);
       ViewModel.ManiaEnabled = project.Modes.Contains(Mode.Mania);
+      ViewModel.Genre = project.Genre;
+      ViewModel.Language = project.Language;
     };
   }
 }

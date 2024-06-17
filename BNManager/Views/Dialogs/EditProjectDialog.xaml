@@ -31,7 +31,7 @@
         <RowDefinition Height="auto" />
       </Grid.RowDefinitions>
       <TextBlock Text="Beatmap Set ID" />
-      <TextBox Grid.Row="1" PlaceholderText="{x:Bind ViewModel.BeatmapSetId,Mode=OneWay}" IsReadOnly="True" /> 
+      <TextBox Grid.Row="1" PlaceholderText="{x:Bind ViewModel.BeatmapSetId,Mode=OneWay}" IsReadOnly="True" />
     </Grid>
     <Grid Grid.Row="1" RowSpacing="4">
       <Grid.RowDefinitions>
@@ -54,7 +54,6 @@
           <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="Targetted Game Modes" />
-        <!-- StatusCircleQuestionMark -->
         <FontIcon Grid.Column="1" Glyph="&#xF142;" ToolTipService.ToolTip="This allows filtering Beatmap Nominators for those that cover the modes you target on your Beatmap Set." />
       </Grid>
       <Grid Grid.Row="1">
@@ -68,6 +67,57 @@
         <CheckBox Grid.Column="1" IsChecked="{x:Bind ViewModel.TaikoEnabled,Mode=TwoWay}" Content="osu!taiko" MinWidth="100" />
         <CheckBox Grid.Column="2" IsChecked="{x:Bind ViewModel.CtbEnabled,Mode=TwoWay}" Content="osu!ctb" MinWidth="100" />
         <CheckBox Grid.Column="3" IsChecked="{x:Bind ViewModel.ManiaEnabled,Mode=TwoWay}" Content="osu!mania" MinWidth="100" />
+      </Grid>
+    </Grid>
+    <Grid Grid.Row="4" ColumnSpacing="12">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid RowSpacing="4">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+      <TextBlock Text="Genre" VerticalAlignment="Center" />
+        <ComboBox Grid.Row="1" SelectedItem="{x:Bind ViewModel.Genre,Mode=TwoWay}" HorizontalAlignment="Stretch">
+          <x:String>Unspecified</x:String>
+          <x:String>Video Game</x:String>
+          <x:String>Anime</x:String>
+          <x:String>Rock</x:String>
+          <x:String>Pop</x:String>
+          <x:String>Novelty</x:String>
+          <x:String>Hip Hop</x:String>
+          <x:String>Electronic</x:String>
+          <x:String>Metal</x:String>
+          <x:String>Classical</x:String>
+          <x:String>Folk</x:String>
+          <x:String>Jazz</x:String>
+          <x:String>Other</x:String>
+        </ComboBox>
+      </Grid>
+      <Grid Grid.Column="1" RowSpacing="4">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Language" VerticalAlignment="Center" />
+        <ComboBox Grid.Row="1" SelectedItem="{x:Bind ViewModel.Language,Mode=TwoWay}" HorizontalAlignment="Stretch">
+          <x:String>Unspecified</x:String>
+          <x:String>English</x:String>
+          <x:String>Chinese</x:String>
+          <x:String>French</x:String>
+          <x:String>German</x:String>
+          <x:String>Italian</x:String>
+          <x:String>Japanese</x:String>
+          <x:String>Korean</x:String>
+          <x:String>Spanish</x:String>
+          <x:String>Swedish</x:String>
+          <x:String>Russian</x:String>
+          <x:String>Polish</x:String>
+          <x:String>Instrumental</x:String>
+          <x:String>Other</x:String>
+        </ComboBox>
       </Grid>
     </Grid>
   </Grid>

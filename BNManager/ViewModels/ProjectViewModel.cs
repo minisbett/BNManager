@@ -35,6 +35,13 @@ internal partial class ProjectViewModel : ObservableObject
   private ComboBoxItem _nominatorSortItem;
 
   /// <summary>
+  /// The selected combo box item for the preference filter option used to filter the nominators by their preferences.
+  /// </summary>
+  [ObservableProperty]
+  [NotifyPropertyChangedFor(nameof(NominatorStates))]
+  private ComboBoxItem _preferenceFilterItem;
+
+  /// <summary>
   /// The selected combo box item for the state filter option used to filter the nominators by their ask state.
   /// </summary>
   [ObservableProperty]
@@ -42,11 +49,11 @@ internal partial class ProjectViewModel : ObservableObject
   private ComboBoxItem _askStateFilterItem;
 
   /// <summary>
-  /// Bool whether the mode targetted by the project are being ignored.
+  /// Bool whether only nominators with open queues should be shown.
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(NominatorStates))]
-  private bool _ignoreModes = false;
+  private bool _onlyOpenQueues = false;
 
   /// <summary>
   /// The nominator states of the project, filtered and sorted based on the search query, sort options and filters.
@@ -55,17 +62,37 @@ internal partial class ProjectViewModel : ObservableObject
   {
     get
     {
-      // Filter the nominator states based on the search query.
+      // Filter the nominator states based on the search query & modes targetted by the project.
       IEnumerable<NominatorStateViewModel> states = Project.NominatorStates.Select(state => new NominatorStateViewModel(state))
-        .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
+        .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)))
+        .Where(state => state.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
 
       // Filter the nominator states based on the state filter.
-      if (AskStateFilterItem?.Tag is AskState state)
-        states = states.Where(states => states.AskState.State == state);
+      if (AskStateFilterItem?.Tag is AskState askState)
+        states = states.Where(state => state.AskState.State == askState);
 
-      // Filter the nominator states based on the modes targetted by the project.
-      if (!IgnoreModes)
-        states = states.Where(state => state.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
+      // Filter the nominator states based on whether their queue is open or not.
+      if (OnlyOpenQueues)
+        states = states.Where(state => !state.Nominator.RequestStatus.Contains(RequestStatus.Closed));
+
+      // Filter the nominators based on their preferences in comparison to the project.
+      if (PreferenceFilterItem?.Tag is PreferenceFilter prefFilter)
+        states = states.Where(state =>
+        {
+          // Get the match states for the genre and language preferences for further filtering.
+          bool genrePref = state.Nominator.GenrePreferences.Contains(Project.Genre.ToLower());
+          bool languagePref = state.Nominator.LanguagePreferences.Contains(Project.Language.ToLower());
+          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(Project.Genre.ToLower())
+                      || state.Nominator.LanguageNegativePreferences.Contains(Project.Language.ToLower());
+
+          return prefFilter switch
+          {
+            PreferenceFilter.SoftPreferred => (genrePref || languagePref) && !anyAnti,
+            PreferenceFilter.ExactPreferred => genrePref && languagePref,
+            PreferenceFilter.NoAntiPreferred => !anyAnti,
+            _ => false
+          };
+        });
 
       // Sort the nominator states based on the selected sort option.
       return NominatorSortItem?.Tag switch

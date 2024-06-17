@@ -21,6 +21,7 @@ internal sealed partial class ProjectPage : Page
     NominatorSortDefaultItem.Tag = NominatorSort.NameAsc;
     ViewModel.NominatorSortItem = NominatorSortDefaultItem;
     ViewModel.AskStateFilterItem = AskStateFilterDefaultItem;
+    ViewModel.PreferenceFilterItem = PreferenceFilterDefaultItem;
   }
 
   protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -62,7 +62,13 @@ internal static class ProjectService
   public static void Create(BeatmapSet beatmapSet)
   {
     // Create a new project and add it to the list of projects.
-    Project project = new Project(beatmapSet.Id, Utils.GetSanitizedString(beatmapSet.Title), beatmapSet.Beatmaps.Select(x => x.Mode).Distinct().ToArray());
+    Project project = new Project(
+      beatmapSet.Id,
+      Utils.GetSanitizedString(beatmapSet.Title),
+      beatmapSet.Beatmaps.Select(x => x.Mode).Distinct().ToArray(),
+      beatmapSet.Genre.Name,
+      beatmapSet.Language.Name
+    );
     _projects.Add(project);
 
     // Populate the project with all current nominators.
