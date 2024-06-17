@@ -80,15 +80,19 @@ internal partial class ProjectViewModel : ObservableObject
         states = states.Where(state =>
         {
           // Get the match states for the genre and language preferences for further filtering.
-          bool genrePref = state.Nominator.GenrePreferences.Contains(Project.Genre.ToLower());
-          bool languagePref = state.Nominator.LanguagePreferences.Contains(Project.Language.ToLower());
-          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(Project.Genre.ToLower())
-                      || state.Nominator.LanguageNegativePreferences.Contains(Project.Language.ToLower());
+          // We apply a hotfix here since the Video Game genre is listed as Game in the preferences.
+          string genre = (Project.Genre == "Video Game" ? "Game" : Project.Genre).ToLower();
+          string language = Project.Language.ToLower();
+          bool genrePref = genre == "Unspecified"
+                        // We concat the detail preferences to the genre preferences since BNsite splits it up like that.
+                        || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
+          bool languagePref = language == "Unspecified" || state.Nominator.LanguagePreferences.Contains(language);
+          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre)
+                      || state.Nominator.LanguageNegativePreferences.Contains(language);
 
           return prefFilter switch
           {
             PreferenceFilter.SoftPreferred => (genrePref || languagePref) && !anyAnti,
-            PreferenceFilter.ExactPreferred => genrePref && languagePref,
             PreferenceFilter.NoAntiPreferred => !anyAnti,
             _ => false
           };

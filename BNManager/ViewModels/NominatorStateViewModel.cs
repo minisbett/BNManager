@@ -7,7 +7,6 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI;
 
 namespace BNManager.ViewModels;
 
