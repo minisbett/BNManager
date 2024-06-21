@@ -1,9 +1,9 @@
-﻿using BNManager.Models;
-using Microsoft.UI.Xaml.Media;
+﻿using BNManager.Enums;
+using BNManager.Models;
 using Microsoft.UI;
-using System.Linq;
-using BNManager.Enums;
+using Microsoft.UI.Xaml.Media;
 using System;
+using System.Linq;
 
 namespace BNManager.ViewModels;
 

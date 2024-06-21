@@ -28,7 +28,7 @@ internal partial class QueueTrackerViewModel : ObservableObject
   private IEnumerable<Nominator> Nominators =>
     MappersGuildService.Nominators.Where(n => ModeFilterItem?.Tag is not Mode mode || n.ModesInfo.Any(info => info.Mode == mode))
                                   .OrderByDescending(n => n.LastQueueStatusUpdate);
-     
+
   /// <summary>
   /// The list of items representing queue changes today (timezone-dependent).
   /// </summary>
