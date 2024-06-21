@@ -40,9 +40,7 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
   /// The parsed beatmap set.
   /// </summary>
   [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(HasValidBeatmapSet))]
-  [NotifyPropertyChangedFor(nameof(Cover))]
-  [NotifyPropertyChangedFor(nameof(Beatmaps))]
+  [NotifyPropertyChangedFor(nameof(HasValidBeatmapSet), nameof(Cover), nameof(Beatmaps))]
   private BeatmapSet _beatmapSet;
 
   /// <summary>

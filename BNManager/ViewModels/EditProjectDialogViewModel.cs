@@ -19,8 +19,7 @@ internal partial class EditProjectDialogViewModel : ObservableObject
   /// The name of the project.
   /// </summary>
   [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(HasRequiredInput))]
-  [NotifyPropertyChangedFor(nameof(ProjectWithNameAlreadyExists))]
+  [NotifyPropertyChangedFor(nameof(HasRequiredInput), nameof(ProjectWithNameAlreadyExists))]
   private string _name = "";
 
   /// <summary>

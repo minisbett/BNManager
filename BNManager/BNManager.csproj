@@ -19,6 +19,7 @@
     <None Remove="Views\Dialogs\NominatorStateInfoDialog.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\LoadingDialog.xaml" />
+    <None Remove="Views\Pages\QueueTrackerPage.xaml" />
     <None Remove="Views\ProjectPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
@@ -103,7 +104,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Pages\" />
+    <Page Update="Views\Pages\QueueTrackerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Dialogs\NominatorStateInfoDialog.xaml">

@@ -5,6 +5,7 @@ using BNManager.Views.Dialogs;
 using BNManager.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
@@ -113,14 +114,14 @@ public sealed partial class MainPage : Page
     }
 
     // Navigate to the corresponding page, depending on the selected item.
-    if (args.SelectedItem is ProjectNavigationViewItem p)
-      ContentFrame.Navigate(typeof(ProjectPage), p.Project, new SuppressNavigationTransitionInfo());
-    else if (args.IsSettingsSelected)
-      ContentFrame.Navigate(typeof(SettingsPage));
-    else if (args.SelectedItem as NavigationViewItem == HomeNavigationViewItem)
-      ContentFrame.Navigate(typeof(HomePage));
-    else
-      throw new Exception("Invalid selected item."); // fail-safe for development
+      ContentFrame.Navigate(args switch
+      {
+        var _ when args.IsSettingsSelected => typeof(SettingsPage),
+        var _ when args.SelectedItem as NavigationViewItem == QueueTrackerNavigationViewItem => typeof(QueueTrackerPage),
+        var _ when args.SelectedItem as NavigationViewItem == HomeNavigationViewItem => typeof(HomePage),
+        var _ when args.SelectedItem is ProjectNavigationViewItem => typeof(ProjectPage),
+        _ => throw new NotImplementedException()
+      }, (args.SelectedItem as ProjectNavigationViewItem)?.Project);
 
   }
 }

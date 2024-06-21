@@ -13,7 +13,7 @@
     <vm:SettingsViewModel x:Name="ViewModel" />
   </Page.DataContext>
 
-  <Grid  Margin="24,12,0,0">
+  <Grid Margin="24,12,12,12">
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
       <RowDefinition Height="auto" />
@@ -22,7 +22,7 @@
     </Grid.RowDefinitions>
     <TextBlock Text="Settings" FontSize="40" FontWeight="SemiBold" />
     <ToggleSwitch Grid.Row="1" Header="Dark Mode" IsOn="{x:Bind ViewModel.DarkMode,Mode=TwoWay}" Margin="12,12,12,0" />
-    <TextBlock Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,12,12" TextAlignment="Right" Foreground="{ThemeResource ThemeAwareGray}">
+    <TextBlock Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,0,0" TextAlignment="Right" Foreground="{ThemeResource ThemeAwareGray}">
       Version
       <Run Text="{x:Bind local:App.Version}" />
       <LineBreak/>

@@ -39,6 +39,11 @@
         <AutoSuggestBox PlaceholderText="Search for projects..." QueryIcon="Find" />
       </NavigationView.AutoSuggestBox>
       <NavigationView.FooterMenuItems>
+        <NavigationViewItem Content="BN Queue Tracker" x:Name="QueueTrackerNavigationViewItem">
+          <NavigationViewItem.Icon>
+            <FontIcon Glyph="&#xE8FD;" />
+          </NavigationViewItem.Icon>
+        </NavigationViewItem>
         <NavigationViewItem Icon="Home" Content="Home" x:Name="HomeNavigationViewItem" />
       </NavigationView.FooterMenuItems>
       <Frame x:Name="ContentFrame" />

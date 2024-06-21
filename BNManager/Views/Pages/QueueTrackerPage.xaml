@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BNManager.Views.Pages.QueueTrackerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:BNManager.ViewModels"
+    xmlns:enums="using:BNManager.Enums"
+    mc:Ignorable="d">
+
+  <Page.DataContext>
+    <vm:QueueTrackerViewModel x:Name="ViewModel" />
+  </Page.DataContext>
+
+  <Page.Resources>
+    <DataTemplate x:Name="QueueUpdateDataTemplate" x:DataType="vm:QueueTrackerItemViewModel">
+      <Grid ColumnSpacing="12">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+          <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="4" Background="{x:Bind QueueStatusForeground}" VerticalAlignment="Stretch" Width="5" />
+        <Border Grid.Column="1" CornerRadius="8" Width="48" Height="48">
+          <Border.Background>
+            <ImageBrush ImageSource="{x:Bind AvatarUrl}" Stretch="Fill" />
+          </Border.Background>
+        </Border>
+        <Grid Grid.Column="2" VerticalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Text="{x:Bind Nominator.Name}" FontSize="18" />
+          <TextBlock Grid.Row="1" Text="{x:Bind LastQueueStatusUpdate}" FontSize="14" Foreground="LightGray" />
+        </Grid>
+      </Grid>
+    </DataTemplate>
+    <ItemsPanelTemplate x:Name="QueueUpdatesItemPanelTemplate">
+      <StackPanel Orientation="Vertical" Spacing="8" />
+    </ItemsPanelTemplate>
+  </Page.Resources>
+
+  <Grid Margin="24,12,12,12">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Text="BN Queue Tracker" FontSize="40" FontWeight="SemiBold" />
+      <ComboBox Grid.Column="1" SelectedItem="{x:Bind ViewModel.ModeFilterItem,Mode=TwoWay}" Width="113" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <ComboBoxItem Content="All" x:Name="ModeFilterDefaultItem" />
+        <ComboBoxItem Content="osu!std" Tag="{x:Bind enums:Mode.Standard}" />
+        <ComboBoxItem Content="osu!taiko" Tag="{x:Bind enums:Mode.Taiko}" />
+        <ComboBoxItem Content="osu!ctb" Tag="{x:Bind enums:Mode.Catch}" />
+        <ComboBoxItem Content="osu!mania" Tag="{x:Bind enums:Mode.Mania}" />
+      </ComboBox>
+    </Grid>
+    <ScrollViewer Grid.Row="1">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        
+        
+        <Grid Visibility="{x:Bind ViewModel.HasItemsToday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Today" FontSize="24" FontWeight="SemiBold" />
+          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+        </Grid>
+        <ItemsControl Grid.Row="1" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsToday,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsToday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+        
+        
+        
+        <Grid Grid.Row="2" Visibility="{x:Bind ViewModel.HasItemsYesterday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Yesterday" FontSize="24" FontWeight="SemiBold" />
+          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+        </Grid>
+        <ItemsControl Grid.Row="3" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsYesterday,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsYesterday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+        
+        
+        
+        <Grid Grid.Row="4" Visibility="{x:Bind ViewModel.HasItemsLast7Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Last 7 Days" FontSize="24" FontWeight="SemiBold" />
+          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+        </Grid>
+        <ItemsControl Grid.Row="5" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsLast7Days,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLast7Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+        
+        
+        
+        <Grid Grid.Row="6" Visibility="{x:Bind ViewModel.HasItemsLast30Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Last 30 Days" FontSize="24" FontWeight="SemiBold" />
+          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+        </Grid>
+        <ItemsControl Grid.Row="7" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsLast30Days,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLast30Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+        
+        
+        
+        <Grid Grid.Row="8" Visibility="{x:Bind ViewModel.HasItemsLongTimeAgo,Mode=OneWay,Converter={StaticResource BoolToVisibility}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="A Long Time Ago" FontSize="24" FontWeight="SemiBold" />
+          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" />
+        </Grid>
+        <ItemsControl Grid.Row="9" Margin="0,8,0,0" ItemsSource="{x:Bind ViewModel.ItemsLongTimeAgo,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLongTimeAgo,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
+      </Grid>
+    </ScrollViewer>
+  </Grid>
+</Page>
