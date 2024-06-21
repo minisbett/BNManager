@@ -2,6 +2,8 @@
 using BNManager.Views.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -13,10 +15,23 @@ namespace BNManager.ViewModels;
 internal partial class MainViewModel : ObservableObject
 {
   /// <summary>
-  /// The project navigation view items for the navigation view.
+  /// The unfiltered project navigation view items for the navigation view.
   /// </summary>
   public ObservableCollection<ProjectNavigationViewItem> ProjectNavigationItems { get; } = new ObservableCollection<ProjectNavigationViewItem>();
 
+  /// <summary>
+  /// The search query used to filter the project navigation items.
+  /// </summary>
+  [ObservableProperty]
+  [NotifyPropertyChangedFor(nameof(FilteredProjectNavigationItems))]
+  private string _searchQuery = "";
+
+  /// <summary>
+  /// The filtered project navigation items based on the search query.
+  /// </summary>
+  public IEnumerable<ProjectNavigationViewItem> FilteredProjectNavigationItems
+    => ProjectNavigationItems.Where(p => SearchQuery.Split(' ').All(t => p.Project.Name.Contains(t, StringComparison.OrdinalIgnoreCase)));
+    
   /// <summary>
   /// The item currently selected in the navigation view.
   /// </summary>
@@ -25,6 +40,9 @@ internal partial class MainViewModel : ObservableObject
 
   public MainViewModel()
   {
+    // Update the filtered project navigation items when the source collection changes.
+    ProjectNavigationItems.CollectionChanged += (_, _) => OnPropertyChanged(nameof(FilteredProjectNavigationItems));
+
     // If a project was created, add it to the tracked view models and select it.
     ProjectService.ProjectCreated += (_, project) =>
     {

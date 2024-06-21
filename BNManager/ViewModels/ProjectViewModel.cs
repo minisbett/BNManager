@@ -90,9 +90,11 @@ internal partial class ProjectViewModel : ObservableObject
           bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre)
                       || state.Nominator.LanguageNegativePreferences.Contains(language);
 
+          // Filter the nominator based on the preference filter.
           return prefFilter switch
           {
             PreferenceFilter.SoftPreferred => (genrePref || languagePref) && !anyAnti,
+            PreferenceFilter.ExactPreferred => genrePref && languagePref,
             PreferenceFilter.NoAntiPreferred => !anyAnti,
             _ => false
           };
