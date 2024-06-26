@@ -123,6 +123,5 @@ public sealed partial class MainPage : Page
     },
     (args.SelectedItem as ProjectNavigationViewItem)?.Project,
     args.SelectedItem is ProjectNavigationViewItem ? new SuppressNavigationTransitionInfo() : null);
-
   }
 }
