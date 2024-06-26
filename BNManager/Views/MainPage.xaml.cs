@@ -58,9 +58,9 @@ public sealed partial class MainPage : Page
         foreach (Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.Id)))
         {
           project.NominatorStates.Add(new NominatorState(nominator));
-          addNoms.Add(nominator.Name);
+          addNoms.Add($"{nominator.Name} ({string.Join(", ", nominator.ModesInfo.Select(m => m.Mode.GetName()))})");
         }
-
+        
         // For all other nominators, update the cached name based on the mappers guild data.
         foreach (NominatorState ns in project.NominatorStates)
           ns.Name = MappersGuildService.FromId(ns.Id).Name;

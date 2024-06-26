@@ -39,4 +39,19 @@ internal static class Utils
     Mode.Mania => "\uE802", // mode-mania
     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
   };
+
+  /// <summary>
+  /// Returns the mode name (eg. "osu!std") of the given mode.
+  /// </summary>
+  /// <param name="mode">The mode.</param>
+  /// <returns>The mode name.</returns>
+  public static string GetName(this Mode mode) => mode switch
+  {
+    Mode.None => "osu!",
+    Mode.Standard => "osu!std",
+    Mode.Taiko => "osu!taiko",
+    Mode.Catch => "osu!catch",
+    Mode.Mania => "osu!mania",
+    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+  };
 }
