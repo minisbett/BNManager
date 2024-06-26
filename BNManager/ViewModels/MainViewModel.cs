@@ -47,7 +47,7 @@ internal partial class MainViewModel : ObservableObject
     ProjectService.ProjectCreated += (_, project) =>
     {
       ProjectNavigationViewItem item = new ProjectNavigationViewItem(project);
-      ProjectNavigationItems.Add(item);
+      ProjectNavigationItems.Insert(0, item);
       SelectedItem = item;
     };
 

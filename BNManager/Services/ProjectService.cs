@@ -69,7 +69,7 @@ internal static class ProjectService
       beatmapSet.Genre.Name,
       beatmapSet.Language.Name
     );
-    _projects.Add(project);
+    _projects.Insert(0, project);
 
     // Populate the project with all current nominators.
     foreach (Nominator nominator in MappersGuildService.Nominators)
