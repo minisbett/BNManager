@@ -37,6 +37,7 @@
       </Grid.RowDefinitions>
 
       <controls:NominatorStateItem State="{x:Bind ViewModel}" IsDetailed="True" />
+      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{x:Bind ViewModel.LastQueueStatusUpdateForeground}" />
       <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal">
         <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">
@@ -45,7 +46,7 @@
               Game Chat
             </TextBlock>
           </StackPanel>
-        </HyperlinkButton>
+        </HyperlinkButton>  
         <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.PersonalQueueUrl}" Margin="8,0,0,0" Visibility="{x:Bind ViewModel.HasPersonalQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">
             <FontIcon Glyph="&#xE8A7;" />
@@ -55,7 +56,6 @@
           </StackPanel>
         </HyperlinkButton>
       </StackPanel>
-      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{x:Bind ViewModel.LastQueueStatusUpdateForeground}" />
       <Border Grid.Row="1" CornerRadius="12" Background="{StaticResource BadgeBackground}" Padding="12">
         <StackPanel>
           <TextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />

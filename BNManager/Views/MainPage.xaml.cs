@@ -5,6 +5,7 @@ using BNManager.Views.Dialogs;
 using BNManager.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +120,9 @@ public sealed partial class MainPage : Page
       var _ when args.SelectedItem as NavigationViewItem == HomeNavigationViewItem => typeof(HomePage),
       var _ when args.SelectedItem is ProjectNavigationViewItem => typeof(ProjectPage),
       _ => throw new NotImplementedException()
-    }, (args.SelectedItem as ProjectNavigationViewItem)?.Project);
+    },
+    (args.SelectedItem as ProjectNavigationViewItem)?.Project,
+    args.SelectedItem is ProjectNavigationViewItem ? new SuppressNavigationTransitionInfo() : null);
 
   }
 }
