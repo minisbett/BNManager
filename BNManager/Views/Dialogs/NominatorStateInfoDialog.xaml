@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BNManager.Views.Controls"
+    xmlns:ctkcontrols="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:vm="using:BNManager.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -57,9 +58,9 @@
           </StackPanel>
         </HyperlinkButton>
       </StackPanel>
-      <Border Grid.Row="1" CornerRadius="12" Background="{StaticResource BadgeBackground}" Padding="12">
+      <Border Grid.Row="1" CornerRadius="12" Background="{ThemeResource BadgeBackground}" Padding="12">
         <StackPanel>
-          <TextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />
+          <ctkcontrols:MarkdownTextBlock Text="{x:Bind ViewModel.RequestInfoFormatted}" LinkClicked="MarkdownTextBlock_LinkClicked" Background="Transparent" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource BoolToVisibility}}" />
           <TextBlock Text="This nominator has no request info specified." TextWrapping="Wrap" Visibility="{x:Bind ViewModel.HasRequestInfo,Converter={StaticResource InvBoolToVisibility}}" />
         </StackPanel>
       </Border>

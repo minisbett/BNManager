@@ -1,7 +1,9 @@
 using BNManager.Services;
 using BNManager.ViewModels;
+using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Diagnostics;
 
 namespace BNManager.Views.Dialogs;
 
@@ -23,5 +25,15 @@ internal sealed partial class NominatorStateInfoDialog : ContentDialog
     RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light;
 
     ViewModel = state;
+  }
+
+  private void MarkdownTextBlock_LinkClicked(object sender, LinkClickedEventArgs e)
+  {
+    // Open the clicked link.
+    Process.Start(new ProcessStartInfo()
+    {
+      FileName = e.Link,
+      UseShellExecute = true
+    });
   }
 }

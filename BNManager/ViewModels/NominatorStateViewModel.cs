@@ -172,9 +172,15 @@ internal partial class NominatorStateViewModel : ObservableObject
   public bool HasRequestInfo => Nominator.RequestInfo is not "";
 
   /// <summary>
-  /// The request info of the nominator, formatted by trimming newlines.
+  /// The request info of the nominator, formatted by trimming newlines and applying some markdown hotfixes.
   /// </summary>
-  public string RequestInfoFormatted => Nominator.RequestInfo.Trim('\n');
+  public string RequestInfoFormatted
+  {
+    get
+    {
+      return Nominator.RequestInfo.Trim('\n').Replace("\n ", "\n").Replace(":\n-", ":\n\n-").Replace("\n", "  \n");
+    }
+  }
 
   /// <summary>
   /// The last time the queue status of the nominator was updated, as a readable string.
