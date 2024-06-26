@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace BNManager.ViewModels;
 
@@ -22,6 +23,11 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
   /// A dispatcher timer for fetching the beatmap set with a delay.
   /// </summary>
   private readonly DispatcherTimer _fetchTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
+
+  /// <summary>
+  /// A cancellation token for the API request.
+  /// </summary>
+  private CancellationTokenSource _cts = null;
 
   /// <summary>
   /// The entered beatmap set ID or URL.
@@ -84,7 +90,8 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
 
     // Parse the beatmap set ID and fetch the beatmap set.
     int id = int.TryParse(BeatmapSetIdInput, out int _id) ? _id : int.Parse(Regex.Match(BeatmapSetIdInput, BEATMAPSET_URL_REGEX).Value);
-    BeatmapSet = await MinoApiService.GetBeatmapSetAsync(id);
+    _cts = new CancellationTokenSource();
+    BeatmapSet = await OsuApiService.GetBeatmapSetAsync(id, _cts.Token);
     IsLoading = false;
 
     // Show an error message if the beatmap set was not found.
@@ -94,8 +101,9 @@ internal partial class CreateProjectDialogViewModel : ObservableObject
 
   partial void OnBeatmapSetIdInputChanged(string value)
   {
-    // Reset the UI and stop the fetch delay timer.
+    // Reset the UI, stop the fetch delay timer and abort any ongoing request.
     _fetchTimer.Stop();
+    _cts?.Cancel();
     ErrorMessage = null;
     BeatmapSet = null;
     IsLoading = false;
