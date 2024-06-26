@@ -15,7 +15,7 @@
 
     <DataTemplate x:Key="PreferenceTemplate" x:DataType="vm:PreferenceViewModel">
       <StackPanel Orientation="Horizontal">
-        <FontIcon Glyph="&#xE73E;" Foreground="LimeGreen" FontSize="16" Visibility="{x:Bind IsPositive, Converter={StaticResource BoolToVisibility}}" />
+        <FontIcon Glyph="&#xE73E;" Foreground="{ThemeResource OpenQueueForeground}" FontSize="16" Visibility="{x:Bind IsPositive, Converter={StaticResource BoolToVisibility}}" />
         <FontIcon Glyph="&#xE711;" Foreground="IndianRed" FontSize="16" Visibility="{x:Bind IsPositive, Converter={StaticResource InvBoolToVisibility}}" />
         <TextBlock Text="{x:Bind Text}" Margin="8,0,0,0" />
       </StackPanel>
@@ -37,17 +37,18 @@
       </Grid.RowDefinitions>
 
       <controls:NominatorStateItem State="{x:Bind ViewModel}" IsDetailed="True" />
-      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{x:Bind ViewModel.LastQueueStatusUpdateForeground}" />
+      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{ThemeResource OpenQueueForeground}" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource InvBoolToVisibility}}" />
+      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="IndianRed" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource BoolToVisibility}}" />
       <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal">
-        <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
+        <HyperlinkButton Background="{ThemeResource QueueLinkBackground}" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">
             <FontIcon Glyph="&#xE8F2;" />
             <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">
               Game Chat
             </TextBlock>
           </StackPanel>
-        </HyperlinkButton>  
-        <HyperlinkButton Background="#3b4e57" CornerRadius="8" NavigateUri="{x:Bind ViewModel.PersonalQueueUrl}" Margin="8,0,0,0" Visibility="{x:Bind ViewModel.HasPersonalQueue,Converter={StaticResource BoolToVisibility}}">
+        </HyperlinkButton>
+        <HyperlinkButton Background="{ThemeResource QueueLinkBackground}" CornerRadius="8" NavigateUri="{x:Bind ViewModel.PersonalQueueUrl}" Margin="8,0,0,0" Visibility="{x:Bind ViewModel.HasPersonalQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">
             <FontIcon Glyph="&#xE8A7;" />
             <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,1">

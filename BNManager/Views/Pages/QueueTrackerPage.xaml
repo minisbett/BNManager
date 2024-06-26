@@ -21,7 +21,8 @@
           <ColumnDefinition Width="auto" />
           <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <Border CornerRadius="4" Background="{x:Bind QueueStatusForeground}" VerticalAlignment="Stretch" Width="5" />
+        <Border CornerRadius="4" Background="{ThemeResource OpenQueueForeground}" VerticalAlignment="Stretch" Width="5" Visibility="{x:Bind IsClosed,Converter={StaticResource InvBoolToVisibility}}" />
+        <Border CornerRadius="4" Background="IndianRed" VerticalAlignment="Stretch" Width="5" Visibility="{x:Bind IsClosed,Converter={StaticResource BoolToVisibility}}" />
         <Border Grid.Column="1" CornerRadius="8" Width="48" Height="48">
           <Border.Background>
             <ImageBrush ImageSource="{x:Bind AvatarUrl}" Stretch="Fill" />
@@ -33,7 +34,7 @@
             <RowDefinition Height="auto" />
           </Grid.RowDefinitions>
           <TextBlock Text="{x:Bind Nominator.Name}" FontSize="18" />
-          <TextBlock Grid.Row="1" Text="{x:Bind LastQueueStatusUpdate}" FontSize="14" Foreground="LightGray" />
+          <TextBlock Grid.Row="1" Text="{x:Bind LastQueueStatusUpdate}" FontSize="14" Foreground="{ThemeResource ThemeAwareGray}" />
         </Grid>
       </Grid>
     </DataTemplate>
@@ -84,7 +85,7 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <TextBlock Text="Today" FontSize="24" FontWeight="SemiBold" />
-          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+          <Border Grid.Column="1" Background="{ThemeResource SeparatorBackground}" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
         </Grid>
         <ItemsControl Grid.Row="1" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsToday,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsToday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
         
@@ -96,7 +97,7 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <TextBlock Text="Yesterday" FontSize="24" FontWeight="SemiBold" />
-          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+          <Border Grid.Column="1" Background="{ThemeResource SeparatorBackground}" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
         </Grid>
         <ItemsControl Grid.Row="3" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsYesterday,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsYesterday,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
         
@@ -108,7 +109,7 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <TextBlock Text="Last 7 Days" FontSize="24" FontWeight="SemiBold" />
-          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+          <Border Grid.Column="1" Background="{ThemeResource SeparatorBackground}" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
         </Grid>
         <ItemsControl Grid.Row="5" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsLast7Days,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLast7Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
         
@@ -120,7 +121,7 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <TextBlock Text="Last 30 Days" FontSize="24" FontWeight="SemiBold" />
-          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
+          <Border Grid.Column="1" Background="{ThemeResource SeparatorBackground}" Height="1" HorizontalAlignment="Stretch" Margin="20,0" />
         </Grid>
         <ItemsControl Grid.Row="7" Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.ItemsLast30Days,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLast30Days,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
         
@@ -132,7 +133,7 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <TextBlock Text="A Long Time Ago" FontSize="24" FontWeight="SemiBold" />
-          <Border Grid.Column="1" Background="#404040" Height="1" HorizontalAlignment="Stretch" />
+          <Border Grid.Column="1" Background="{ThemeResource SeparatorBackground}" Height="1" HorizontalAlignment="Stretch" />
         </Grid>
         <ItemsControl Grid.Row="9" Margin="0,8,0,0" ItemsSource="{x:Bind ViewModel.ItemsLongTimeAgo,Mode=OneWay}" ItemTemplate="{StaticResource QueueUpdateDataTemplate}" ItemsPanel="{StaticResource QueueUpdatesItemPanelTemplate}" Visibility="{x:Bind ViewModel.HasItemsLongTimeAgo,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
       </Grid>

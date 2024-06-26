@@ -65,7 +65,7 @@ internal partial class ProjectViewModel : ObservableObject
       // Filter the nominator states based on the search query & modes targetted by the project.
       IEnumerable<NominatorStateViewModel> states = Project.NominatorStates.Select(state => new NominatorStateViewModel(state))
         .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)))
-        .Where(state => state.Nominator.ModesInfo.Any(x => Project.Modes.Contains(x.Mode)));
+        .Where(state => state.Nominator.ModesInfo.Any(x => Project.Modes.Concat(new[] { Mode.None }).Contains(x.Mode)));
 
       // Filter the nominator states based on the state filter.
       if (AskStateFilterItem?.Tag is AskState askState)
@@ -83,10 +83,10 @@ internal partial class ProjectViewModel : ObservableObject
           // We apply a hotfix here since the Video Game genre is listed as Game in the preferences.
           string genre = (Project.Genre == "Video Game" ? "Game" : Project.Genre).ToLower();
           string language = Project.Language.ToLower();
-          bool genrePref = genre == "Unspecified"
+          bool genrePref = genre == "unspecified"
                         // We concat the detail preferences to the genre preferences since BNsite splits it up like that.
                         || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
-          bool languagePref = language == "Unspecified" || state.Nominator.LanguagePreferences.Contains(language);
+          bool languagePref = language == "unspecified" || state.Nominator.LanguagePreferences.Contains(language);
           bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre)
                       || state.Nominator.LanguageNegativePreferences.Contains(language);
 

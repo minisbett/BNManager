@@ -39,25 +39,25 @@
         <ComboBoxItem Width="320" x:Name="PreferenceFilterDefaultItem">
           <StackPanel Spacing="4">
             <TextBlock Text="Any Preferences" />
-            <TextBlock Text="No preference filter." Foreground="LightGray" />
+            <TextBlock Text="No preference filter." Foreground="{ThemeResource ThemeAwareGray}" />
           </StackPanel>
         </ComboBoxItem>
         <ComboBoxItem Width="320" Tag="{x:Bind enums:PreferenceFilter.SoftPreferred}">
           <StackPanel Spacing="2">
             <TextBlock Text="Soft Preferred" />
-            <TextBlock Text="Matching genre *or* language preferences." Foreground="LightGray" TextWrapping="Wrap" />
+            <TextBlock Text="Matching genre *or* language preferences." Foreground="{ThemeResource ThemeAwareGray}" TextWrapping="Wrap" />
           </StackPanel>
         </ComboBoxItem>
         <ComboBoxItem Width="320" Tag="{x:Bind enums:PreferenceFilter.ExactPreferred}">
           <StackPanel Spacing="4">
             <TextBlock Text="Exact Preferred" />
-            <TextBlock Text="Matching genre *and* language preferences." Foreground="LightGray" TextWrapping="Wrap" />
+            <TextBlock Text="Matching genre *and* language preferences." Foreground="{ThemeResource ThemeAwareGray}" TextWrapping="Wrap" />
           </StackPanel>
         </ComboBoxItem>
         <ComboBoxItem Width="320" Tag="{x:Bind enums:PreferenceFilter.NoAntiPreferred}">
           <StackPanel Spacing="4">
             <TextBlock Text="No Anti-preferred" />
-            <TextBlock Text="No anti-preference for genre or language." Foreground="LightGray" TextWrapping="Wrap" />
+            <TextBlock Text="No anti-preference for genre or language." Foreground="{ThemeResource ThemeAwareGray}" TextWrapping="Wrap" />
           </StackPanel>
         </ComboBoxItem>
       </ComboBox>

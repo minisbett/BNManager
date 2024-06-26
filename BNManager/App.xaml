@@ -21,12 +21,18 @@
 
       <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-          <Color x:Key="BadgeBackground">#10000000</Color>
+          <Color x:Key="BadgeBackground">#08000000</Color>
           <Color x:Key="ThemeAwareGray">Gray</Color>
+          <Color x:Key="OpenQueueForeground">LimeGreen</Color>
+          <Color x:Key="SeparatorBackground">#DFDFDF</Color>
+          <Color x:Key="QueueLinkBackground">#ccddff</Color>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
           <Color x:Key="BadgeBackground">#08FFFFFF</Color>
           <Color x:Key="ThemeAwareGray">LightGray</Color>
+          <Color x:Key="OpenQueueForeground">LightGreen</Color>
+          <Color x:Key="SeparatorBackground">#404040</Color>
+          <Color x:Key="QueueLinkBackground">#3b4e57</Color>
         </ResourceDictionary>
       </ResourceDictionary.ThemeDictionaries>
     </ResourceDictionary>

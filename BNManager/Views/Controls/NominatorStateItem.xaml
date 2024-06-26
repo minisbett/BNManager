@@ -19,7 +19,7 @@
         <ImageBrush Stretch="Fill" ImageSource="{x:Bind ViewModel.AvatarUrl,Mode=OneWay}" />
       </Border.Background>
     </Border>
-    <FontIcon Glyph="&#xF136;" Margin="0,0,4,4" Foreground="LightGreen" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.ToolTip="The queue is currently opened." Visibility="{x:Bind ViewModel.IsClosed,Mode=OneWay,Converter={StaticResource InvBoolToVisibility}}" />
+    <FontIcon Glyph="&#xF136;" Margin="0,0,4,4" Foreground="{ThemeResource OpenQueueForeground}" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.ToolTip="The queue is currently opened." Visibility="{x:Bind ViewModel.IsClosed,Mode=OneWay,Converter={StaticResource InvBoolToVisibility}}" />
     <FontIcon Glyph="&#xEB90;" Margin="0,0,4,4" Foreground="IndianRed" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.ToolTip="The queue is currently closed." Visibility="{x:Bind ViewModel.IsClosed,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
     <Grid Grid.Column="1" Margin="0,16,0,0" RowSpacing="4">
       <Grid.RowDefinitions>
@@ -45,7 +45,7 @@
           <DataTemplate x:DataType="vm:GroupBadgeViewModel">
             <Border CornerRadius="8" Width="auto">
               <Border.Background>
-                <SolidColorBrush Color="{StaticResource BadgeBackground}" />
+                <SolidColorBrush Color="{ThemeResource BadgeBackground}" />
               </Border.Background>
               <StackPanel Orientation="Horizontal" Margin="6" VerticalAlignment="Center">
                 <TextBlock Text="{x:Bind ModeIcons}" Margin="0,0,4,0" FontFamily="{StaticResource OsuFont}" FontSize="14" VerticalAlignment="Center" />

@@ -74,7 +74,7 @@ internal partial class NominatorStateViewModel : ObservableObject
   public string PersonalQueueUrl => Nominator.RequestLink is "" ? GameChatUrl : Nominator.RequestLink;
 
   /// <summary>
-  /// Bool whether the queue of the nominator is opened.
+  /// Bool whether the queue of the nominator is closed.
   /// </summary>
   public bool IsClosed => Nominator.RequestStatus.Contains(RequestStatus.Closed);
 
@@ -182,11 +182,6 @@ internal partial class NominatorStateViewModel : ObservableObject
   public string LastQueueStatusUpdate
     => IsClosed ? $"Last opened {(DateTime.UtcNow - Nominator.LastQueueStatusUpdate).Days} days ago"
                 : $"Opened for {(DateTime.UtcNow - Nominator.LastQueueStatusUpdate).Days} days";
-
-  /// <summary>
-  /// The foreground color for the <see cref="LastQueueStatusUpdate"/> text.
-  /// </summary>
-  public SolidColorBrush LastQueueStatusUpdateForeground => new SolidColorBrush(IsClosed ? Colors.IndianRed : Colors.LightGreen);
 
   /// <summary>
   /// The nominator this state is representing.
