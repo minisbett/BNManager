@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BNManager.Views.Controls"
     xmlns:ctkcontrols="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:vm="using:BNManager.ViewModels"
+    xmlns:vm="using:BNManager.ViewModels" 
+    d:DataContext="{d:DesignInstance Type=vm:NominatorStateViewModel}"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -38,8 +39,6 @@
       </Grid.RowDefinitions>
 
       <controls:NominatorStateItem State="{x:Bind ViewModel}" IsDetailed="True" />
-      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="{ThemeResource OpenQueueForeground}" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource InvBoolToVisibility}}" />
-      <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" VerticalAlignment="Bottom" Margin="99,0,0,0" Foreground="IndianRed" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource BoolToVisibility}}" />
       <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-4" Orientation="Horizontal">
         <HyperlinkButton Background="{ThemeResource QueueLinkBackground}" CornerRadius="8" NavigateUri="{x:Bind ViewModel.GameChatUrl}" Visibility="{x:Bind ViewModel.HasGameChatQueue,Converter={StaticResource BoolToVisibility}}">
           <StackPanel Orientation="Horizontal" Spacing="4">

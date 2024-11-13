@@ -35,15 +35,9 @@ internal partial class NominatorStateViewModel : ObservableObject
       _state.AskState = value.State;
       _state.UpdatedAt = DateTime.UtcNow;
       OnPropertyChanged(nameof(AskState)); // Update AskState bindings for other parts of the UI (eg. info dialog & project list)
-      OnPropertyChanged(nameof(UpdatedAt));
       ProjectService.Save();
     }
   }
-
-  /// <summary>
-  /// A readable string of the last time the nominator state was updated.
-  /// </summary>
-  public string UpdatedAt => $"Updated on {_state.UpdatedAt.ToLocalTime():yyyy/MM/dd HH:mm}";
 
   /// <summary>
   /// The notes for the state of the nominator.
@@ -62,6 +56,11 @@ internal partial class NominatorStateViewModel : ObservableObject
   /// A URL to the avatar of the nominator.
   /// </summary>
   public string AvatarUrl => $"https://a.ppy.sh/{_state.Id}";
+
+  /// <summary>
+  /// A URL to the profile of the nominator.
+  /// </summary>
+  public string ProfileUrl => $"https://osu.ppy.sh/u/{_state.Id}";
 
   /// <summary>
   /// A URL to the game chat of the nominator.

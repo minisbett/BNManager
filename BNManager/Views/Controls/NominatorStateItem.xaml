@@ -21,8 +21,9 @@
     </Border>
     <FontIcon Glyph="&#xF136;" Margin="0,0,4,4" Foreground="{ThemeResource OpenQueueForeground}" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.ToolTip="The queue is currently opened." Visibility="{x:Bind ViewModel.IsClosed,Mode=OneWay,Converter={StaticResource InvBoolToVisibility}}" />
     <FontIcon Glyph="&#xEB90;" Margin="0,0,4,4" Foreground="IndianRed" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" ToolTipService.ToolTip="The queue is currently closed." Visibility="{x:Bind ViewModel.IsClosed,Mode=OneWay,Converter={StaticResource BoolToVisibility}}" />
-    <Grid Grid.Column="1" Margin="0,16,0,0" RowSpacing="4">
+    <Grid Grid.Column="1" Margin="0" RowSpacing="4" VerticalAlignment="Center">
       <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
         <RowDefinition Height="auto" />
       </Grid.RowDefinitions>
@@ -31,9 +32,17 @@
           <ColumnDefinition Width="auto" />
           <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Spacing="4">
-          <TextBlock Text="{x:Bind ViewModel.Nominator.Name,Mode=OneWay}" FontSize="24" FontWeight="SemiBold" />
-        </StackPanel>
+        <TextBlock Text="{x:Bind ViewModel.Nominator.Name,Mode=OneWay}" FontSize="24" FontWeight="SemiBold" Visibility="{x:Bind IsDetailed,Converter={StaticResource InvBoolToVisibility}}" />
+        <HyperlinkButton Foreground="White" NavigateUri="{x:Bind ViewModel.ProfileUrl,Mode=OneWay}" Padding="4,0" Visibility="{x:Bind IsDetailed,Converter={StaticResource BoolToVisibility}}">
+          <HyperlinkButton.Resources>
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPointerOver" Color="White" />
+            <SolidColorBrush x:Key="HyperlinkButtonForegroundPressed" Color="White" />
+          </HyperlinkButton.Resources>
+          <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock Text="{x:Bind ViewModel.Nominator.Name,Mode=OneWay}" FontSize="24" FontWeight="SemiBold" />
+            <FontIcon FontSize="16" Glyph="&#xE8A7;" />
+          </StackPanel>
+        </HyperlinkButton>
       </Grid>
       <ItemsControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.GroupBadges,Mode=OneWay}">
         <ItemsControl.ItemsPanel>
@@ -55,14 +64,19 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
+      <StackPanel Grid.Row="2" Margin="8,0,0,0" Visibility="{x:Bind IsDetailed,Converter={StaticResource BoolToVisibility}}">
+        <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" Foreground="{ThemeResource OpenQueueForeground}" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource InvBoolToVisibility}}" />
+        <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" Foreground="IndianRed" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource BoolToVisibility}}" />
+      </StackPanel>
     </Grid>
-    <ComboBox HorizontalAlignment="Right" ItemsSource="{x:Bind vm:AskStateViewModel.Options}" SelectedItem="{x:Bind ViewModel.AskState,Mode=TwoWay}" Grid.Column="3" MinWidth="116" VerticalAlignment="Center" Margin="0,0,4,0">
+    <ComboBox x:Name="cc" HorizontalAlignment="Right" ItemsSource="{x:Bind vm:AskStateViewModel.Options}" SelectedItem="{x:Bind ViewModel.AskState,Mode=TwoWay}" Grid.Column="2" MinWidth="116" VerticalAlignment="Center" Margin="0,0,4,0">
       <ComboBox.ItemTemplate>
         <DataTemplate x:DataType="vm:AskStateViewModel">
-          <TextBlock Text="{x:Bind ToString()}" Foreground="{x:Bind Brush}" TextAlignment="Center" />
+          <Grid>
+            <TextBlock Loaded="AskStateTextBlock_Loaded" Text="{x:Bind ToString()}" Foreground="{x:Bind Brush}" TextAlignment="Center" />
+          </Grid>
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
-    <TextBlock Grid.Column="2" Text="{x:Bind ViewModel.UpdatedAt,Mode=OneWay}" FontSize="14" Foreground="Gray" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,9,9,0" Visibility="{x:Bind IsDetailed,Converter={StaticResource BoolToVisibility}}" />
   </Grid>
 </UserControl>
