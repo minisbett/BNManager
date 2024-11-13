@@ -65,6 +65,7 @@
       <ComboBox Grid.Column="5" Width="115" SelectedItem="{x:Bind ViewModel.AskStateFilterItem,Mode=TwoWay}">
         <ComboBoxItem Content="All" x:Name="AskStateFilterDefaultItem" />
         <ComboBoxItem Content="Declined" Tag="{x:Bind enums:AskState.Declined}" />
+        <ComboBoxItem Content="Unlikely" Tag="{x:Bind enums:AskState.Unlikely}" />
         <ComboBoxItem Content="Not Asked" Tag="{x:Bind enums:AskState.NotAsked}" />
         <ComboBoxItem Content="Pending" Tag="{x:Bind enums:AskState.Pending}"/>
         <ComboBoxItem Content="Possible" Tag="{x:Bind enums:AskState.Possible}" />
