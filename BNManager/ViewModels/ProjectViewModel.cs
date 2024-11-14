@@ -62,41 +62,46 @@ internal partial class ProjectViewModel : ObservableObject
   {
     get
     {
-      // Filter the nominator states based on the search query & modes targetted by the project.
+      // Filter the nominator states based on modes targetted by the project.
       IEnumerable<NominatorStateViewModel> states = Project.NominatorStates.Select(state => new NominatorStateViewModel(state))
-        .Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)))
         .Where(state => state.Nominator.ModesInfo.Any(x => Project.Modes.Concat(new[] { Mode.None }).Contains(x.Mode)));
 
-      // Filter the nominator states based on the state filter.
-      if (AskStateFilterItem?.Tag is AskState askState)
-        states = states.Where(state => state.AskState.State == askState);
+      // If a search query is specified, filter by that query and ignore all other filters. (ask state filter, only open queue, preference)
+      if (SearchQuery != "")
+        states = states.Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
+      else
+      {
+        // Filter the nominator states based on the state filter.
+        if (AskStateFilterItem?.Tag is AskState askState)
+          states = states.Where(state => state.AskState.State == askState);
 
-      // Filter the nominator states based on whether their queue is open or not.
-      if (OnlyOpenQueues)
-        states = states.Where(state => !state.Nominator.RequestStatus.Contains(RequestStatus.Closed));
+        // Filter the nominator states based on whether their queue is open or not.
+        if (OnlyOpenQueues)
+          states = states.Where(state => !state.Nominator.RequestStatus.Contains(RequestStatus.Closed));
 
-      // Filter the nominators based on their preferences in comparison to the project.
-      if (PreferenceFilterItem?.Tag is PreferenceFilter prefFilter)
-        states = states.Where(state =>
-        {
-          // Get the match states for the genre and language preferences for further filtering.
-          // We apply a hotfix here since the Video Game genre is listed as Game in the preferences.
-          string genre = (Project.Genre == "Video Game" ? "Game" : Project.Genre).ToLower();
-          string language = Project.Language.ToLower();
-          // Genre and details are concat since the BNsite differentiates the genres between those two categories.
-          bool genrePref = genre == "unspecified" || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
-          bool languagePref = language == "unspecified" || state.Nominator.LanguagePreferences.Contains(language);
-          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre) || state.Nominator.LanguageNegativePreferences.Contains(language);
-
-          // Filter the nominator based on the preference filter.
-          return prefFilter switch
+        // Filter the nominators based on their preferences in comparison to the project.
+        if (PreferenceFilterItem?.Tag is PreferenceFilter prefFilter)
+          states = states.Where(state =>
           {
-            PreferenceFilter.SoftPreferred => (genrePref || languagePref) && !anyAnti,
-            PreferenceFilter.ExactPreferred => genrePref && languagePref,
-            PreferenceFilter.NoAntiPreferred => !anyAnti,
-            _ => false
-          };
-        });
+            // Get the match states for the genre and language preferences for further filtering.
+            // We apply a hotfix here since the Video Game genre is listed as Game in the preferences.
+            string genre = (Project.Genre == "Video Game" ? "Game" : Project.Genre).ToLower();
+            string language = Project.Language.ToLower();
+            // Genre and details are concat since the BNsite differentiates the genres between those two categories.
+            bool genrePref = genre == "unspecified" || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
+            bool languagePref = language == "unspecified" || state.Nominator.LanguagePreferences.Contains(language);
+            bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre) || state.Nominator.LanguageNegativePreferences.Contains(language);
+
+            // Filter the nominator based on the preference filter.
+            return prefFilter switch
+            {
+              PreferenceFilter.SoftPreferred => (genrePref || languagePref) && !anyAnti,
+              PreferenceFilter.ExactPreferred => genrePref && languagePref,
+              PreferenceFilter.NoAntiPreferred => !anyAnti,
+              _ => false
+            };
+          });
+      }
 
       // Sort the nominator states based on the selected sort option.
       return NominatorSortItem?.Tag switch
