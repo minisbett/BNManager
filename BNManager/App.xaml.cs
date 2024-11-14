@@ -17,7 +17,7 @@ public partial class App : Application
   {
     get
     {
-      string ver = "0.5.0";
+      string ver = "0.6.0";
 #if DEBUG
       ver += "-dev";
 #endif
