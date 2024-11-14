@@ -83,12 +83,10 @@ internal partial class ProjectViewModel : ObservableObject
           // We apply a hotfix here since the Video Game genre is listed as Game in the preferences.
           string genre = (Project.Genre == "Video Game" ? "Game" : Project.Genre).ToLower();
           string language = Project.Language.ToLower();
-          bool genrePref = genre == "unspecified"
-                        // We concat the detail preferences to the genre preferences since BNsite splits it up like that.
-                        || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
+          // Genre and details are concat since the BNsite differentiates the genres between those two categories.
+          bool genrePref = genre == "unspecified" || state.Nominator.GenrePreferences.Concat(state.Nominator.DetailPreferences).Contains(genre);
           bool languagePref = language == "unspecified" || state.Nominator.LanguagePreferences.Contains(language);
-          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre)
-                      || state.Nominator.LanguageNegativePreferences.Contains(language);
+          bool anyAnti = state.Nominator.GenreNegativePreferences.Contains(genre) || state.Nominator.LanguageNegativePreferences.Contains(language);
 
           // Filter the nominator based on the preference filter.
           return prefFilter switch

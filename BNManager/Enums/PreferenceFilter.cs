@@ -6,7 +6,7 @@
 internal enum PreferenceFilter
 {
   /// <summary>
-  /// Filtered to only show nominators with either matching genre or language preferences.
+  /// Filtered to only show nominators with either matching genre or language preferences, and no anti-preferences.
   /// </summary>
   SoftPreferred,
 

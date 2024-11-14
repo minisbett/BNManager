@@ -19,7 +19,7 @@
     </Grid.ColumnDefinitions>
     <Border CornerRadius="12" Width="42" Height="42">
       <Border.Background>
-        <ImageBrush ImageSource="{x:Bind ViewModel.Cover}" Stretch="UniformToFill" />
+        <ImageBrush ImageSource="{x:Bind ViewModel.CoverUrl}" Stretch="UniformToFill" />
       </Border.Background>
     </Border>
     <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Project.Name,Mode=OneWay}" Width="174" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,0,4" />

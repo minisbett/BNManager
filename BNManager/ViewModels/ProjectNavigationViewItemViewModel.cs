@@ -22,13 +22,13 @@ internal partial class ProjectNavigationViewItemViewModel : ObservableObject
   /// The project the navigation view item represents.
   /// </summary>
   [ObservableProperty]
-  [NotifyPropertyChangedFor(nameof(Cover))]
+  [NotifyPropertyChangedFor(nameof(CoverUrl))]
   private Project _project;
 
   /// <summary>
   /// The cover image for the beatmap set associated with the project.
   /// </summary>
-  public string Cover => $"https://assets.ppy.sh/beatmaps/{Project.BeatmapSetId}/covers/cover.jpg";
+  public string CoverUrl => $"https://assets.ppy.sh/beatmaps/{Project.BeatmapSetId}/covers/cover.jpg";
 
   /// <summary>
   /// Prompts the user to edit a project.

@@ -21,8 +21,20 @@
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
     <TextBlock Text="Settings" FontSize="40" FontWeight="SemiBold" />
-    <ToggleSwitch Grid.Row="1" Header="Dark Mode" IsOn="{x:Bind ViewModel.DarkMode,Mode=TwoWay}" Margin="12,12,12,0" />
-    <TextBlock Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,0,0" TextAlignment="Right" Foreground="{ThemeResource ThemeAwareGray}">
+    <Grid Grid.Row="1" Margin="0,12,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition Width="auto" />
+      </Grid.ColumnDefinitions>
+      <ToggleSwitch Header="Dark Mode" IsOn="{x:Bind ViewModel.DarkMode,Mode=TwoWay}" />
+      <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="12" Grid.Row="2">
+        <TextBlock>
+          Beatmap Background Opacity (<Run Text="{x:Bind ViewModel.BackgroundOpacity,Mode=OneWay}" />%)
+        </TextBlock>
+        <Slider HorizontalAlignment="Left" Minimum="0" Width="230" Maximum="30" Value="{x:Bind ViewModel.BackgroundOpacity,Mode=TwoWay}" LostFocus="BackgroundOpacitySlider_LostFocus" />
+      </StackPanel>
+    </Grid>
+    <TextBlock Grid.Row="4" HorizontalAlignment="Right" Margin="0,0,0,0" TextAlignment="Right" Foreground="{ThemeResource ThemeAwareGray}">
       Version
       <Run Text="{x:Bind local:App.Version}" />
       <LineBreak/>

@@ -1,11 +1,14 @@
 ﻿using BNManager.Services;
 using BNManager.Views.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI;
 
 namespace BNManager.ViewModels;
 
@@ -36,7 +39,20 @@ internal partial class MainViewModel : ObservableObject
   /// The item currently selected in the navigation view.
   /// </summary>
   [ObservableProperty]
+  [NotifyPropertyChangedFor(nameof(SelectedProjectBeatmapCoverUrl))]
+  [NotifyPropertyChangedFor(nameof(BeatmapBackgroundOpacity))]
   private NavigationViewItem _selectedItem;
+
+  /// <summary>
+  /// The URL of the beatmap cover of the selected project. If no project is selected (Home, Settings), this returns "msappx://". (valid, empty image source)
+  /// </summary>
+  public string SelectedProjectBeatmapCoverUrl => 
+    SelectedItem is ProjectNavigationViewItem p ? $"https://assets.ppy.sh/beatmaps/{p.Project.BeatmapSetId}/covers/cover.jpg" : "msappx://";
+
+  /// <summary>
+  /// The opacity of the beatmap background displayed over the whole application.
+  /// </summary>
+  public double BeatmapBackgroundOpacity => ConfigService.Config.BackgroundOpacity / 100d;
 
   public MainViewModel()
   {

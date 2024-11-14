@@ -18,6 +18,9 @@ internal static class ConfigService
       "BNManager", "config.json"
   );
 
+  /// <summary>
+  /// The static config instance.
+  /// </summary>
   public static Config Config { get; private set; } = new Config();
 
   /// <summary>
