@@ -4,6 +4,7 @@ using BNManager.ViewModels;
 using BNManager.Views.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.Linq;
 
 namespace BNManager.Views.Pages;
 
@@ -20,7 +21,7 @@ internal sealed partial class ProjectPage : Page
     // point the bindings, which assign enum value and combobox item, haven't initialized yet, causing Tag to be null.
     NominatorSortDefaultItem.Tag = NominatorSort.NameAsc;
     ViewModel.NominatorSortItem = NominatorSortDefaultItem;
-    ViewModel.AskStateFilterItem = AskStateFilterDefaultItem;
+    AskStateFilterComboBox.SelectedIndex = 0;
     ViewModel.PreferenceFilterItem = PreferenceFilterDefaultItem;
   }
 

@@ -1,4 +1,5 @@
 ﻿using BNManager.Enums;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Linq;
@@ -21,6 +22,7 @@ internal class AskStateViewModel
   /// </summary>
   public Brush Brush => new SolidColorBrush(State switch
   {
+    AskState.None => Colors.White,
     AskState.Declined => Color.FromArgb(255, 224, 102, 102),
     AskState.Unlikely => Color.FromArgb(255, 252, 149, 76),
     AskState.NotAsked => Color.FromArgb(255, 200, 200, 200),
@@ -37,6 +39,7 @@ internal class AskStateViewModel
 
   public override string ToString() => State switch
   {
+    AskState.None => "All",
     AskState.Declined => "Declined",
     AskState.Unlikely => "Unlikely",
     AskState.NotAsked => "Not Asked",
@@ -47,7 +50,12 @@ internal class AskStateViewModel
   };
 
   /// <summary>
-  /// An array of options for the nominator ask state combo box.
+  /// An array with all view models for all ask states. (excluding <see cref="AskState.None"/>)
   /// </summary>
-  public static AskStateViewModel[] Options { get; } = Enum.GetValues<AskState>().Select(x => new AskStateViewModel(x)).ToArray();
+  public static AskStateViewModel[] Options { get; } = Enum.GetValues<AskState>().Skip(1 /* None */).Select(x => new AskStateViewModel(x)).ToArray();
+
+  /// <summary>
+  /// An array with all view models for all ask states. (including <see cref="AskState.None"/>)
+  /// </summary>
+  public static AskStateViewModel[] OptionsFull { get; } = Enum.GetValues<AskState>().Select(x => new AskStateViewModel(x)).ToArray();
 }

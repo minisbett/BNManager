@@ -69,7 +69,7 @@
         <TextBlock Text="{x:Bind ViewModel.LastQueueStatusUpdate}" Foreground="IndianRed" Visibility="{x:Bind ViewModel.IsClosed,Converter={StaticResource BoolToVisibility}}" />
       </StackPanel>
     </Grid>
-    <ComboBox x:Name="cc" HorizontalAlignment="Right" ItemsSource="{x:Bind vm:AskStateViewModel.Options}" SelectedItem="{x:Bind ViewModel.AskState,Mode=TwoWay}" Grid.Column="2" MinWidth="116" VerticalAlignment="Center" Margin="0,0,4,0">
+    <ComboBox HorizontalAlignment="Right" ItemsSource="{x:Bind vm:AskStateViewModel.Options}" SelectedItem="{x:Bind ViewModel.AskState,Mode=TwoWay}" Grid.Column="2" MinWidth="116" VerticalAlignment="Center" Margin="0,0,4,0">
       <ComboBox.ItemTemplate>
         <DataTemplate x:DataType="vm:AskStateViewModel">
           <Grid>

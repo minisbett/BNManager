@@ -19,7 +19,7 @@
       <RowDefinition Height="auto" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <Grid MaxHeight="100" Margin="16,8,16,0" ColumnSpacing="16">
+    <Grid MaxHeight="100" Margin="16,16,16,8" ColumnSpacing="16">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="auto" />
         <ColumnDefinition Width="auto" />
@@ -62,14 +62,14 @@
         </ComboBoxItem>
       </ComboBox>
       <CheckBox Grid.Column="3" MinWidth="120" Content="Only Open Queues" IsChecked="{x:Bind ViewModel.OnlyOpenQueues,Mode=TwoWay}" ToolTipService.ToolTip="Only displays Beatmap Nominators with opened queues." />
-      <ComboBox Grid.Column="5" Width="115" SelectedItem="{x:Bind ViewModel.AskStateFilterItem,Mode=TwoWay}">
-        <ComboBoxItem Content="All" x:Name="AskStateFilterDefaultItem" />
-        <ComboBoxItem Content="Declined" Tag="{x:Bind enums:AskState.Declined}" />
-        <ComboBoxItem Content="Unlikely" Tag="{x:Bind enums:AskState.Unlikely}" />
-        <ComboBoxItem Content="Not Asked" Tag="{x:Bind enums:AskState.NotAsked}" />
-        <ComboBoxItem Content="Pending" Tag="{x:Bind enums:AskState.Pending}"/>
-        <ComboBoxItem Content="Possible" Tag="{x:Bind enums:AskState.Possible}" />
-        <ComboBoxItem Content="Confirmed" Tag="{x:Bind enums:AskState.Confirmed}" />
+      <ComboBox x:Name="AskStateFilterComboBox" Grid.Column="5" Width="115" ItemsSource="{x:Bind vm:AskStateViewModel.OptionsFull}" SelectedItem="{x:Bind ViewModel.AskStateFilterItem,Mode=TwoWay}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:AskStateViewModel">
+            <Grid>
+              <TextBlock Text="{x:Bind ToString()}" Foreground="{x:Bind Brush}" />
+            </Grid>
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
       </ComboBox>
     </Grid>
     <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.NominatorStates,Mode=OneWay}" ItemClick="ListView_ItemClick" SelectionMode="None" IsItemClickEnabled="True">

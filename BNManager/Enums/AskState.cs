@@ -8,6 +8,11 @@ namespace BNManager.Enums;
 internal enum AskState
 {
   /// <summary>
+  /// Represents all/no specific ask states.
+  /// </summary>
+  None,
+
+  /// <summary>
   /// The nominator has declined to nominate the beatmap.
   /// </summary>
   [EnumMember(Value = "declined")]
