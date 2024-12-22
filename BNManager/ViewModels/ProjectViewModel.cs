@@ -46,7 +46,7 @@ internal partial class ProjectViewModel : ObservableObject
   /// </summary>
   [ObservableProperty]
   [NotifyPropertyChangedFor(nameof(NominatorStates))]
-  private ComboBoxItem _askStateFilterItem;
+  private AskStateViewModel _askStateFilterItem;
 
   /// <summary>
   /// Bool whether only nominators with open queues should be shown.
@@ -72,8 +72,8 @@ internal partial class ProjectViewModel : ObservableObject
       else
       {
         // Filter the nominator states based on the state filter.
-        if (AskStateFilterItem?.Tag is AskState askState)
-          states = states.Where(state => state.AskState.State == askState);
+        if (AskStateFilterItem is AskStateViewModel askState)
+          states = states.Where(state => state.AskState.State == askState.State);
 
         // Filter the nominator states based on whether their queue is open or not.
         if (OnlyOpenQueues)
