@@ -21,10 +21,13 @@ internal static class OsuApiService
     "https://osu.direct/api/v2/s/$ID"
   };
 
-  /// <summary>
-  /// The HTTP client used for the service.
-  /// </summary>
-  private static readonly HttpClient _http = new HttpClient();
+    /// <summary>
+    /// The HTTP client used for the service.
+    /// </summary>
+    private static readonly HttpClient _http = new HttpClient()
+    {
+        DefaultRequestHeaders = { { "User-Agent", $"bnmanager/{App.Version}" } }
+    };
 
   /// <summary>
   /// Returns the beatmap set with the specified ID. If an error occured, null is returned.
