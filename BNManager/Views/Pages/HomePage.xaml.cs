@@ -23,4 +23,6 @@ public sealed partial class HomePage : Page
     if (await cpd.ShowAsync() == ContentDialogResult.Primary)
       ProjectService.Create((cpd.DataContext as CreateProjectDialogViewModel).BeatmapSet);
   }
+
+  private async void BnWebsite_Click(object sender, RoutedEventArgs e) => await Windows.System.Launcher.LaunchUriAsync(new Uri("https://bn.mappersguild.com/"));
 }

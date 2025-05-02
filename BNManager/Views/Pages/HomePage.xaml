@@ -26,8 +26,8 @@
         <ColumnDefinition Width="auto" />
       </Grid.ColumnDefinitions>
       <Button Content="Create Project" Click="CreateProject_Click" MinWidth="100" />
-      <Button Grid.Column="1" Content="Lorem Ipsum" />
+      <Button Grid.Column="1" Content="BN website" Click="BnWebsite_Click" />
     </Grid>
-    <HyperlinkButton Grid.Row="4" Content="How does this work?" HorizontalAlignment="Center" Margin="0,12,0,0" />
+    <HyperlinkButton Grid.Row="4" Content="How does this work?" NavigateUri="https://github.com/minisbett/bnmanager?tab=readme-ov-file#usage" HorizontalAlignment="Center" Margin="0,12,0,0" />
   </Grid>
 </Page>
