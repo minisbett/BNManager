@@ -71,8 +71,8 @@ internal partial class ProjectViewModel : ObservableObject
         states = states.Where(x => SearchQuery.ToLower().Split(' ').All(tag => x.Nominator.Name.ToLower().Contains(tag)));
       else
       {
-        // Filter the nominator states based on the state filter.
-        if (AskStateFilterItem is AskStateViewModel askState)
+        // Filter the nominator states based on the state filter (None = All).
+        if (AskStateFilterItem is AskStateViewModel askState && askState.State > AskState.None)
           states = states.Where(state => state.AskState.State == askState.State);
 
         // Filter the nominator states based on whether their queue is open or not.
