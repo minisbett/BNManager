@@ -36,4 +36,9 @@ internal sealed partial class NominatorStateInfoDialog : ContentDialog
       UseShellExecute = true
     });
   }
+
+  private void ExitButton_Click(object sender, RoutedEventArgs e)
+  {
+    Hide();
+  }
 }

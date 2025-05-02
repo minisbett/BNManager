@@ -12,9 +12,11 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
       <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
     <Image Source="{StaticResource Logo}" Width="128" Height="128" />
-    <ProgressRing Margin="0,118,0,0" />
+    <ProgressRing Margin="0,118,0,0" Name="ProgressRing" />
     <TextBlock Grid.Row="1" Name="InfoTextBlock" TextAlignment="Center" TextWrapping="Wrap" MaxWidth="270" />
+    <Button Grid.Row="2" Name="ErrorActionButton" Visibility="Collapsed" HorizontalAlignment="Center" Click="ErrorActionButton_Click" />
   </Grid>
 </ContentDialog>

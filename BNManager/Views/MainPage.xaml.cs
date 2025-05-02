@@ -9,6 +9,9 @@ using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace BNManager.Views;
 
@@ -30,15 +33,25 @@ public sealed partial class MainPage : Page
     {
       // Display a loading dialog while some services are being initialized.
       LoadingDialog ld = new LoadingDialog() { XamlRoot = Content.XamlRoot };
-      _ = ld.ShowAsync();
-
-      // Initialize the mappers guild service, providing info about the beatmap nominators.
-      ld.InfoText = "Fetching Beatmap Nominators from Mappers' Guild...";
-      await MappersGuildService.InitializeAsync();
+      IAsyncOperation<ContentDialogResult> operation = ld.ShowAsync();
 
       // Load all projects from the local storage.
       ld.InfoText = "Loading projects...";
       ProjectService.Initialize();
+
+      // Initialize the mappers guild service, providing info about the beatmap nominators.
+      ld.InfoText = "Fetching Beatmap Nominators from Mappers' Guild...";
+      try
+      {
+        await MappersGuildService.InitializeAsync();
+        ld.Hide();
+      }
+      catch (BnSiteDownException)
+      {
+        ld.Fail("Mappers' Guild is currently unreachable.", "Proceed with cached data", MappersGuildService.IsCacheAvailable);
+        await operation.AsTask().WaitAsync(CancellationToken.None); // Wait for the dialog to be actively closed (error button) before proceeding.
+        MappersGuildService.InitializeFromCache();
+      }
 
       // Update the nominator names saved in the projects based on the mappers guild data.
       // Also find all nominators that are no longer a BN, remove them and notify the user.
@@ -68,7 +81,6 @@ public sealed partial class MainPage : Page
 
       // Save all projects back to the local storage since they might have changed via the synchronization with the mappers guild.
       ProjectService.Save();
-      ld.Hide();
 
       // Load the projects into the navigation view.
       foreach (Project p in ProjectService.Projects)
