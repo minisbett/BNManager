@@ -11,10 +11,16 @@ namespace BNManager.Models;
 internal class Nominator
 {
   /// <summary>
+  /// The unique ID of the nominator on the mapper's guild API.
+  /// </summary>
+  [JsonProperty("id")]
+  public string Id { get; private set; }
+
+  /// <summary>
   /// The osu! ID of the nominator.
   /// </summary>
   [JsonProperty("osuId")]
-  public int Id { get; private set; }
+  public int UserId { get; private set; }
 
   /// <summary>
   /// The osu! username of the nominator.

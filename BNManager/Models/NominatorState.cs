@@ -50,7 +50,7 @@ internal class NominatorState
   /// <param name="nominator"></param>
   public NominatorState(Nominator nominator)
   {
-    Id = nominator.Id;
+    Id = nominator.UserId;
     Name = nominator.Name;
     UpdatedAt = DateTime.UtcNow;
     AskState = AskState.NotAsked;

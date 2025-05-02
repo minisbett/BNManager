@@ -4,6 +4,7 @@ using BNManager.Views.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using Windows.System;
 
 namespace BNManager.Views.Pages;
 
@@ -24,5 +25,5 @@ public sealed partial class HomePage : Page
       ProjectService.Create((cpd.DataContext as CreateProjectDialogViewModel).BeatmapSet);
   }
 
-  private async void BnWebsite_Click(object sender, RoutedEventArgs e) => await Windows.System.Launcher.LaunchUriAsync(new Uri("https://bn.mappersguild.com/"));
+  private async void BnWebsite_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("https://bn.mappersguild.com/"));
 }

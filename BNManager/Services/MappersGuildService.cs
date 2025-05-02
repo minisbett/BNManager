@@ -41,7 +41,7 @@ internal static class MappersGuildService
       throw new BnSiteDownException();
 
     // Distinct nominators by their ID such that we don't have duplicates.
-    Nominators = nominators.GroupBy(x => x.Id).Select(x => x.First()).ToArray();
+    Nominators = nominators.GroupBy(x => x.UserId).Select(x => x.First()).ToArray();
 
     // Save the nominators to the cache file.
     File.WriteAllText(_nominatorsCacheFile, JsonConvert.SerializeObject(Nominators));
@@ -66,7 +66,7 @@ internal static class MappersGuildService
   /// </summary>
   /// <param name="id">The ID of the nominator.</param>
   /// <returns>The nominator or null if not found.</returns>
-  public static Nominator FromId(int id) => Nominators.FirstOrDefault(n => n.Id == id);
+  public static Nominator FromId(int id) => Nominators.FirstOrDefault(n => n.UserId == id);
 }
 
 public class BnSiteDownException : Exception;

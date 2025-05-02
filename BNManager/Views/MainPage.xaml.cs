@@ -68,7 +68,7 @@ public sealed partial class MainPage : Page
         }
 
         // Find all nominators that are not in the project yet, add them, and remember their names.
-        foreach (Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.Id)))
+        foreach (Nominator nominator in MappersGuildService.Nominators.Where(n => !project.NominatorStates.Any(ns => ns.Id == n.UserId)))
         {
           project.NominatorStates.Add(new NominatorState(nominator));
           addNoms.Add($"{nominator.Name} ({string.Join(", ", nominator.ModesInfo.Select(m => m.Mode.GetName()))})");

@@ -20,7 +20,7 @@ internal class QueueTrackerItemViewModel
   /// <summary>
   /// A URL to the avatar of the nominator.
   /// </summary>
-  public string AvatarUrl => $"https://a.ppy.sh/{Nominator.Id}";
+  public string AvatarUrl => $"https://a.ppy.sh/{Nominator.UserId}";
 
   /// <summary>
   /// A string representation of the nominator's last queue status update.
