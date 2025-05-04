@@ -38,7 +38,10 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
               </Grid.RowDefinitions>
-              <TextBlock Text="{x:Bind Nominator.Name}" FontSize="18" />
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ModeIcons}" Margin="0,0,4,0" FontFamily="{StaticResource OsuFont}" FontSize="18" VerticalAlignment="Center" />
+                <TextBlock Text="{x:Bind Nominator.Name}" FontSize="18" />
+              </StackPanel>
               <TextBlock Grid.Row="1" Text="{x:Bind LastQueueStatusUpdate}" FontSize="14" Foreground="{ThemeResource ThemeAwareGray}" />
             </Grid>
           </Grid>

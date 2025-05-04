@@ -23,6 +23,11 @@ internal class QueueTrackerItemViewModel
   public string AvatarUrl => $"https://a.ppy.sh/{Nominator.UserId}";
 
   /// <summary>
+  /// A string containing the mode icons (special font) for the modes the nominator applies to.
+  /// </summary>
+  public string ModeIcons => string.Join(" ", Nominator.ModesInfo.Select(x => x.Mode).Select(Utils.GetModeIcon));
+
+  /// <summary>
   /// A string representation of the nominator's last queue status update.
   /// </summary>
   public string LastQueueStatusUpdate
