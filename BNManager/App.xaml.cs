@@ -1,7 +1,12 @@
 ﻿using BNManager.Services;
 using BNManager.Views;
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using System.Globalization;
+using System.IO;
+using Windows.ApplicationModel;
 
 namespace BNManager;
 
@@ -17,7 +22,7 @@ public partial class App : Application
   {
     get
     {
-      string ver = "1.0.0";
+      string ver = "1.1.0";
 #if DEBUG
       ver += "-dev";
 #endif
@@ -50,6 +55,9 @@ public partial class App : Application
 
     // Apply settings from the configuration which are to be applied on startup.
     (MainWindow.Content as FrameworkElement).RequestedTheme = ConfigService.Config.DarkMode ? ElementTheme.Dark : ElementTheme.Light;
+
+    MainWindow.AppWindow.SetIcon("Assets/LogoCompact.ico");
+    MainWindow.Title = "BNManager";
 
     MainWindow.Activate();
   }

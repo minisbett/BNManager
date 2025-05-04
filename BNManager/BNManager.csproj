@@ -13,17 +13,8 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <ApplicationIcon>Assets/LogoCompact.ico</ApplicationIcon>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Views\Controls\NominatorStateItem.xaml" />
-    <None Remove="Views\Controls\ProjectNavigationViewItem.xaml" />
-    <None Remove="Views\Dialogs\NominatorStateInfoDialog.xaml" />
-    <None Remove="Views\HomePage.xaml" />
-    <None Remove="Views\LoadingDialog.xaml" />
-    <None Remove="Views\Pages\QueueTrackerPage.xaml" />
-    <None Remove="Views\ProjectPage.xaml" />
-    <None Remove="Views\SettingsPage.xaml" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
